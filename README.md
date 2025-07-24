@@ -82,6 +82,7 @@ npm run dev
 Обнови свой development, чтобы не начать работу на устаревшей версии проекта:
 
 git checkout development
+
 git pull origin development
 
 🌿 2. Создай отдельную ветку под задачу
@@ -92,7 +93,7 @@ feature/имя, fix/имя, refactor/имя.
 git checkout -b feature/button-primary
 
 (если работа в внутри другой ветки то:
-git checkout -b feature/button-primary feature/ui-button feature/button-primary)
+git checkout -b feature/ui-button feature/button-primary)
 
 👨‍💻 3. Работай в своей ветке
 Делай коммиты осмысленно:
