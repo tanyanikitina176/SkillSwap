@@ -1,12 +1,9 @@
 import "./App.css";
 
 function App() {
-
   return (
     <>
-      <p>
-        Начинаем работу 
-      </p>
+      <p>Начинаем работу</p>
     </>
   );
 }
