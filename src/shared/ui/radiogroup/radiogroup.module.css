@@ -4,7 +4,7 @@
 
 .title {
   margin: 0 0 20px 0;
-  font-family: 'Jost', sans-serif;
+  font-family: "Jost", sans-serif;
   font-weight: 500;
   font-size: 20px;
   line-height: 24px;
@@ -23,7 +23,7 @@
   flex-direction: row;
   align-items: start;
   gap: 8px;
-  font-family: 'Roboto-Regular', sans-serif;
+  font-family: "Roboto-Regular", sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;

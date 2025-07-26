@@ -1,64 +1,61 @@
 .button {
-    border: none;
-    cursor: pointer;
-    outline: none;
-    border-radius: 12px;
-    transition: all .3s ease-in;
-    font-family: 'Roboto', sans-serif;
-    height: 48px;
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    padding: 12px 24px;
-
+  border: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: 12px;
+  transition: all 0.3s ease-in;
+  font-family: "Roboto", sans-serif;
+  height: 48px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  padding: 12px 24px;
 }
 
 .button_type_primary {
-    color: #253017;
-    background: #ABD27A;
-
+  color: #253017;
+  background: #abd27a;
 }
 
 .button_type_primary:hover {
-    background: #DEEBC5;
+  background: #deebc5;
 }
 
 .button_type_primary:active {
-    background: #508826;
-    color: #FFFFFF;
+  background: #508826;
+  color: #ffffff;
 }
 
 .button_type_primary[disabled] {
-    color: #69735D;
-    background: #E4E8DF;
-    pointer-events: none;
+  color: #69735d;
+  background: #e4e8df;
+  pointer-events: none;
 }
 
 .button_type_secondary {
-    max-width: 200px;
-    border: 1px solid #abd27a;
-    color: #253017;
-    background: #fff;
+  max-width: 200px;
+  border: 1px solid #abd27a;
+  color: #253017;
+  background: #fff;
 }
 
 .button_type_secondary:hover {
-    border: 1px solid #deebc5;
-    color: #69735d;
+  border: 1px solid #deebc5;
+  color: #69735d;
 }
 
 .button_type_secondary:active {
-    border: 1px solid #508826;
-    color: #253017;
+  border: 1px solid #508826;
+  color: #253017;
 }
 
 .button_type_secondary[disabled] {
-    border: 1px solid #e4e8df;
-    color: #9ca197;
+  border: 1px solid #e4e8df;
+  color: #9ca197;
 }
 
 .button_type_tertiary {
-    color: #253017;
-    background: #fff;
+  color: #253017;
+  background: #fff;
 }
-
