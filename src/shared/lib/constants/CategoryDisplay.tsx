@@ -1,6 +1,5 @@
-// src/shared/lib/constants/CategoryDisplay.tsx
 import { CATEGORIES } from './constants';
-import './variables.css'; // Импорт переменных
+import './variables.css';
 
 export const CategoryDisplay = () => {
   return (

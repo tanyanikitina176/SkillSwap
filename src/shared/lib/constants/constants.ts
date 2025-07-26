@@ -4,6 +4,7 @@ import GlobalIcon from '@icons/global.svg';
 import BookIcon from '@icons/book.svg';
 import HomeIcon from '@icons/home.svg';
 import LifestyleIcon from '@icons/lifestyle.svg';
+import type { Category } from '../../../entities/Category/CategoryTypes';
 
 export const Icons = {
   BriefcaseIcon,
@@ -13,21 +14,6 @@ export const Icons = {
   HomeIcon,
   LifestyleIcon,
 } as const;
-
-type IconPath = string;
-
-export interface Category {
-  id: string;
-  name: string;
-  color: string;
-  icon: IconPath;
-  subcategories: Subcategory[];
-}
-
-export interface Subcategory {
-  id: string;
-  name: string;
-}
 
 export const CATEGORIES: Category[] = [
   {
@@ -121,12 +107,3 @@ export const CATEGORIES: Category[] = [
     ],
   },
 ];
-
-// Ищем категорию по id
-export const getCategoryById = (id: string) => CATEGORIES.find(category => category.id === id);
-
-// Ищем субкатегорию по id
-export const getSubcategoryById = (categoryId: string, subcategoryId: string) => {
-  const category = getCategoryById(categoryId);
-  return category?.subcategories.find(sub => sub.id === subcategoryId);
-};
