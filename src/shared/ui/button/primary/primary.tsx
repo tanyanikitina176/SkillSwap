@@ -1,5 +1,7 @@
 import React from "react";
 import type { SyntheticEvent } from "react";
+
+import clsx from "clsx";
 import styles from "./primary.module.css";
 
 
@@ -7,30 +9,34 @@ interface Props
   extends React.PropsWithChildren<
     Omit<React.HTMLProps<HTMLButtonElement>, "type" >
   > {
+  type?: "primary" | "secondary" | "tertiary";
   onClick?: (() => void) | ((e: SyntheticEvent) => void);
   extraClass?: string;
   htmlType?: "button" | "submit" | "reset";
 }
 
-export const PrimaryButton: React.FC<Props> = ({
+export const Button: React.FC<Props> = ({
+
   children,
+  type = 'primary',
   onClick,
-  disabled = false,
-  htmlType = "button",
+  htmlType,
   extraClass = "",
+  ...rest
 }) => {
-  const classNames = [
+
+  const className = clsx(
     styles.button,
-    styles[`button_type_primary`],
-    extraClass,
-  ].join(" ");
+    styles[`button_type_${type}`],
+    extraClass
+  );
 
   return (
     <button
-      className={classNames}
-      onClick={onClick}
-      disabled={disabled}
       type={htmlType}
+      onClick={onClick}
+      className={className}
+      {...rest}
     >
       {children}
     </button>
