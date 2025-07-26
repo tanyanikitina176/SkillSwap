@@ -1,4 +1,10 @@
 {
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@icons/*": ["./src/assets/icons/*"]
+    }
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },

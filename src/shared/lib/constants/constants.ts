@@ -1,9 +1,9 @@
-import BriefcaseIcon from '@/assets/icons/briefcase.svg';
-import PaletteIcon from '@/assets/icons/palette.svg';
-import GlobalIcon from '@/assets/icons/global.svg';
-import BookIcon from '@/assets/icons/book.svg';
-import HomeIcon from '@/assets/icons/home.svg';
-import LifestyleIcon from '@/assets/icons/lifestyle.svg';
+import BriefcaseIcon from '@icons/briefcase.svg';
+import PaletteIcon from '@icons/palette.svg';
+import GlobalIcon from '@icons/global.svg';
+import BookIcon from '@icons/book.svg';
+import HomeIcon from '@icons/home.svg';
+import LifestyleIcon from '@icons/lifestyle.svg';
 
 export const Icons = {
   BriefcaseIcon,

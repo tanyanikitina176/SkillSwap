@@ -1,10 +1,15 @@
 import "./App.css";
 
+
+
+import { CategoryDisplay } from '../shared/lib/constants/CategoryDisplay';
+
 function App() {
   return (
-    <>
-      <p>Начинаем работу</p>
-    </>
+    <div>
+      <h1 style={{ textAlign: 'center' }}>Категории навыков</h1>
+      <CategoryDisplay />
+    </div>
   );
 }
 
