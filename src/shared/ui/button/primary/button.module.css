@@ -4,7 +4,7 @@
     outline: none;
     border-radius: 12px;
     transition: all .3s ease-in;
-    font-family: 'Roboto';
+    font-family: 'Roboto', sans-serif;
     height: 48px;
     font-size: 16px;
     line-height: 24px;
@@ -36,13 +36,8 @@
 }
 
 .button_type_secondary {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     max-width: 200px;
     border: 1px solid #abd27a;
-    border-radius: 12px;
-    padding: 12px 24px;
     color: #253017;
     background: #fff;
 }

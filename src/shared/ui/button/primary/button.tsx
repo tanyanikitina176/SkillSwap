@@ -2,7 +2,7 @@ import React from "react";
 import type { SyntheticEvent } from "react";
 
 import clsx from "clsx";
-import styles from "./primary.module.css";
+import styles from "./button.module.css";
 
 
 interface Props
