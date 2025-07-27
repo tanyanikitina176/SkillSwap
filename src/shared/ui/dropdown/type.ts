@@ -1,8 +1,15 @@
-import type { ReactNode } from "react"
+export type DropdownOption = {
+  value: string;
+  label: string;
+};
 
-export type DropDownUIProps = {
-  variant: string;
-  children: ReactNode;
-  className: string;
-  isOpened: boolean;
-}
+export type DropdownType = 'select' | 'multiselect' | 'input';
+
+export type DropdownProps = {
+  type?: DropdownType;
+  options: DropdownOption[];
+  value?: string | string[];
+  onChange?: (value: string | string[]) => void;
+  placeholder?: string;
+  className?: string;
+};
