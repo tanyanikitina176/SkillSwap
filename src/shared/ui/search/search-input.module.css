@@ -1,0 +1,51 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 527px;
+  height: 48px;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 12px;
+  justify-content: space-between;
+}
+
+.inputWrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  line-height: 24px;
+  color: #253017;
+  caret-color: rgba(80, 136, 38, 1);
+}
+
+.input::placeholder {
+  color: #69735d;
+}
+
+.input:focus::placeholder {
+  color: transparent;
+}
+
+.button {
+  display: flex;
+  background: transparent;
+  border: none;
+}
+
+input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
