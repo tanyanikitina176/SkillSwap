@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import styles from './radiogroup.module.css';
+import styles from "./radiogroup.module.css";
 
 type Props = {
   name: string;

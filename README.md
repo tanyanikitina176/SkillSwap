@@ -90,6 +90,7 @@ git pull origin development
 feature/имя, fix/имя, refactor/имя.
 
 Пример:
+
 git checkout -b feature/button-primary
 
 (если работа в внутри другой ветки то:
