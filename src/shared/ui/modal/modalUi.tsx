@@ -1,4 +1,4 @@
-import { ModalOverlayUI } from "./modal-overlay.tsx";
+import { ModalOverlayUI } from "./modal-overlay/modal-overlay.tsx";
 import { type FC, memo } from "react";
 import styles from './modalUi.module.css'
 import type {TModalUIProps} from "./type.ts";
