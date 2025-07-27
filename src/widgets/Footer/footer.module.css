@@ -1,11 +1,15 @@
 .footer {
     display: grid;
-    background: #E7F2F6;
+    background: #FFFFFF;
     padding: 32px 36px;
     grid-template-columns: 350px 1fr;
     grid-template-rows: auto auto auto;
-    max-width: 1440px;
     margin: 0 auto;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
 }
 
 .logo {
@@ -36,6 +40,7 @@
     text-decoration: none;
     color: #253017;
     transition: color 0.3s;
+
 }
 
 .copy {
@@ -45,5 +50,5 @@
     color: #69735D;
     display: flex;
     justify-content: flex-start;
-    padding-top: 41px;
+    padding-top: 25px;
 }
