@@ -1,7 +1,8 @@
 import "./App.css";
-import {ModalUI} from "../shared/ui/modal/modalUi.tsx";
+
 import modalImage from '../assets/icons//user-circle.svg'
 import {Button} from "../shared/ui/button/button.tsx";
+import {Modal} from "../shared/ui/modal/modal.tsx";
 
 
 
@@ -13,7 +14,7 @@ function App() {
       <p>Начинаем работу</p>
       <p>Начинаем работу</p>
       <p>Начинаем работу</p>
-      <ModalUI title={"Важе предложение создано"} description={'Теперь вы можете предложить обмен'} image={modalImage} onClose={console.log}>
+      <Modal title={"Важе предложение создано"} description={'Теперь вы можете предложить обмен'} image={modalImage} onClose={console.log}>
         <Button
           type="primary"
           htmlType="button"
@@ -22,7 +23,7 @@ function App() {
           Нажми меня
         </Button>
 
-      </ModalUI>
+      </Modal>
     </>
   );
 }
