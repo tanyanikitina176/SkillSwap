@@ -1,18 +1,19 @@
 import "./App.css";
 import {BrowserRouter} from "react-router-dom";
-import { CategoryDisplay } from "../widgets/SkillsPanel/SkillsPanel";
+
 
 function App() {
   return (
     <BrowserRouter>
-    <div className="app">
-      <CategoryDisplay />
-    </div>
+    <>
+      <p>Начинаем работу</p>
+    </>
     </BrowserRouter>
   );
 }
 
 export default App;
+
 
 
 
