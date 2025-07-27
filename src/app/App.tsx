@@ -1,5 +1,6 @@
 import "./App.css";
-import {ModalOverlayUI} from "../shared/ui/modal/modal-overlay.tsx";
+import {ModalUI} from "../shared/ui/modal/modalUi.tsx";
+import modalImage from '../assets/icons//user-circle.svg'
 
 
 
@@ -11,8 +12,7 @@ function App() {
       <p>Начинаем работу</p>
       <p>Начинаем работу</p>
       <p>Начинаем работу</p>
-      <ModalOverlayUI onClick={console.log}></ModalOverlayUI>
-
+      <ModalUI title={"Заголовок"} description={'Описание'} image={modalImage} onClose={console.log}><p>Текст внутри модалки</p></ModalUI>
     </>
   );
 }
