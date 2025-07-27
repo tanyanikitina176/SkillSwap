@@ -1,0 +1,100 @@
+{
+	"users": [
+		{
+			"id": 1,
+			"name": "Анна",
+			"age": 28,
+			"cityId": 1,
+			"ownedSkills": [11, 29, 8],
+			"teachingSkills": [11, 29]
+		},
+		{
+			"id": 2,
+			"name": "Дмитрий",
+			"age": 35,
+			"cityId": 2,
+			"ownedSkills": [1, 2, 34, 36],
+			"teachingSkills": [34]
+		},
+		{
+			"id": 3,
+			"name": "Екатерина",
+			"age": 42,
+			"cityId": 3,
+			"ownedSkills": [24, 25],
+			"teachingSkills": [24, 25, 27]
+		},
+		{
+			"id": 4,
+			"name": "Александр",
+			"age": 24,
+			"cityId": 1,
+			"ownedSkills": [],
+			"teachingSkills": [30, 31]
+		},
+		{
+			"id": 5,
+			"name": "Мария",
+			"age": 31,
+			"cityId": 4,
+			"ownedSkills": [6, 7, 9, 13],
+			"teachingSkills": [6, 9]
+		},
+		{
+			"id": 6,
+			"name": "Сергей",
+			"age": 29,
+			"cityId": 5,
+			"ownedSkills": [32, 35],
+			"teachingSkills": []
+		},
+		{
+			"id": 7,
+			"name": "Ольга",
+			"age": 38,
+			"cityId": 2,
+			"ownedSkills": [16, 17, 21, 23],
+			"teachingSkills": [16, 17, 21]
+		},
+		{
+			"id": 8,
+			"name": "Игорь",
+			"age": 45,
+			"cityId": 6,
+			"ownedSkills": [3, 4],
+			"teachingSkills": [3]
+		},
+		{
+			"id": 9,
+			"name": "Наталья",
+			"age": 33,
+			"cityId": 7,
+			"ownedSkills": [12, 14, 15],
+			"teachingSkills": [12, 14]
+		},
+		{
+			"id": 10,
+			"name": "Михаил",
+			"age": 27,
+			"cityId": 8,
+			"ownedSkills": [26, 28],
+			"teachingSkills": [26]
+		},
+		{
+			"id": 11,
+			"name": "Светлана",
+			"age": 40,
+			"cityId": 9,
+			"ownedSkills": [20, 22, 38],
+			"teachingSkills": [20, 38]
+		},
+		{
+			"id": 12,
+			"name": "Алексей",
+			"age": 36,
+			"cityId": 10,
+			"ownedSkills": [5, 18, 19, 37],
+			"teachingSkills": [5, 18]
+		}
+	]
+}
