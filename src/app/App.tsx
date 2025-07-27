@@ -12,7 +12,7 @@ function App() {
       <p>Начинаем работу</p>
       <p>Начинаем работу</p>
       <p>Начинаем работу</p>
-      <ModalUI title={"Заголовок"} description={'Описание'} image={modalImage} onClose={console.log}><p>Текст внутри модалки</p></ModalUI>
+      <ModalUI title={"Важе предложение создано"} description={'Теперь вы можете предложить обмен'} image={modalImage} onClose={console.log}><p>Текст внутри модалки</p></ModalUI>
     </>
   );
 }
