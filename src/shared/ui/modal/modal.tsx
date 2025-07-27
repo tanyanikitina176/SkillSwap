@@ -1,7 +1,5 @@
 import {type FC, memo, useEffect} from 'react';
 import ReactDOM from 'react-dom';
-
-
 import {ModalUI} from "./modalUi.tsx";
 import type {TModalUIProps} from "./type.ts";
 
@@ -9,7 +7,7 @@ import type {TModalUIProps} from "./type.ts";
 const modalRoot = document.getElementById('modals');
 
 export const Modal: FC<TModalUIProps> = memo(
-  ({ image, title, description, onClose, children }) => {
+  ({ image, imageAlt, title, description, onClose, children }) => {
     useEffect(() => {
       const handleEsc = (e: KeyboardEvent) => {
         e.key === 'Escape' && onClose();
@@ -22,7 +20,7 @@ export const Modal: FC<TModalUIProps> = memo(
     }, [onClose]);
 
     return ReactDOM.createPortal(
-      <ModalUI title={title} description={description} image={image} onClose={onClose}>
+      <ModalUI title={title} description={description} image={image} imageAlt={imageAlt} onClose={onClose}>
         {children}
       </ModalUI>,
       modalRoot as HTMLDivElement

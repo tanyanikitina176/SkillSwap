@@ -5,10 +5,10 @@ import type {TModalUIProps} from "./type.ts";
 
 
 export const ModalUI: FC<TModalUIProps> = memo(
-  ({ image, title, description, onClose, children }) => (
+  ({ image, imageAlt, title, description, onClose, children }) => (
     <>
       <div className={styles.modal}>
-        <img src={image} alt="Modal" className={styles.image} />
+        <img src={image} alt={imageAlt} className={styles.image} />
         <div className={styles.content}>
           <h2 className={styles.title}>{title}</h2>
           <p className={styles.description}>{description}</p>
