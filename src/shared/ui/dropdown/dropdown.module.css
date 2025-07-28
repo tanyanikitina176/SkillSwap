@@ -86,6 +86,7 @@
 }
 
 .selectItem {
+  font-family: 'Roboto', sans-serif;
   padding: 4px 20px;
   cursor: pointer;
   display: flex;
