@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Checkbox } from "../../shared/ui/checkbox/checkbox";
-import { cityOptions } from "../../shared/ui/DropDown/dropdownConstants";
+import { cityOptions } from "../../shared/ui/dropdown/dropdownConstants";
 import styles from "./Filtres.module.css";
 
 import chevronDownIcon from "../../assets/icons/chevron-down.svg";
