@@ -1,12 +1,10 @@
-import type { Category, Subcategory } from '../Category/CategoryTypes'
-
 export type Skill = {
-  id: string; 
-  title: string; 
-  category: Category; 
-  subcategory?: Subcategory; 
-  description: string; 
-  author: {         // TODO: заменить на User или userId когда тип будет создан
+  id: string;
+  title: string;
+  CategoryId: string; 
+  SubcategoryId?: string;
+  description: string;
+  author: { // Пока оставляем, но потом заменим на authorId: string
     id: string;
     name: string;
     age?: number;
@@ -15,9 +13,9 @@ export type Skill = {
     gender?: 'male' | 'female' | 'other';
     avatar?: string;
   };
-  likesCount?: number; 
-  createdAt?: Date; // Дата создания (возможно понадобится для сортировки например в раздел "новое")
-  updatedAt?: Date; // Дата последнего обновления (возможно понадобится для сортировки )
-  location?: string; // Уточнение места (адрес например)
+  likesCount?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  location?: string;
   status?: 'active' | 'pending' | 'completed';
 };
