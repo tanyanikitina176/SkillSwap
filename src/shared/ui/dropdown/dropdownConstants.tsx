@@ -195,3 +195,6 @@ export const cities = [
   'Дзержинское',
   'Власиха'
 ];
+
+export const genderOptions = gender.map((gen, idx) => ({value: String(idx + 1), label: gen, }));
+export const cityOptions = cities.map((city, idx) => ({ value: String(idx + 1), label: city, }));
