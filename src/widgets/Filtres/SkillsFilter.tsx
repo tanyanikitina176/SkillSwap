@@ -75,7 +75,7 @@ export const SkillsFilter: React.FC<SkillsFilterProps> = ({
 
           {expandedCategories[category.id] && category.subcategories && (
             <div className={styles.subcategories}>
-              {category.subcategories.map((subcategory: any) => (
+              {category.subcategories.map((subcategory) => (
                 <Checkbox
                   key={subcategory.id}
                   checkboxType="remove"
