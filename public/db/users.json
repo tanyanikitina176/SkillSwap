@@ -7,16 +7,18 @@
 			"gender": "female",
 			"cityId": 1,
 			"wantToLearnSkills": [6, 24, 38],
-			"teachingSkills": [11, 29]
+			"teachingSkills": [11, 29],
+			"photo": "../db/users-photo/anna.jpg"
 		},
 		{
 			"id": 2,
-			"name": "Дмитрий",
+			"name": "Максим",
 			"age": 35,
 			"gender": "male",
 			"cityId": 2,
 			"wantToLearnSkills": [30, 31],
-			"teachingSkills": [1, 2, 34]
+			"teachingSkills": [1, 2, 34],
+			"photo": "../db/users-photo/maksim.jpg"
 		},
 		{
 			"id": 3,
@@ -25,16 +27,18 @@
 			"gender": "female",
 			"cityId": 3,
 			"wantToLearnSkills": [11, 13],
-			"teachingSkills": [24, 25, 27]
+			"teachingSkills": [24, 25, 27],
+			"photo": "../db/users-photo/ekaterina.jpg"
 		},
 		{
 			"id": 4,
-			"name": "Александр",
+			"name": "Михаил",
 			"age": 24,
 			"gender": "male",
 			"cityId": 1,
 			"wantToLearnSkills": [1, 2, 5, 29],
-			"teachingSkills": [30, 31]
+			"teachingSkills": [30, 31],
+			"photo": "../db/users-photo/mihail.jpg"
 		},
 		{
 			"id": 5,
@@ -43,70 +47,68 @@
 			"gender": "female",
 			"cityId": 4,
 			"wantToLearnSkills": [8, 10],
-			"teachingSkills": [6, 7, 9, 13]
+			"teachingSkills": [6, 7, 9, 13],
+			"photo": "../db/users-photo/maria.jpg"
 		},
 		{
 			"id": 6,
-			"name": "Сергей",
+			"name": "Илона",
 			"age": 29,
-			"gender": "male",
+			"gender": "female",
 			"cityId": 5,
 			"wantToLearnSkills": [29, 30, 32],
-			"teachingSkills": [35]
+			"teachingSkills": [35],
+			"photo": "../db/users-photo/ilona.png"
 		},
 		{
 			"id": 7,
-			"name": "Ольга",
+			"name": "Дарья",
 			"age": 38,
 			"gender": "female",
 			"cityId": 2,
 			"wantToLearnSkills": [38, 20],
-			"teachingSkills": [16, 17, 21, 23]
+			"teachingSkills": [16, 17, 21, 23],
+			"photo": "../db/users-photo/daria.jpg"
 		},
 		{
 			"id": 8,
-			"name": "Игорь",
+			"name": "Константин",
 			"age": 45,
 			"gender": "male",
 			"cityId": 6,
 			"wantToLearnSkills": [11, 12],
-			"teachingSkills": [3, 4]
+			"teachingSkills": [3, 4],
+			"photo": "../db/users-photo/konstantin.jpg"
 		},
 		{
 			"id": 9,
-			"name": "Наталья",
+			"name": "София",
 			"age": 33,
 			"gender": "female",
 			"cityId": 7,
 			"wantToLearnSkills": [11, 15],
-			"teachingSkills": [12, 14]
-		},
-		{
-			"id": 10,
-			"name": "Михаил",
-			"age": 27,
-			"gender": "male",
-			"cityId": 8,
-			"wantToLearnSkills": [30, 31, 32],
-			"teachingSkills": [26, 28]
+			"teachingSkills": [12, 14],
+			"photo": "../db/users-photo/sofia.jpg"
 		},
 		{
 			"id": 11,
-			"name": "Светлана",
+			"name": "Елена",
 			"age": 40,
 			"gender": "female",
 			"cityId": 9,
 			"wantToLearnSkills": [22, 23],
-			"teachingSkills": [20, 38]
+			"teachingSkills": [20, 38],
+			"photo": "../db/users-photo/elena.jpg"
 		},
 		{
 			"id": 12,
-			"name": "Алексей",
+			"name": "Виктория",
 			"age": 36,
 			"gender": "male",
 			"cityId": 10,
 			"wantToLearnSkills": [1, 2, 37],
-			"teachingSkills": [5, 18, 19]
+			"teachingSkills": [5, 18, 19],
+			"photo": "../db/users-photo/viktoria.jpg"
 		}
 	]
 }
