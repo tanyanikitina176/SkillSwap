@@ -1,1 +1,1 @@
-export {SearchInputUI} from "./search-input";
+export { SearchInputUI } from "./search-input";

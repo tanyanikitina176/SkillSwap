@@ -1,6 +1,6 @@
-import React from 'react';
-import { RadioGroupUI } from '../../shared/ui/radiogroup/radiogroup';
-import styles from './Filtres.module.css';
+import React from "react";
+import { RadioGroupUI } from "../../shared/ui/radiogroup/radiogroup";
+import styles from "./Filtres.module.css";
 
 interface RoleFilterProps {
   selectedRole: string;
@@ -8,10 +8,10 @@ interface RoleFilterProps {
 }
 
 export const RoleFilter: React.FC<RoleFilterProps> = ({
-  selectedRole = 'Всё',
+  selectedRole = "Всё",
   onChange,
 }) => {
-  const roleOptions = ['Всё', 'Хочу научиться', 'Могу научить'];
+  const roleOptions = ["Всё", "Хочу научиться", "Могу научить"];
 
   return (
     <div className={styles.filterSection}>

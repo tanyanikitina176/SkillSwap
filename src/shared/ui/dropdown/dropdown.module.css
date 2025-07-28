@@ -14,7 +14,7 @@
 }
 
 .searchInput.placeholder {
-  color: #69735D;
+  color: #69735d;
 }
 
 .searchInput.selected {
@@ -24,7 +24,7 @@
 .content {
   width: 100%;
   border-radius: 12px;
-  border: 1px solid #69735D;
+  border: 1px solid #69735d;
   background-color: #fff;
   position: absolute;
 }
@@ -38,7 +38,7 @@
 }
 
 .searchInput {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: inherit;
@@ -86,7 +86,7 @@
 }
 
 .selectItem {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   padding: 4px 20px;
   cursor: pointer;
   display: flex;
@@ -97,7 +97,7 @@
 
 .selectItem:hover {
   transition: background-color 0.3s ease;
-  background-color: #E4E8DF;
+  background-color: #e4e8df;
 }
 
 .selectItem.selected {

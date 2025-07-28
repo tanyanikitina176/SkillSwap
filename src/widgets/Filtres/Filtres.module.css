@@ -1,5 +1,5 @@
 .container {
-  font-family: 'Jost', sans-serif;
+  font-family: "Jost", sans-serif;
   font-weight: 500;
   padding: 20px;
   background-color: #fff;
@@ -38,7 +38,7 @@
   border: none;
   padding: 4px 8px;
   color: #508826;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 14px;
   cursor: pointer;
   transition: opacity 0.2s;
@@ -55,7 +55,8 @@
 .closeIcon {
   width: 24px;
   height: 24px;
-  filter: invert(48%) sepia(89%) saturate(376%) hue-rotate(44deg) brightness(95%) contrast(91%);
+  filter: invert(48%) sepia(89%) saturate(376%) hue-rotate(44deg)
+    brightness(95%) contrast(91%);
 }
 
 .filterSection {
@@ -63,7 +64,7 @@
 }
 
 .filterTitle {
-  font-family: 'Jost', sans-serif;
+  font-family: "Jost", sans-serif;
   margin-bottom: 12px;
   font-size: 20px;
   color: #253017;

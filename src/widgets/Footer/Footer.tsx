@@ -1,7 +1,7 @@
 import type { FC } from "react";
-import styles from './footer.module.css';
-import { Link } from 'react-router-dom';
-import logo from '../../assets/images/logo.svg';
+import styles from "./footer.module.css";
+import { Link } from "react-router-dom";
+import logo from "../../assets/images/logo.svg";
 
 export const Footer: FC = () => (
   <footer className={styles.footer}>
@@ -20,4 +20,4 @@ export const Footer: FC = () => (
 
     <div className={styles.copy}>SkillSwap — 2025</div>
   </footer>
-)
+);

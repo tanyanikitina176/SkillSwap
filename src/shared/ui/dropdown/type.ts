@@ -3,7 +3,7 @@ export type DropdownOption = {
   label: string;
 };
 
-export type DropdownType = 'select' | 'multiselect' | 'input';
+export type DropdownType = "select" | "multiselect" | "input";
 
 export type DropdownProps = {
   type?: DropdownType;

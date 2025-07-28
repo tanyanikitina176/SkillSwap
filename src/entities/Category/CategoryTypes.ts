@@ -10,4 +10,3 @@ export interface Category {
   icon: string;
   subcategories: Subcategory[];
 }
-

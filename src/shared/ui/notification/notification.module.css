@@ -11,13 +11,13 @@
 }
 
 .notification:hover {
-  background: var(--button-hover, #deebc5); 
+  background: var(--button-hover, #deebc5);
 }
 
 .notification:hover .messageWrapper {
   opacity: 0;
   transition: opacity 0.2s ease;
-} 
+}
 
 .message {
   color: var(--text-primary, #253017);
@@ -33,7 +33,7 @@
 .messageWrapper {
   display: flex;
   gap: 8px;
-  transition: opacity 0.3s ease 0.1s; 
+  transition: opacity 0.3s ease 0.1s;
 }
 
 .messageWrapper:hover {
@@ -55,31 +55,30 @@
   border: none;
   border-radius: 20px;
   padding: 8px 12px;
-  background: var(--accent, #ABD27A);;
+  background: var(--accent, #abd27a);
   cursor: pointer;
   left: 50%;
   top: -40px;
   transform: translateX(-50%);
   opacity: 0;
-  transition: 
+  transition:
     opacity 0.3s ease-out,
     top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    color: var(--text-primary, #253017);
-font-family: Jost;
-font-size: 20px;
-font-style: normal;
-font-weight: 500;
-line-height: 24px;
-letter-spacing: -0.22px;
-
+  color: var(--text-primary, #253017);
+  font-family: Jost;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: -0.22px;
 }
 
-.notification:hover .actionButton { 
+.notification:hover .actionButton {
   opacity: 1;
   top: 50%;
   transform: translate(-50%, -50%);
   display: flex;
-  transition: 
+  transition:
     opacity 0.2s ease-in,
     top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

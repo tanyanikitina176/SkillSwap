@@ -1,8 +1,7 @@
 import { ModalOverlayUI } from "./modal-overlay/modal-overlay.tsx";
 import { type FC, memo } from "react";
-import styles from './modalUi.module.css'
-import type {TModalUIProps} from "./type.ts";
-
+import styles from "./modalUi.module.css";
+import type { TModalUIProps } from "./type.ts";
 
 export const ModalUI: FC<TModalUIProps> = memo(
   ({ image, imageAlt, title, description, onClose, children }) => (
