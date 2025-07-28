@@ -1,13 +1,14 @@
 export type User = {
-  id: number;
-  name: string;
-  age: number;
-  gender: "male" | "female";
-  cityId?: number;
-  wantToLearnSkills?: number[];
-  teachingSkills?: number[];
-  photo?: string;
-  description?: string;
-};
+	id: string
+	name: string
+	age: number
+	gender: UserGender
+	cityId?: number
+	wantToLearnSkills?: string[]
+	teachingSkills?: string[]
+	photo?: string
+	description?: string
+	likes?: string[]
+}
 
-export type UserGender = "male" | "female";
+export type UserGender = 'male' | 'female'
