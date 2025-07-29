@@ -1,15 +1,20 @@
 import type { FC } from 'react'
 import styles from './user-card.module.css'
-import type { User } from '../../entities/User/types'
 import { Tag } from '../../shared/ui/tag/tag'
 import { Button } from '../../shared/ui/button/button'
+import type { UserCardProps } from './type'
 
-const clickHandler = () => {
-	console.log('Button clicked')
-}
-
-export const UserCard: FC<User> = ({ ...props }) => (
+export const UserCard: FC<UserCardProps> = ({
+	user,
+	onLikeClick,
+	onButtonClick,
+}) => (
 	<div className={styles.card}>
+		<button
+			type='button'
+			className={styles.card__like_button}
+			onClick={() => onLikeClick?.(user.id)}
+		></button>
 		<div className={styles.card__header}>
 			<img
 				src={props.photo}
@@ -27,7 +32,7 @@ export const UserCard: FC<User> = ({ ...props }) => (
 			<div className={styles.card__skills}>
 				<span className={styles.card__skills_title}>Может научить:</span>
 				<div className={styles.card__skills_list}>
-					{props.teachingSkills.map(skill => (
+					{user.teachingSkills.map(skill => (
 						<Tag key={skill} label={skill} backgroundColor={'#E0F7FA'} />
 					))}
 				</div>
@@ -35,7 +40,7 @@ export const UserCard: FC<User> = ({ ...props }) => (
 			<div className={styles.card__skills}>
 				<span className={styles.card__skills_title}>Хочет научиться:</span>
 				<div className={styles.card__skills_list}>
-					{props.teachingSkills.map(skill => (
+					{user.wantToLearnSkills.map(skill => (
 						<Tag key={skill} label={skill} backgroundColor={'#E0F7FA'} />
 					))}
 				</div>
@@ -44,7 +49,7 @@ export const UserCard: FC<User> = ({ ...props }) => (
 		<Button
 			type='primary'
 			htmlType='button'
-			onClick={clickHandler}
+			onClick={() => onButtonClick?.(user.id)}
 			extraClass={styles.card__button}
 		>
 			Подробнее

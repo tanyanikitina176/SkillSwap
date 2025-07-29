@@ -1,17 +1,18 @@
 .card {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 20px;
 	max-width: 324px;
+	border: 1px solid red;
 	border-radius: 12px;
 	padding: 20px;
-	background: #fff;
-	border: 1px solid red;
 	color: #253017;
 	font-family: Roboto;
-	font-style: normal;
 	font-weight: 400;
+	font-style: normal;
+	background: #fff;
 }
 
 .card__header {
@@ -73,4 +74,22 @@
 
 .card__button {
 	width: 100%;
+}
+
+.card__like_button {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	width: 24px;
+	height: 24px;
+	margin: 0;
+	border: none;
+	padding: 0;
+	background: transparent url('../../assets/icons/like.svg') no-repeat;
+	background-size: 24px 24px;
+	cursor: pointer;
+}
+
+.card__like_button .liked {
+	background: transparent url('../../assets/icons/likeFill.svg') no-repeat;
 }
