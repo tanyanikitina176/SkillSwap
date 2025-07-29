@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Checkbox } from "../../shared/ui/checkbox/checkbox";
-import { CATEGORIES } from "../../shared/lib/constants/constants";
+import { CATEGORIES } from "../../shared/lib/helpers/categoryHelpers";
 import styles from "./Filtres.module.css";
 import chevronDownIcon from "../../assets/icons/chevron-down.svg";
 import chevronUpIcon from "../../assets/icons/chevron-up.svg";
