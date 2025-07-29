@@ -32,6 +32,6 @@
 }
 
 .sidebar_item__title {
-  color: #253017;
+  color: var(--text-primary, #253017);
   letter-spacing: 0.02em;
 }

@@ -1,5 +1,5 @@
 .container {
-  color: #253017;
+  color: var(--text-primary, #253017);
 }
 
 .title {

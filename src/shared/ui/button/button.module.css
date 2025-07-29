@@ -14,7 +14,7 @@
 }
 
 .button_type_primary {
-  color: #253017;
+  color: var(--text-primary, #253017);
   background: #abd27a;
 }
 
@@ -36,7 +36,7 @@
 .button_type_secondary {
   max-width: 200px;
   border: 1px solid #abd27a;
-  color: #253017;
+  color: var(--text-primary, #253017);
   background: #fff;
 }
 
@@ -47,7 +47,7 @@
 
 .button_type_secondary:active {
   border: 1px solid #508826;
-  color: #253017;
+  color: var(--text-primary, #253017);
 }
 
 .button_type_secondary[disabled] {
@@ -56,6 +56,6 @@
 }
 
 .button_type_tertiary {
-  color: #253017;
+  color: var(--text-primary, #253017);
   background: #fff;
 }

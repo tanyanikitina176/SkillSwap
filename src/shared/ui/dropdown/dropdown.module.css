@@ -18,7 +18,7 @@
 }
 
 .searchInput.selected {
-  color: #253017;
+  color: var(--text-primary, #253017);
 }
 
 .content {
@@ -91,7 +91,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: #253017;
+  color: var(--text-primary, #253017);
   gap: 8px;
 }
 

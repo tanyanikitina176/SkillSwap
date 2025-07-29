@@ -18,7 +18,7 @@
 .mainTitle {
   font-size: 24px;
   margin: 0;
-  color: #253017;
+  color: var(--text-primary, #253017);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -67,7 +67,7 @@
   font-family: "Jost", sans-serif;
   margin-bottom: 12px;
   font-size: 20px;
-  color: #253017;
+  color: var(--text-primary, #253017);
 }
 
 .citiesList {
