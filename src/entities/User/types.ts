@@ -1,13 +1,21 @@
-export type User = {
-  id: number;
-  name: string;
-  age: number;
-  gender: "male" | "female";
-  cityId?: number;
-  wantToLearnSkills?: number[];
-  teachingSkills?: number[];
-  photo?: string;
-  description?: string;
-};
+import type { Subcategory } from '../Category/CategoryTypes'
 
-export type UserGender = "male" | "female";
+export type User = {
+	id: string
+	name: string
+	age: number
+	gender: UserGender
+	city: City
+	wantToLearnSkills: Subcategory[]
+	teachingSkills: Subcategory[]
+	photo: string
+	description: string
+	likes: User[]
+}
+
+export type UserGender = 'male' | 'female'
+
+export type City = {
+	id: string
+	name: string
+}

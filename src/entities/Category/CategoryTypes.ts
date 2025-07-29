@@ -1,7 +1,7 @@
 export interface Subcategory {
 	id: string
-	categoryId?: string
 	name: string
+	category: Category
 }
 
 export interface Category {
@@ -12,5 +12,5 @@ export interface Category {
 }
 
 export interface CategoryWithSubcategories extends Category {
-  subcategories: Subcategory[];
+	subcategories: Subcategory[]
 }
