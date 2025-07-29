@@ -3,7 +3,7 @@
   cursor: pointer;
   outline: none;
   border-radius: 12px;
-  transition: all 0.3s ease-in;
+  transition: all 0.1s ease-in;
   font-family: "Roboto-Regular", sans-serif;
   height: 48px;
   font-size: 16px;
