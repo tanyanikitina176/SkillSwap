@@ -2,6 +2,7 @@ import styles from "./Header.module.css";
 import logo from "../../assets/images/logo.svg";
 import topic from "../../assets/icons/moon.svg";
 import chevronDown from "../../assets/icons/chevron-down.svg";
+import chevronUp from "../../assets/icons/chevron-up.svg";
 import { SearchInputUI } from "../../shared/ui/search";
 import { Button } from "../../shared/ui/button/button";
 import { CategoryDisplay } from "../SkillsPanel/SkillsPanel";
@@ -11,6 +12,7 @@ import clsx from "clsx";
 export const AppHeaderUI = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
 
   return (
     <header className={styles.header}>
@@ -22,6 +24,7 @@ export const AppHeaderUI = () => {
         <div className={styles.linksWrapper}>
           <span className={styles.text}>О проекте</span>
 
+
           <div className={styles.dropdownWrapper} ref={dropdownRef}>
             <button
               className={clsx(styles.dropdownTrigger, styles.text)}
@@ -29,7 +32,7 @@ export const AppHeaderUI = () => {
             >
               Все навыки
               <img
-                src={chevronDown}
+                src={isDropdownOpen ? chevronUp : chevronDown}
                 alt="Стрелка вниз"
                 className={styles.chevronDown}
               />
@@ -42,6 +45,7 @@ export const AppHeaderUI = () => {
               <CategoryDisplay />
             </div>
           </div>
+
         </div>
 
         <SearchInputUI />
@@ -53,8 +57,8 @@ export const AppHeaderUI = () => {
         </div>
 
         <div className={styles.buttonsWrapper}>
-          <Button className={styles.login}>Войти</Button>
-          <Button className={styles.register}>Зарегистрироваться</Button>
+          <Button type="secondary">Войти</Button>
+          <Button type="primary">Зарегистрироваться</Button>
         </div>
       </nav>
     </header>
