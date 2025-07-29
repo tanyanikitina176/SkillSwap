@@ -51,7 +51,7 @@
   line-height: 24px;
   font-weight: 400;
   font-size: 16px;
-  color: #000000;
+  color: var(--text-black, #000000);
 }
 
 .body {
