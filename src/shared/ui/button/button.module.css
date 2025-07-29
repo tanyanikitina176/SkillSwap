@@ -28,7 +28,7 @@
 }
 
 .button_type_primary[disabled] {
-  color: #69735d;
+  color: var(--text-caption, #69735d);
   background: #e4e8df;
   pointer-events: none;
 }
@@ -42,7 +42,7 @@
 
 .button_type_secondary:hover {
   border: 1px solid #deebc5;
-  color: #69735d;
+  color: var(--text-caption, #69735d);
 }
 
 .button_type_secondary:active {
