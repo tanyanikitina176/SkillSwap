@@ -1,5 +1,5 @@
 .container {
-  color: #253017;
+  color: var(--text-primary, #253017);
 }
 
 .title {
@@ -31,7 +31,7 @@
 }
 
 .input {
-  accent-color: #508826;
+  accent-color: var(--text-link, #508826);
   inline-size: 20px;
   aspect-ratio: 1 / 1;
 }

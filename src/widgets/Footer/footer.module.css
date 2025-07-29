@@ -1,6 +1,6 @@
 .footer {
   display: grid;
-  background: #ffffff;
+  background: var(--card-bg, #ffffff);
   padding: 32px 36px;
   grid-template-columns: 350px 1fr;
   grid-template-rows: auto auto auto;
@@ -37,7 +37,7 @@
 }
 .links a {
   text-decoration: none;
-  color: #253017;
+  color: var(--text-primary, #253017);
   transition: color 0.3s;
 }
 
@@ -45,7 +45,7 @@
   grid-column: 1 / -1;
   grid-row: 3;
   font-size: 12px;
-  color: #69735d;
+  color: var(--text-caption, #69735d);
   display: flex;
   justify-content: flex-start;
   padding-top: 25px;

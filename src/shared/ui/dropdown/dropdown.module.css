@@ -14,18 +14,18 @@
 }
 
 .searchInput.placeholder {
-  color: #69735d;
+  color: var(--text-caption, #69735d);
 }
 
 .searchInput.selected {
-  color: #253017;
+  color: var(--text-primary, #253017);
 }
 
 .content {
   width: 100%;
   border-radius: 12px;
-  border: 1px solid #69735d;
-  background-color: #fff;
+  border: 1px solid var(--text-caption, #69735d);
+  background-color: var(--card-bg, #ffffff);
   position: absolute;
 }
 
@@ -91,17 +91,17 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: #253017;
+  color: var(--text-primary, #253017);
   gap: 8px;
 }
 
 .selectItem:hover {
   transition: background-color 0.3s ease;
-  background-color: #e4e8df;
+  background-color: var(--disabled, #e4e8df);
 }
 
 .selectItem.selected {
-  color: #508826;
+  color: var(--text-link, #508826);
 }
 
 .notFound {

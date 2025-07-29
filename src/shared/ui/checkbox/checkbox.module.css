@@ -64,7 +64,7 @@
 }
 
 .checkbox_label {
-  color: #253017;
+  color: var(--text-primary, #253017);
   transition: color 0.3s ease;
   cursor: pointer;
 }

@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   height: 42rem;
-  background-color: #fff;
+  background-color: var(--card-bg, #ffffff);
   padding: 40px;
   font-family: "Roboto", sans-serif;
   width: max-content;
@@ -16,22 +16,22 @@
   display: flex;
   gap: 12px;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: var(--card-bg, #ffffff);
   padding: 12px 20px;
   width: 100%;
   align-items: center;
 }
 
 .sidebar_item__active {
-  background-color: #deebc5;
+  background-color: var(--button-hover, #deebc5);
 }
 
 .sidebar_item:hover {
-  background-color: #e4e8df;
+  background-color: var(--disabled, #e4e8df);
   cursor: pointer;
 }
 
 .sidebar_item__title {
-  color: #253017;
+  color: var(--text-primary, #253017);
   letter-spacing: 0.02em;
 }

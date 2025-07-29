@@ -4,7 +4,7 @@
   gap: 8px;
   min-width: 527px;
   height: 48px;
-  background: #ffffff;
+  background: var(--card-bg, #ffffff);
   padding: 12px;
   border-radius: 12px;
   justify-content: space-between;
@@ -26,13 +26,13 @@
   background: transparent;
   font-size: 16px;
   line-height: 24px;
-  color: #253017;
-  caret-color: rgba(80, 136, 38, 1);
+  color: var(--text-primary, #253017);
+  caret-color: var(--button-pressed, #508826);
   font-family: "Roboto-Regular", sans-serif;
 }
 
 .input::placeholder {
-  color: rgba(105, 115, 93, 1);
+  color: var(--text-caption, #69735d);
   font-size: 16px;
   line-height: 24px;
   font-family: "Roboto-Regular", sans-serif;
