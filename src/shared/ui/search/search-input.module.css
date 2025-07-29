@@ -28,10 +28,14 @@
   line-height: 24px;
   color: #253017;
   caret-color: rgba(80, 136, 38, 1);
+  font-family: "Roboto-Regular", sans-serif;
 }
 
 .input::placeholder {
-  color: #69735d;
+  color: rgba(105, 115, 93, 1);
+  font-size: 16px;
+  line-height: 24px;
+  font-family: "Roboto-Regular", sans-serif;
 }
 
 .input:focus::placeholder {
