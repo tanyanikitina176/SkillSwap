@@ -12,15 +12,22 @@ const loadIcon = (name: string): string => {
 }
 
 export const CATEGORIES: Array<Category & { subcategories: Subcategory[] }> =
-	skillsData.categories.map(category => ({
-		...category,
-		id: String(category.id),
-		icon: loadIcon(category.icon),
-		subcategories: subcategoriesData.subcategories
-			.filter(sub => sub.categoryId === category.id)
-			.map(sub => ({
-				...sub,
-				id: String(sub.id),
-				categoryId: String(sub.categoryId),
-			})),
-	}))
+	skillsData.categories.map(category => {
+		const categoryObj: Category = {
+			id: String(category.id),
+			name: category.name,
+			color: category.color,
+			icon: loadIcon(category.icon),
+		}
+
+		return {
+			...categoryObj,
+			subcategories: subcategoriesData.subcategories
+				.filter(sub => sub.categoryId === String(category.id))
+				.map(sub => ({
+					id: String(sub.id),
+					name: sub.name,
+					category: categoryObj,
+				})),
+		}
+	})

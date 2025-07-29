@@ -1,14 +1,21 @@
+import type { Subcategory } from '../Category/CategoryTypes'
+
 export type User = {
 	id: string
 	name: string
 	age: number
 	gender: UserGender
-	cityId: string
-	wantToLearnSkills: string[]
-	teachingSkills: string[]
+	city: City
+	wantToLearnSkills: Subcategory[]
+	teachingSkills: Subcategory[]
 	photo: string
 	description: string
-	likes: string[]
+	likes: User[]
 }
 
 export type UserGender = 'male' | 'female'
+
+export type City = {
+	id: string
+	name: string
+}
