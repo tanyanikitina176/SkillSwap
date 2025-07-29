@@ -46,8 +46,13 @@ export const FormInputUI: FC<InputProps> = ({
   return (
     <div className={style.wrapper}>
       <div className={style.inputContainer}>
-        {label && <label className={style.label}>{label}</label>}
+        {label && (
+          <label htmlFor={name} className={style.label}>
+            {label}
+          </label>
+        )}
         <input
+          id={name}
           className={`${style.input} ${error ? style.error : ""}`}
           type={inputType}
           placeholder={placeholder}
