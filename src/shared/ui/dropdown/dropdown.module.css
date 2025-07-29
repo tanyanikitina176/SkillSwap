@@ -38,7 +38,7 @@
 }
 
 .searchInput {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto-Regular", sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: inherit;
@@ -86,7 +86,7 @@
 }
 
 .selectItem {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto-Regular", sans-serif;
   padding: 4px 20px;
   cursor: pointer;
   display: flex;
