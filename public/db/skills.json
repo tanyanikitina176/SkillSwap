@@ -1,44 +1,40 @@
 {
 	"categories": [
 		{
-			"id": "1",
+			"id": 1,
 			"name": "Бизнес и карьера",
-			"color": "#2563eb"
+			"color": "var(--tag-business)",
+			"icon": "briefcase"
 		},
 		{
-			"id": "2",
+			"id": 2,
 			"name": "Творчество и искусство",
-			"color": "#dc2626"
+			"color": "var(--tag-creative)",
+			"icon": "palette"
 		},
 		{
-			"id": "3",
+			"id": 3,
 			"name": "Иностранные языки",
-			"color": "#16a34a"
+			"color": "var(--tag-languages)",
+			"icon": "global"
 		},
 		{
-			"id": "4",
+			"id": 4,
 			"name": "Образование и развитие",
-			"color": "#ca8a04"
+			"color": "var(--tag-education)",
+			"icon": "book"
 		},
 		{
-			"id": "5",
-			"name": "Здоровье и лайфстайл",
-			"color": "#059669"
-		},
-		{
-			"id": "6",
+			"id": 5,
 			"name": "Дом и уют",
-			"color": "#d97706"
+			"color": "var(--tag-home)",
+			"icon": "home"
 		},
 		{
-			"id": "7",
-			"name": "Технологии и IT",
-			"color": "#7c3aed"
-		},
-		{
-			"id": "8",
-			"name": "Спорт и фитнес",
-			"color": "#dc2626"
+			"id": 6,
+			"name": "Здоровье и лайфстайл",
+			"color": "var(--tag-health)",
+			"icon": "lifestyle"
 		}
 	]
 }

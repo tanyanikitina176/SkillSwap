@@ -1,14 +1,26 @@
-import { CATEGORIES } from '../constants/constants.ts'
+import skillsData from '../../../../public/db/skills.json'
+import subcategoriesData from '../../../../public/db/skills_subcategories.json'
 
-// Ищем категорию по id
-export const getCategoryById = (id: string) =>
-	CATEGORIES.find(category => category.id === id)
+import type {
+	Category,
+	Subcategory,
+} from '../../../entities/Category/CategoryTypes'
 
-// Ищем субкатегорию по id
-export const getSubcategoryById = (
-	categoryId: string,
-	subcategoryId: string
-) => {
-	const category = getCategoryById(categoryId)
-	return category?.subcategories.find(sub => sub.id === subcategoryId)
+// Динамический импорт иконок
+const loadIcon = (name: string): string => {
+	return new URL(`/src/assets/icons/${name}.svg`, import.meta.url).href
 }
+
+export const CATEGORIES: Array<Category & { subcategories: Subcategory[] }> =
+	skillsData.categories.map(category => ({
+		...category,
+		id: String(category.id),
+		icon: loadIcon(category.icon),
+		subcategories: subcategoriesData.subcategories
+			.filter(sub => sub.categoryId === category.id)
+			.map(sub => ({
+				...sub,
+				id: String(sub.id),
+				categoryId: String(sub.categoryId),
+			})),
+	}))
