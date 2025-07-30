@@ -4,7 +4,6 @@ import { Footer } from '@widgets/Footer/Footer'
 import './App.css'
 import { CategoryDisplay } from '@widgets/SkillsPanel/SkillsPanel'
 import { UserCard } from '@widgets/UserCard/user-card'
-// import type { User } from '../entities/User/types'
 import { demoUser as user } from '@entities/User/userHelper'
 
 function App() {
@@ -29,6 +28,7 @@ function App() {
       />
     </>
   );
+
 }
 
 export default App;
