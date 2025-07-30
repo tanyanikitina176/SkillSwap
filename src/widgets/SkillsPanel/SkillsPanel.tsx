@@ -1,5 +1,5 @@
-import { CATEGORIES } from '../../shared/lib/helpers/categoryHelpers'
-import '../../shared/lib/constants/variables.css'
+import { CATEGORIES } from '@shared/lib/helpers/categoryHelpers'
+import '@shared/lib/constants/variables.css'
 import styles from './SkillsPanel.module.css'
 
 export const CategoryDisplay = () => {
