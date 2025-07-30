@@ -21,7 +21,7 @@
 
 .message {
   color: var(--text-primary, #253017);
-  font-family: "Jost", sans-serif;
+  font-family: var(--font-jost, sans-serif);
   font-weight: 500;
   font-size: 20px;
   font-style: normal;
@@ -65,7 +65,7 @@
     opacity 0.3s ease-out,
     top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   color: var(--text-primary, #253017);
-  font-family: Jost, sans-serif;
+  font-family: var(--font-jost, sans-serif);
   font-size: 20px;
   font-style: normal;
   font-weight: 500;

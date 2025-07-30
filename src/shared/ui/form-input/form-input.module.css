@@ -13,7 +13,7 @@
 
 .label {
   font-size: 16px;
-  font-family: "Roboto-Regular", sans-serif;
+  font-family: var(--font-roboto-regular, sans-serif);
   line-height: 24px;
 }
 
@@ -24,14 +24,14 @@
   border-radius: 12px;
   position: relative;
   font-size: 16px;
-  font-family: "Roboto-Regular", sans-serif;
+  font-family: var(--font-roboto-regular, sans-serif);
   line-height: 24px;
 }
 
 .input::placeholder {
   color: rgba(105, 115, 93, 1);
   font-size: 16px;
-  font-family: "Roboto-Regular", sans-serif;
+  font-family: var(--font-roboto-regular, sans-serif);
   line-height: 24px;
 }
 
@@ -62,13 +62,14 @@
   width: 24px;
   height: 24px;
   display: block;
+  margin: auto 0;
 }
 
 .helperText.errorText {
   color: rgba(191, 57, 32, 1);
   font-size: 12px;
   line-height: 16px;
-  font-family: "Roboto-Regular", sans-serif;
+  font-family: var(--font-roboto-regular, sans-serif);
 }
 
 .error {
@@ -79,5 +80,5 @@
   color: rgba(37, 48, 23, 1);
   font-size: 12px;
   line-height: 16px;
-  font-family: "Roboto-Regular", sans-serif;
+  font-family: var(--font-roboto-regular, sans-serif);
 }

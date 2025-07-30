@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import styles from './user-card.module.css'
-import { Tag } from '../../shared/ui/tag/tag'
-import { Button } from '../../shared/ui/button/button'
+import { Tag } from '@shared/ui/tag/tag'
+import { Button } from '@shared/ui/button/button'
 import type { UserCardProps } from './type'
 
 export const UserCard: FC<UserCardProps> = ({

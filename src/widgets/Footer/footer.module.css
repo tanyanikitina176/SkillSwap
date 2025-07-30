@@ -5,7 +5,7 @@
   grid-template-columns: 350px 1fr;
   grid-template-rows: auto auto auto;
   margin: 0 auto;
-  font-family: "Roboto-Regular", sans-serif;
+  font-family: var(--font-roboto-regular, sans-serif);
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;

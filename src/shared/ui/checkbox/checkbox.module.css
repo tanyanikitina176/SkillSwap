@@ -1,5 +1,5 @@
 .checkbox {
-  font-family: "Roboto-Regular", sans-serif;
+  font-family: var(--font-roboto-regular, sans-serif);
   position: relative;
   display: inline-flex;
   align-items: center;

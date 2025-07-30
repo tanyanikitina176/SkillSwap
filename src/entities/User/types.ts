@@ -1,4 +1,4 @@
-import type { Subcategory } from '../Category/CategoryTypes'
+import type { Subcategory } from '@entities/Category/CategoryTypes'
 
 export type User = {
 	id: string

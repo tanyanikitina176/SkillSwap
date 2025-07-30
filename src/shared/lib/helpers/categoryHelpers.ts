@@ -2,7 +2,7 @@ import type {
   Category,
   Subcategory,
   CategoryWithSubcategories
-} from '../../../entities/Category/CategoryTypes';
+} from '@entities/Category/CategoryTypes';
 
 interface RawCategory {
   id: number;
@@ -10,6 +10,7 @@ interface RawCategory {
   color: string;
   icon: string;
 }
+
 
 interface RawSubcategory {
   id: number;
