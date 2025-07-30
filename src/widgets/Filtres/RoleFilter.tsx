@@ -1,5 +1,5 @@
 import React from "react";
-import { RadioGroupUI } from "../../shared/ui/radiogroup/radiogroup";
+import { RadioGroupUI } from "@shared/ui/radiogroup/radiogroup";
 import styles from "./Filtres.module.css";
 
 interface RoleFilterProps {

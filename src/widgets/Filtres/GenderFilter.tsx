@@ -1,6 +1,6 @@
 import React from "react";
-import { RadioGroupUI } from "../../shared/ui/radiogroup/radiogroup";
-import { genderOptions } from "../../shared/ui/dropdown/dropdownConstants";
+import { RadioGroupUI } from "@shared/ui/radiogroup/radiogroup";
+import { genderOptions } from "@shared/ui/dropdown/dropdownConstants";
 import styles from "./Filtres.module.css";
 
 interface GenderFilterProps {

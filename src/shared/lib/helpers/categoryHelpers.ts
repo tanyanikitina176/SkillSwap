@@ -1,10 +1,10 @@
-import skillsData from '../../../../public/db/skills.json'
-import subcategoriesData from '../../../../public/db/skills_subcategories.json'
+import skillsData from '@public/db/skills.json'
+import subcategoriesData from '@public/db/skills_subcategories.json'
 
 import type {
 	Category,
 	Subcategory,
-} from '../../../entities/Category/CategoryTypes'
+} from '@entities/Category/CategoryTypes'
 
 // Динамический импорт иконок
 const loadIcon = (name: string): string => {

@@ -4,7 +4,7 @@ import { GeoFilter } from './GeoFilter'
 import { SkillsFilter } from './SkillsFilter'
 import { RoleFilter } from './RoleFilter'
 import styles from './Filtres.module.css'
-import closeIcon from '../../assets/icons/cross.svg'
+import closeIcon from '@assets/icons/cross.svg'
 
 export const Filtres = () => {
 	const [role, setRole] = useState('Всё')

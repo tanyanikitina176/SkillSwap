@@ -1,11 +1,11 @@
 import styles from "./Header.module.css";
-import logo from "../../assets/images/logo.svg";
-import topic from "../../assets/icons/moon.svg";
-import chevronDown from "../../assets/icons/chevron-down.svg";
-import chevronUp from "../../assets/icons/chevron-up.svg";
-import { SearchInputUI } from "../../shared/ui/search";
-import { Button } from "../../shared/ui/button/button";
-import { CategoryDisplay } from "../SkillsPanel/SkillsPanel";
+import logo from "@assets/images/logo.svg";
+import topic from "@assets/icons/moon.svg";
+import chevronDown from "@assets/icons/chevron-down.svg";
+import chevronUp from "@assets/icons/chevron-up.svg";
+import { SearchInputUI } from "@shared/ui/search";
+import { Button } from "@shared/ui/button/button";
+import { CategoryDisplay } from "@widgets/SkillsPanel/SkillsPanel";
 import { useRef, useState } from "react";
 import clsx from "clsx";
 
