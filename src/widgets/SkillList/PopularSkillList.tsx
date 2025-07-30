@@ -31,7 +31,7 @@ export const PopularSkillList: FC<IPropsPopularSkillList> = ({
             <h1 className={styles.mainSection__title}>Популярное</h1>
             {users.length > 3 && (
               <Button
-                type={"primary"}
+                type={"tertiary"}
                 htmlType={"button"}
                 extraClass={styles.showAllButton}
                 onClick={() => setShowAll((prev) => !prev)}
