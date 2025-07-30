@@ -1,4 +1,10 @@
 :root {
+  /* ======= Шрифты ======= */
+
+  --font-jost: "Jost";
+  --font-roboto-regular: "Roboto-Regular";
+  --font-roboto-medium: "Roboto-Medium"; 
+
   /* ======= Основные цвета текста ======= */
 
   --text-primary: #253017; /* Основной текст */

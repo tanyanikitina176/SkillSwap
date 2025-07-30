@@ -40,7 +40,7 @@
 .categoryTitle {
   margin: 0;
   color: var(--text-primary, #253017);
-  font-family: "Jost", sans-serif;
+  font-family: var(--font-jost, sans-serif);
   font-weight: 500;
   font-size: 24px;
   font-style: normal;
@@ -62,7 +62,7 @@
 .subcategoryItem {
   padding: 6px 0 6px 0;
   color: var(--text-primary, #253017);
-  font-family: "Roboto-Regular", sans-serif;
+  font-family: var(--font-roboto-regular, sans-serif);
   font-weight: 400;
   font-size: 16px;
   font-style: normal;
