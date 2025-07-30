@@ -13,7 +13,6 @@ export const DataPicker: React.FC = () => (
   <ConfigProvider locale={ruRU}>
     <Space direction="vertical">
       <label className="label" id="dataPicker">
-        Дата рождения
         <DatePicker
           onChange={onChange}
           placeholder="дд.мм.гггг"
