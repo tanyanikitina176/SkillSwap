@@ -1,0 +1,19 @@
+.new_list {
+  background-color: aqua;
+  margin-left: 24px;
+  margin-right: 36px;
+}
+
+.new_list__header {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-roboto-regular, sans-serif);
+  margin-bottom: 32px;
+}
+
+.header__title {
+  letter-spacing: -0.01em;
+  line-height: 125%;
+  font-size: 32px;
+  font-family:  var(--font-jost, sans-serif);
+}
