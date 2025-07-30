@@ -6,6 +6,7 @@ import { CategoryDisplay } from '../widgets/SkillsPanel/SkillsPanel'
 import { UserCard } from '../widgets/UserCard/user-card'
 // import type { User } from '../entities/User/types'
 import { demoUser as user } from '../entities/User/userHelper'
+import { DataPicker } from '../shared/ui/data-picker/data-picker'
 function App() {
 	const onLikeClick = (userId: string) => {
 		console.log(`Like clicked for user with ID: ${userId}`)
@@ -19,6 +20,7 @@ function App() {
 				<Filtres />
 				<Footer />
 				<CategoryDisplay />
+				<DataPicker />
 			</BrowserRouter>
 			<p>Начинаем работу</p>
 			<UserCard
