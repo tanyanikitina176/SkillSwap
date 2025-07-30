@@ -62,6 +62,7 @@
   width: 24px;
   height: 24px;
   display: block;
+  margin: auto 0;
 }
 
 .helperText.errorText {
