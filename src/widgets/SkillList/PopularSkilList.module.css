@@ -1,0 +1,19 @@
+.mainSection {
+    margin-top: 32px;
+}
+
+.mainSection__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mainSection__title {
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
