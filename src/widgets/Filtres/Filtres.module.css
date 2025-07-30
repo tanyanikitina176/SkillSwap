@@ -1,5 +1,5 @@
 .container {
-  font-family: "Jost", sans-serif;
+  font-family: var(--font-jost, sans-serif);
   font-weight: 500;
   padding: 20px;
   background-color: var(--input-bg, #ffffff);
@@ -64,7 +64,7 @@
 }
 
 .filterTitle {
-  font-family: "Jost", sans-serif;
+  font-family: var(--font-jost, sans-serif);
   margin-bottom: 12px;
   font-size: 20px;
   color: var(--text-primary, #253017);
