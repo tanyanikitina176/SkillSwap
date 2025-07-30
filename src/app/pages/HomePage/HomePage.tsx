@@ -4,82 +4,20 @@ import { Filtres } from "../../../widgets/Filtres/Filtres";
 import { Footer } from "../../../widgets/Footer/Footer";
 import { UserCard } from "../../../widgets/UserCard/user-card";
 import styles from "./HomePage.module.css";
-import type { User, City } from "../../../entities/User/types";
-import type { Subcategory, Category } from "../../../entities/Category/CategoryTypes";
-
-interface FetchedUser extends Omit<User, 'city'> {
-  cityId: string;
-}
+import type { User} from "../../../entities/User/types";
+import { fetchUsersData } from "../../../api/User/User-api";
 
 export const HomePage = () => {
-  const [activeFilter, setActiveFilter] = useState<
-    "all" | "wantToLearn" | "canTeach"
-  >("all");
   const [users, setUsers] = useState<User[]>([]);
-  const [cities, setCities] = useState<City[]>([]);
-  const [subcategories, setSubcategories] = useState<Subcategory[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [citiesRes, subcategoriesRes, categoriesRes, usersRes] = 
-          await Promise.all([
-            fetch('/db/cities.json').then(res => res.json()),
-            fetch('/db/skills_subcategories.json').then(res => res.json()),
-            fetch('/db/skills.json').then(res => res.json()),
-            fetch('/db/users.json').then(res => res.json())
-          ]);
-
-        const usersWithFormattedData = (usersRes.users || []).map((user: FetchedUser) => {
-          const cityData = citiesRes.cities.find((c: City) => c.id === user.cityId);
-          const city = cityData || { id: "unknown", name: "Неизвестный город" };
-
-          const formattedTeachingSkills = user.teachingSkills
-            .map((skill: string | Subcategory) => {
-              const skillId = typeof skill === 'string' ? skill : skill.id;
-              const subcategory = subcategoriesRes.subcategories.find((s: Subcategory) => s.id === skillId);
-              if (!subcategory) return null;
-              
-              const category = categoriesRes.categories.find((c: Category) => c.id === subcategory.categoryId);
-              return {
-                ...subcategory,
-                category: category || { id: "unknown", name: "Неизвестная категория", color: "#E8ECF7", icon: "" }
-              };
-            })
-            .filter(Boolean) as Subcategory[];
-
-          const formattedWantToLearnSkills = user.wantToLearnSkills
-            .map((skill: string | Subcategory) => {
-              const skillId = typeof skill === 'string' ? skill : skill.id;
-              const subcategory = subcategoriesRes.subcategories.find((s: Subcategory) => s.id === skillId);
-              if (!subcategory) return null;
-              
-              const category = categoriesRes.categories.find((c: Category) => c.id === subcategory.categoryId);
-              return {
-                ...subcategory,
-                category: category || { id: "unknown", name: "Неизвестная категория", color: "#E8ECF7", icon: "" }
-              };
-            })
-            .filter(Boolean) as Subcategory[];
-
-          return {
-            ...user,
-            id: String(user.id),
-            city,
-            teachingSkills: formattedTeachingSkills,
-            wantToLearnSkills: formattedWantToLearnSkills,
-            exchangesCount: Math.floor(Math.random() * 10) + 1
-          } as User;
-        });
-
-        setCities(citiesRes.cities || []);
-        setSubcategories(subcategoriesRes.subcategories || []);
-        setCategories(categoriesRes.categories || []);
-        setUsers(usersWithFormattedData);
+        const usersData = await fetchUsersData();
+        setUsers(usersData);
       } catch (error) {
-        console.error("Error loading data:", error);
+        console.error("Error in HomePage:", error);
       } finally {
         setLoading(false);
       }
@@ -103,8 +41,6 @@ export const HomePage = () => {
       <main className={styles.main}>
         <div className={styles.layout}>
           <Filtres 
-            activeFilter={activeFilter} 
-            onFilterChange={setActiveFilter} 
           />
         
           <div className={styles.content}>
