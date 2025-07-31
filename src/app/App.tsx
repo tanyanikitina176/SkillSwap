@@ -4,7 +4,19 @@ import HomePage from "../pages/HomePage/HomePage";
 import { NotFound404 } from "./../pages/page-404/page-404";
 import { ConnetcError500 } from "./../pages/page-500/page-500";
 
+
 function App() {
+  const [users, setUsers] = useState<User[]>([]);
+  useEffect(() => {
+    fetchUsersData()
+      .then((users) => {
+        console.log(users);
+        setUsers(users);
+      })
+      .catch((error) => {
+        console.error("Ошибка при загрузке данных пользователей:", error);
+      });
+  }, []);
   return (
     <>
       <BrowserRouter>
