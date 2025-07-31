@@ -12,6 +12,8 @@ interface Props
   onClick?: (() => void) | ((e: SyntheticEvent) => void);
   extraClass?: string;
   htmlType?: "button" | "submit" | "reset";
+  startIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
 }
 
 export const Button: React.FC<Props> = ({
@@ -20,6 +22,8 @@ export const Button: React.FC<Props> = ({
   onClick,
   htmlType,
   extraClass = "",
+  startIcon,
+  endIcon,
   ...rest
 }) => {
   const className = clsx(
@@ -30,7 +34,9 @@ export const Button: React.FC<Props> = ({
 
   return (
     <button type={htmlType} onClick={onClick} className={className} {...rest}>
+      {startIcon && <span className={styles.icon}>{startIcon}</span>}
       {children}
+      {endIcon && <span className={styles.icon}>{endIcon}</span>}
     </button>
   );
 };
