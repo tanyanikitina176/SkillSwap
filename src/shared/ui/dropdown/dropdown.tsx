@@ -4,9 +4,9 @@ import clsx from "clsx";
 import styles from "./dropdown.module.css";
 import { Checkbox } from "../checkbox/checkbox";
 
-import crossIcon from "@icons/cross.svg";
-import chevronDownIcon from "@icons/chevron-down.svg";
-import chevronUpIcon from "@icons/chevron-up.svg";
+import crossIcon from "@assets/icons/cross.svg";
+import chevronDownIcon from "@assets/icons/chevron-down.svg";
+import chevronUpIcon from "@assets/icons/chevron-up.svg";
 
 export const Dropdown: React.FC<DropdownProps> = ({
   type = "select",
