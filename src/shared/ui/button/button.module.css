@@ -58,4 +58,18 @@
 .button_type_tertiary {
   color: var(--text-primary, #253017);
   background: var(--card-bg, #ffffff);
+  display: flex;
+}
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon:not(:only-child):not(:last-child) {
+  margin-right: 8px;
+}
+
+.icon:last-child {
+  margin-right: 8px;
 }

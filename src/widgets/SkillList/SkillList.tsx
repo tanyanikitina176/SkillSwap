@@ -3,6 +3,8 @@ import { UserCard } from "@widgets/UserCard/user-card";
 import { Button } from "@shared/ui/button/button";
 import styles from "./skill-list.module.css";
 import { useCallback, useEffect, useState } from "react";
+import chevronRightIcon from "@assets/icons/chevron-right.svg";
+import chevronDownIcon from "@assets/icons/chevron-down.svg";
 
 interface ISkillListProps {
   users: User[];
@@ -38,7 +40,7 @@ const SkillList = ({
 
   return (
     <div className={styles.skill_list}>
-      <div className={styles.new_list__header}>
+      <div className={styles.list__header}>
         <h3 className={styles.header__title}>{title}</h3>
         {isShortList &&
           (isExpanded ? (
@@ -46,6 +48,7 @@ const SkillList = ({
               type="tertiary"
               htmlType="button"
               onClick={onButtonLessClick}
+              endIcon={<img src={chevronDownIcon} alt="button less" />}
             >
               Свернуть
             </Button>
@@ -54,6 +57,7 @@ const SkillList = ({
               type="tertiary"
               htmlType="button"
               onClick={onButtonMoreClick}
+              endIcon={<img src={chevronRightIcon} alt="button more" />}
             >
               Смотреть все
             </Button>
