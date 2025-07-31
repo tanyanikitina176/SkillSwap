@@ -1,6 +1,8 @@
 .container {
   border-radius: 12px;
-  height: 48px;
+  height: 46px;
+  width: 208px;
+  border: 1px solid var(--text-caption, #69735d);
 }
 
 .container .ant-picker-input {
