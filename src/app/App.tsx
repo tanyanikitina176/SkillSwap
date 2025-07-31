@@ -1,9 +1,9 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import SkillList from "@widgets/SkillList/SkillList";
-import { useEffect, useState } from "react";
-import { fetchUsersData } from "../api/User/User-api";
-import type { User } from "@entities/User/types";
+import HomePage from "../pages/HomePage/HomePage";
+import { NotFound404 } from "./../pages/page-404/page-404";
+import { ConnetcError500 } from "./../pages/page-500/page-500";
+
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
@@ -20,21 +20,11 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <p>Начинаем работу</p>
-        <SkillList
-          users={users}
-          onButtonClick={() => {}}
-          onLikeClick={() => {}}
-          title="Популярное"
-          isShortList={true}
-        />
-        <SkillList
-          users={users}
-          onButtonClick={() => {}}
-          onLikeClick={() => {}}
-          title="Новое"
-          isShortList={true}
-        />
+        <Routes>
+			<Route path='/' element={<HomePage />} />
+			<Route path='*' element={<NotFound404 />} />
+			<Route path='/500' element={<ConnetcError500 />} />
+        </Routes>
       </BrowserRouter>
     </>
   );
