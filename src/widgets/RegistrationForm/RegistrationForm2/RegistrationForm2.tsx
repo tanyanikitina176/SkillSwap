@@ -10,6 +10,7 @@ import styles from './RegistrationForm2.module.css';
 import { genderOptions, cityOptions } from '@shared/ui/dropdown/dropdownConstants';
 import { categories } from '../../../../public/db/skills.json';
 import { subcategories } from '../../../../public/db/skills_subcategories.json';
+import { validateFormInfo, type FormErrors } from '../utils/validation';
 
 interface RegistrationStep2Props {
   onNextStep: () => void;
@@ -32,7 +33,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
   formData,
   setFormData
 }) => {
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<FormErrors>({
     name: '',
     birthDate: '',
     gender: '',
@@ -111,43 +112,15 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
   };
 
   const validateField = (name: string, value: any) => {
-    let message = '';
-    
-    if (!value || (Array.isArray(value) && value.length === 0)) {
-      message = 'Это поле обязательно';
-    } else if (name === 'birthDate') {
-      const date = new Date(value);
-      const now = new Date();
-      if (date > now) {
-        message = 'Дата рождения не может быть в будущем';
-      }
-    }
-    
-    setErrors(prev => ({ ...prev, [name]: message }));
+    const tempFormData = { ...formData, [name]: value };
+    const { errors: newErrors } = validateFormInfo(tempFormData);
+    setErrors(prev => ({ ...prev, [name]: newErrors[name as keyof FormErrors] }));
   };
 
   const validateForm = () => {
-    const now = new Date();
-    const birthDate = formData.birthDate ? new Date(formData.birthDate) : null;
-    
-    const isBirthDateValid = birthDate && birthDate <= now;
-
-    const newErrors = {
-      name: !formData.name ? 'Это поле обязательно' : '',
-      birthDate: !formData.birthDate 
-        ? 'Это поле обязательно' 
-        : !isBirthDateValid
-          ? 'Дата рождения не может быть в будущем' 
-          : '',
-      gender: !formData.gender ? 'Это поле обязательно' : '',
-      city: !formData.city ? 'Это поле обязательно' : '',
-      categories: formData.categories.length === 0 ? 'Выберите хотя бы одну категорию' : '',
-      subcategories: formData.subcategories.length === 0 ? 'Выберите хотя бы одну подкатегорию' : ''
-    };
-
+    const { isValid, errors: newErrors } = validateFormInfo(formData);
     setErrors(newErrors);
-
-    return !Object.values(newErrors).some(error => error) && isBirthDateValid;
+    return isValid;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
