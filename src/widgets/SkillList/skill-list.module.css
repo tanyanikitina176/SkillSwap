@@ -1,6 +1,4 @@
 .skill_list {
-  margin-left: 24px;
-  margin-right: 36px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   max-width: 1020px;
