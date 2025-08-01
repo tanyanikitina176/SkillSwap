@@ -176,6 +176,12 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
 								placeholder='Выберите категорию навыка'
 								onChange={value => handleCategoryChange(value)}
 							/>
+							{errors.skillCategory && (
+								<span className={styles.errorText}>
+									{validateSkillCategory(values.skillCategory).message ||
+										'ERROR'}
+								</span>
+							)}
 						</div>
 
 						<div className={styles.inputContainer}>
@@ -193,6 +199,12 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
 								placeholder='Выберите подкатегорию навыка'
 								onChange={value => handleSubCategoryChange(value)}
 							/>
+							{errors.skillSubCategory && (
+								<span className={styles.errorText}>
+									{validateSkillSubCategory(values.skillSubCategory).message ||
+										'ERROR'}
+								</span>
+							)}
 						</div>
 
 						<FormTextArea
