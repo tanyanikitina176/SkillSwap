@@ -9,11 +9,10 @@ interface ISkillListContainer {
 
 export const SkillListContainer = ({ users }: ISkillListContainer) => {
   const popularUsers = sortBy(users, ["likes.length"]).reverse();
-  console.log(popularUsers);
   return (
     <div className={styles.skill_list__container}>
       <SkillList
-        users={users}
+        users={popularUsers}
         onButtonClick={() => {}}
         onLikeClick={() => {}}
         title="Популярное"
