@@ -13,7 +13,6 @@ export const AppHeaderUI = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -23,7 +22,6 @@ export const AppHeaderUI = () => {
 
         <div className={styles.linksWrapper}>
           <span className={styles.text}>О проекте</span>
-
 
           <div className={styles.dropdownWrapper} ref={dropdownRef}>
             <button
@@ -45,7 +43,6 @@ export const AppHeaderUI = () => {
               <CategoryDisplay />
             </div>
           </div>
-
         </div>
 
         <SearchInputUI />

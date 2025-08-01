@@ -1,16 +1,19 @@
-import React, { useState, useMemo } from 'react';
-import { Button } from '@shared/ui/button/button';
-import { FormInputUI } from '@shared/ui/form-input/form-input';
-import { DataPicker } from '@shared/ui/data-picker/data-picker';
-import { Dropdown } from '@shared/ui/dropdown/dropdown';
-import { StepIndicator } from '@shared/ui/stepIndicator/stepIndicator';
-import userIcon from '@assets/images/user info.svg';
-import iconAdd from '@assets/icons/Icon+Add.svg';
-import styles from './RegistrationForm2.module.css';
-import { genderOptions, cityOptions } from '@shared/ui/dropdown/dropdownConstants';
-import { categories } from '../../../../public/db/skills.json';
-import { subcategories } from '../../../../public/db/skills_subcategories.json';
-import { validateFormInfo, type FormErrors } from '../utils/validation';
+import React, { useState, useMemo } from "react";
+import { Button } from "@shared/ui/button/button";
+import { FormInputUI } from "@shared/ui/form-input/form-input";
+import { DataPicker } from "@shared/ui/data-picker/data-picker";
+import { Dropdown } from "@shared/ui/dropdown/dropdown";
+import { StepIndicator } from "@shared/ui/stepIndicator/stepIndicator";
+import userIcon from "@assets/images/user info.svg";
+import iconAdd from "@assets/icons/Icon+Add.svg";
+import styles from "./RegistrationForm2.module.css";
+import {
+  genderOptions,
+  cityOptions,
+} from "@shared/ui/dropdown/dropdownConstants";
+import { categories } from "../../../../public/db/skills.json";
+import { subcategories } from "../../../../public/db/skills_subcategories.json";
+import { validateFormInfo, type FormErrors } from "../utils/validation";
 
 interface RegistrationStep2Props {
   onNextStep: () => void;
@@ -31,28 +34,32 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
   onNextStep,
   onPrevStep,
   formData,
-  setFormData
+  setFormData,
 }) => {
   const [errors, setErrors] = useState<FormErrors>({
-    name: '',
-    birthDate: '',
-    gender: '',
-    city: '',
-    categories: '',
-    subcategories: ''
+    name: "",
+    birthDate: "",
+    gender: "",
+    city: "",
+    categories: "",
+    subcategories: "",
   });
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
+  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>(
+    [],
+  );
 
   const subcategoriesOptions = useMemo(() => {
     if (selectedCategories.length === 0) return [];
-    
+
     return subcategories
-      .filter(subcategory => selectedCategories.includes(subcategory.categoryId))
-      .map(subcategory => ({
+      .filter((subcategory) =>
+        selectedCategories.includes(subcategory.categoryId),
+      )
+      .map((subcategory) => ({
         value: subcategory.id,
-        label: subcategory.name
+        label: subcategory.name,
       }));
   }, [selectedCategories]);
 
@@ -64,25 +71,25 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
 
   const handleDateChange = (dateString: string) => {
     setFormData({ ...formData, birthDate: dateString });
-    
+
     const now = new Date();
     const date = new Date(dateString);
-    setErrors(prev => ({
+    setErrors((prev) => ({
       ...prev,
-      birthDate: date > now ? 'Дата рождения не может быть в будущем' : ''
+      birthDate: date > now ? "Дата рождения не может быть в будущем" : "",
     }));
   };
 
   const handleGenderChange = (value: string | string[]) => {
     const genderValue = Array.isArray(value) ? value[0] : value;
     setFormData({ ...formData, gender: genderValue });
-    validateField('gender', genderValue);
+    validateField("gender", genderValue);
   };
 
   const handleCityChange = (value: string | string[]) => {
     const cityValue = Array.isArray(value) ? value[0] : value;
     setFormData({ ...formData, city: cityValue });
-    validateField('city', cityValue);
+    validateField("city", cityValue);
   };
 
   const handleCategoriesChange = (value: string | string[]) => {
@@ -91,14 +98,14 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
     setFormData({ ...formData, categories: categoriesValue });
     setSelectedSubcategories([]);
     setFormData((prev: any) => ({ ...prev, subcategories: [] }));
-    validateField('categories', categoriesValue);
+    validateField("categories", categoriesValue);
   };
 
   const handleSubcategoriesChange = (value: string | string[]) => {
     const subcategoriesValue = Array.isArray(value) ? value : [value];
     setSelectedSubcategories(subcategoriesValue);
     setFormData({ ...formData, subcategories: subcategoriesValue });
-    validateField('subcategories', subcategoriesValue);
+    validateField("subcategories", subcategoriesValue);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,7 +113,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
       const file = e.target.files[0];
       setFormData({
         ...formData,
-        avatar: file
+        avatar: file,
       });
     }
   };
@@ -114,7 +121,10 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
   const validateField = (name: string, value: any) => {
     const tempFormData = { ...formData, [name]: value };
     const { errors: newErrors } = validateFormInfo(tempFormData);
-    setErrors(prev => ({ ...prev, [name]: newErrors[name as keyof FormErrors] }));
+    setErrors((prev) => ({
+      ...prev,
+      [name]: newErrors[name as keyof FormErrors],
+    }));
   };
 
   const validateForm = () => {
@@ -124,27 +134,27 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  
-  const now = new Date();
-  const birthDate = formData.birthDate ? new Date(formData.birthDate) : null;
-  
-  if (birthDate && birthDate > now) {
-    setErrors(prev => ({
-      ...prev,
-      birthDate: 'Дата рождения не может быть в будущем'
-    }));
-    return;
-  }
+    e.preventDefault();
 
-  if (validateForm()) {
-    onNextStep();
-  }
-};
+    const now = new Date();
+    const birthDate = formData.birthDate ? new Date(formData.birthDate) : null;
 
-  const categoryOptions = categories.map(category => ({
+    if (birthDate && birthDate > now) {
+      setErrors((prev) => ({
+        ...prev,
+        birthDate: "Дата рождения не может быть в будущем",
+      }));
+      return;
+    }
+
+    if (validateForm()) {
+      onNextStep();
+    }
+  };
+
+  const categoryOptions = categories.map((category) => ({
     value: category.id,
-    label: category.name
+    label: category.name,
   }));
 
   return (
@@ -152,14 +162,18 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
       <div className={styles.stepIndicatorContainer}>
         <StepIndicator currentStep={2} totalSteps={3} />
       </div>
-      
+
       <div className={styles.content}>
         <div className={styles.formContainer}>
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.avatarContainer}>
               <label htmlFor="avatar" className={styles.avatarLabel}>
                 <img
-                  src={formData.avatar ? URL.createObjectURL(formData.avatar) : iconAdd}
+                  src={
+                    formData.avatar
+                      ? URL.createObjectURL(formData.avatar)
+                      : iconAdd
+                  }
                   alt="Загрузить аватар"
                   className={styles.avatarImage}
                 />
@@ -169,7 +183,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
                 id="avatar"
                 onChange={handleImageChange}
                 accept="image/*"
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
               />
             </div>
 
@@ -187,8 +201,14 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
             <div className={styles.row}>
               <div className={styles.column}>
                 <label className={styles.label}>Дата рождения</label>
-                <DataPicker onChange={(dateString: string) => handleDateChange(dateString)} />
-                {errors.birthDate && <div className={styles.errorText}>{errors.birthDate}</div>}
+                <DataPicker
+                  onChange={(dateString: string) =>
+                    handleDateChange(dateString)
+                  }
+                />
+                {errors.birthDate && (
+                  <div className={styles.errorText}>{errors.birthDate}</div>
+                )}
               </div>
               <div className={styles.column}>
                 <label className={styles.label}>Пол</label>
@@ -199,7 +219,9 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
                   onChange={handleGenderChange}
                   placeholder="Не указан"
                 />
-                {errors.gender && <div className={styles.errorText}>{errors.gender}</div>}
+                {errors.gender && (
+                  <div className={styles.errorText}>{errors.gender}</div>
+                )}
               </div>
             </div>
 
@@ -212,11 +234,15 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
                 onChange={handleCityChange}
                 placeholder="Не указан"
               />
-              {errors.city && <div className={styles.errorText}>{errors.city}</div>}
+              {errors.city && (
+                <div className={styles.errorText}>{errors.city}</div>
+              )}
             </div>
 
             <div className={styles.inputGroup}>
-              <label className={styles.label}>Категория навыка, которому хотите научиться</label>
+              <label className={styles.label}>
+                Категория навыка, которому хотите научиться
+              </label>
               <Dropdown
                 type="multiselect"
                 options={categoryOptions}
@@ -224,21 +250,26 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
                 onChange={handleCategoriesChange}
                 placeholder="Выберите категорию"
               />
-              {errors.categories && <div className={styles.errorText}>{errors.categories}</div>}
+              {errors.categories && (
+                <div className={styles.errorText}>{errors.categories}</div>
+              )}
             </div>
 
-            
-              <div className={styles.inputGroup}>
-                <label className={styles.label}>Подкатегория навыка, которому хотите научиться</label>
-                <Dropdown
-                  type="multiselect"
-                  options={subcategoriesOptions}
-                  value={selectedSubcategories}
-                  onChange={handleSubcategoriesChange}
-                  placeholder="Выберите подкатегорию"
-                />
-                {errors.subcategories && <div className={styles.errorText}>{errors.subcategories}</div>}
-              </div>
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>
+                Подкатегория навыка, которому хотите научиться
+              </label>
+              <Dropdown
+                type="multiselect"
+                options={subcategoriesOptions}
+                value={selectedSubcategories}
+                onChange={handleSubcategoriesChange}
+                placeholder="Выберите подкатегорию"
+              />
+              {errors.subcategories && (
+                <div className={styles.errorText}>{errors.subcategories}</div>
+              )}
+            </div>
 
             <div className={styles.buttonsContainer}>
               <Button
@@ -268,7 +299,10 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
               <p>Расскажите немного о себе</p>
             </div>
             <div className={styles.description}>
-              <p>Это поможет другим людям лучше вас узнать, чтобы выбрать для обмена</p>
+              <p>
+                Это поможет другим людям лучше вас узнать, чтобы выбрать для
+                обмена
+              </p>
             </div>
           </div>
         </div>

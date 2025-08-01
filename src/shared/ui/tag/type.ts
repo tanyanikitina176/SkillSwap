@@ -1,4 +1,4 @@
 export type TagProps = {
-	label: string
-	backgroundColor: string
-}
+  label: string;
+  backgroundColor: string;
+};

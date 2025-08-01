@@ -4,7 +4,7 @@ import { Filtres } from "../../widgets/Filtres/Filtres";
 import { Footer } from "../../widgets/Footer/Footer";
 import { UserCard } from "../../widgets/UserCard/user-card";
 import styles from "./HomePage.module.css";
-import type { User} from "../../entities/User/types";
+import type { User } from "../../entities/User/types";
 import { fetchUsersData } from "../../api/User/User-api";
 
 export const HomePage = () => {
@@ -40,9 +40,8 @@ export const HomePage = () => {
 
       <main className={styles.main}>
         <div className={styles.layout}>
-          <Filtres 
-          />
-        
+          <Filtres />
+
           <div className={styles.content}>
             <section className={styles.section}>
               <h2 className={styles.sectionTitle}>Популярное</h2>

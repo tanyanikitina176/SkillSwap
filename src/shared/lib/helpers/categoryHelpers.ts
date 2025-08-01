@@ -1,8 +1,8 @@
 import type {
   Category,
   Subcategory,
-  CategoryWithSubcategories
-} from '@entities/Category/CategoryTypes';
+  CategoryWithSubcategories,
+} from "@entities/Category/CategoryTypes";
 
 interface RawCategory {
   id: number;
@@ -10,7 +10,6 @@ interface RawCategory {
   color: string;
   icon: string;
 }
-
 
 interface RawSubcategory {
   id: number;
@@ -24,8 +23,8 @@ export let isCategoriesLoaded = false;
 export const initializeCategories = async (): Promise<boolean> => {
   try {
     const [skillsRes, subcategoriesRes] = await Promise.all([
-      fetch('/db/skills.json'),
-      fetch('/db/skills_subcategories.json')
+      fetch("/db/skills.json"),
+      fetch("/db/skills_subcategories.json"),
     ]);
 
     const skillsData = await skillsRes.json();
@@ -36,25 +35,30 @@ export const initializeCategories = async (): Promise<boolean> => {
         id: String(category.id),
         name: category.name,
         color: category.color,
-        icon: new URL(`/src/assets/icons/${category.icon}.svg`, import.meta.url).href
+        icon: new URL(`/src/assets/icons/${category.icon}.svg`, import.meta.url)
+          .href,
       };
 
       return {
         ...categoryObj,
         subcategories: subcategoriesData.subcategories
-          .filter((sub: RawSubcategory) => String(sub.categoryId) === categoryObj.id)
-          .map((sub: RawSubcategory): Subcategory => ({
-            id: String(sub.id),
-            name: sub.name,
-            category: categoryObj
-          }))
+          .filter(
+            (sub: RawSubcategory) => String(sub.categoryId) === categoryObj.id,
+          )
+          .map(
+            (sub: RawSubcategory): Subcategory => ({
+              id: String(sub.id),
+              name: sub.name,
+              category: categoryObj,
+            }),
+          ),
       };
     });
 
     isCategoriesLoaded = true;
     return true;
   } catch (error) {
-    console.error('Categories init error:', error);
+    console.error("Categories init error:", error);
     isCategoriesLoaded = false;
     return false;
   }

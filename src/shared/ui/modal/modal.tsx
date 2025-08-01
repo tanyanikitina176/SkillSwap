@@ -30,7 +30,7 @@ export const Modal: FC<TModalUIProps> = memo(
       >
         {children}
       </ModalUI>,
-      modalRoot as HTMLDivElement
+      modalRoot as HTMLDivElement,
     );
-  }
+  },
 );
