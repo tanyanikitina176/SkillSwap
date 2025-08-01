@@ -1,5 +1,5 @@
 import { useState, type FC, type ReactNode } from 'react'
-import style from './form-input.module.css'
+import style from './text-area.module.css'
 import TextArea from 'antd/es/input/TextArea'
 
 interface InputProps {

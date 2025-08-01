@@ -97,7 +97,7 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
 			skillCategory: selectedCategory || null,
 		}))
 		setFormData({ ...values, skillCategory: selectedCategory || null })
-		const { message } = validateSkillCategory(selectedCategory)
+		const { message } = validateSkillCategory(selectedCategory || null)
 		setErrors(prev => ({ ...prev, skillCategory: message || '' }))
 	}
 
@@ -114,19 +114,14 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
 			skillSubCategory: selectedSubCategory || null,
 		}))
 		setFormData({ ...values, skillSubCategory: selectedSubCategory || null })
-		const { message } = validateSkillSubCategory(selectedSubCategory)
+
+		const { message } = validateSkillSubCategory(selectedSubCategory || null)
 		setErrors(prev => ({ ...prev, skillSubCategory: message || '' }))
 	}
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
-		const validation = validateFormStep3(
-			values.skillName,
-			values.skillCategory,
-			values.skillSubCategory,
-			values.description,
-			values.skillImage
-		)
+		const validation = validateFormStep3(values)
 		setErrors({
 			skillName: validation.errors.skillName || '',
 			skillCategory: validation.errors.skillCategory || '',
@@ -157,9 +152,6 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
 			</div>
 
 			<div className={styles.content}>
-				<div className={styles.imageContainer}>
-					<img src={schoolBoardIcon} alt='Изображение анкеты' />
-				</div>
 				<div className={styles.formContainer}>
 					<form onSubmit={handleSubmit} className={styles.form}>
 						<FormInputUI

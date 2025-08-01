@@ -5,13 +5,14 @@ import './App.css'
 import { CategoryDisplay } from '@widgets/SkillsPanel/SkillsPanel'
 import { UserCard } from '@widgets/UserCard/user-card'
 import { demoUser as user } from '@entities/User/userHelper'
-import { RegistrationStep3 } from '@widgets/RegistrationForm/RegistrationStep3/RegistrationStep3'
+
 import {
 	CATEGORIES,
 	initializeCategories,
 } from '@shared/lib/helpers/categoryHelpers'
 import type { CategoryWithSubcategories } from '@entities/Category/CategoryTypes'
 import { useState } from 'react'
+import { RegistrationStep3 } from '@widgets/RegistrationForm/RegistrationForm3/RegistrationForm3'
 
 function App() {
 	const [categories, setCategories] = useState<CategoryWithSubcategories[]>([])
