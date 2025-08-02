@@ -3,7 +3,9 @@ import { AppHeaderUI } from "../../widgets/Header/Header";
 import { Filtres } from "../../widgets/Filtres/Filtres";
 import { Footer } from "../../widgets/Footer/Footer";
 import { UserCard } from "../../widgets/UserCard/user-card";
+import { SkillListContainer } from "../../widgets/SkillList/SkillListContainer";
 import styles from "./HomePage.module.css";
+import skillListStyles from "../../widgets/SkillList/skill-list.module.css";
 import type { User } from "../../entities/User/types";
 import { fetchUsersData } from "../../api/User/User-api";
 
@@ -101,6 +103,14 @@ export const HomePage = () => {
     });
   }, [users, filters]);
 
+  // Проверяем, установлены ли дефолтные фильтры
+  const isDefaultFilters = useMemo(() => {
+    return filters.role === 'Всё' && 
+           filters.gender === 'Не имеет значения' && 
+           filters.cities.length === 0 && 
+           filters.skills.length === 0;
+  }, [filters]);
+
   if (loading) {
     return <div className={styles.loading}>Загрузка данных...</div>;
   }
@@ -119,18 +129,24 @@ export const HomePage = () => {
           />
         
           <div className={styles.content}>
-            <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>Популярное</h2>
-              <div className={styles.usersGrid}>
-                {filteredUsers.map(user => (
-                  <MemoizedUserCard
-                    key={user.id}
-                    user={user}
-                    onButtonClick={handleDetailsClick}
-                  />
-                ))}
-              </div>
-            </section>
+            {isDefaultFilters ? (
+              <SkillListContainer users={filteredUsers} />
+            ) : (
+              <section className={styles.section}>
+                <h2 className={skillListStyles.header__title} style={{ marginBottom: '36px' }}>
+                  Подходящие предложения: {filteredUsers.length}
+                </h2>
+                <div className={styles.usersGrid}>
+                  {filteredUsers.map(user => (
+                    <MemoizedUserCard
+                      key={user.id}
+                      user={user}
+                      onButtonClick={handleDetailsClick}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
         </div>
       </main>
