@@ -12,6 +12,7 @@
 	font-weight: 400;
 	font-style: normal;
 	background: var(--card-bg, #ffffff);
+	justify-content: space-between;
 }
 
 .card__header {

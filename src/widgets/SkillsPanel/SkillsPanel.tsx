@@ -103,7 +103,6 @@ export const CategoryDisplay = () => {
                   <li
                     key={sub.id}
                     className={styles.subcategoryItem}
-                    style={{ borderLeftColor: colorValue }}
                   >
                     {sub.name}
                   </li>
