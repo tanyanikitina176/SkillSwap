@@ -16,8 +16,6 @@ interface ISkillListProps {
 
 const SkillList = ({
   users,
-  onLikeClick,
-  onButtonClick,
   title,
   isShortList,
 }: ISkillListProps) => {

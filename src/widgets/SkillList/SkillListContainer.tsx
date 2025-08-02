@@ -25,6 +25,13 @@ export const SkillListContainer = ({ users }: ISkillListContainer) => {
         title="Новое"
         isShortList={true}
       />
+      <SkillList
+        users={users}
+        onButtonClick={() => {}}
+        onLikeClick={() => {}}
+        title="Рекомендуем"
+        isShortList={false}
+      />
     </div>
   );
 };
