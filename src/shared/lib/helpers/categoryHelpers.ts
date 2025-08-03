@@ -24,7 +24,7 @@ export let isCategoriesLoaded = false;
 export const initializeCategories = async (): Promise<boolean> => {
   try {
     const [skillsRes, subcategoriesRes] = await Promise.all([
-      fetch('/db/skills.json'),
+      fetch('/db/skills_categories.json'),
       fetch('/db/skills_subcategories.json')
     ]);
 

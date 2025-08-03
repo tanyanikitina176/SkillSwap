@@ -11,7 +11,7 @@ export const fetchUsersData = async (): Promise<User[]> => {
       await Promise.all([
         fetch('/db/cities.json').then(res => res.json()),
         fetch('/db/skills_subcategories.json').then(res => res.json()),
-        fetch('/db/skills.json').then(res => res.json()),
+        fetch('/db/skills_categories.json').then(res => res.json()),
         fetch('/db/users.json').then(res => res.json())
       ]);
 
