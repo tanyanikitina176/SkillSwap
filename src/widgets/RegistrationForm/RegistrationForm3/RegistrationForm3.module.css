@@ -91,7 +91,7 @@
 	font-size: 24px;
 	font-weight: 500;
 	font-family: var(--font-jost), sans-serif;
-	color: ar(--text-primary);
+	color: var(--text-primary);
 }
 
 .description {
@@ -113,4 +113,19 @@
 	font-size: 12px;
 	line-height: 16px;
 	font-family: var(--font-roboto-regular, sans-serif);
+}
+
+.label{
+	font-size: 16px;
+  font-family: var(--font-roboto-regular, sans-serif);
+  line-height: 24px;
+	margin-bottom: 4px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 436px;
+  position: relative;
 }
