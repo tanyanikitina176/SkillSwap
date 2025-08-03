@@ -21,6 +21,7 @@ import type {
 	Subcategory,
 } from '@entities/Category/CategoryTypes'
 import { FormTextArea } from '@shared/ui/text-area/text-area'
+import { DragAndDropUI } from '@shared/ui/drag-and-drop/drag-and-drop'
 
 interface RegistrationStep3Props {
 	onNextStep: () => void
@@ -145,6 +146,14 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
 		}
 	}
 
+	const handleFileChange = (file: File | null) => {
+		const fileUrl = file ? URL.createObjectURL(file) : ''
+		setValues(prev => ({ ...prev, skillImage: fileUrl }))
+		setFormData({ ...values, skillImage: fileUrl })
+		const { message } = validateSkillImage(fileUrl)
+		setErrors(prev => ({ ...prev, skillImage: message || '' }))
+	}
+
 	return (
 		<div className={styles.wrapper}>
 			<div className={styles.stepIndicatorContainer}>
@@ -216,6 +225,8 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
 							error={!!errors.description}
 							helperText={errors.description}
 						/>
+
+						<DragAndDropUI />
 
 						<div className={styles.buttonsContainer}>
 							<Button

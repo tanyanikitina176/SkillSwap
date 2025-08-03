@@ -65,6 +65,50 @@ export const validateForm = (email: string, password: string) => {
 	}
 }
 
+export type FormErrors = {
+	name: string
+	birthDate: string
+	gender: string
+	city: string
+	categories: string
+	subcategories: string
+}
+
+export const validateFormInfo = (formData: {
+	name: string
+	birthDate: string
+	gender: string
+	city: string
+	categories: string[]
+	subcategories: string[]
+}): { isValid: boolean; errors: FormErrors } => {
+	const now = new Date()
+	const birthDate = formData.birthDate ? new Date(formData.birthDate) : null
+	const isBirthDateValid = birthDate ? birthDate && birthDate <= now : false
+
+	const errors = {
+		name: !formData.name ? 'Это поле обязательно' : '',
+		birthDate: !formData.birthDate
+			? 'Это поле обязательно'
+			: !isBirthDateValid
+				? 'Дата рождения не может быть в будущем'
+				: '',
+		gender: !formData.gender ? 'Это поле обязательно' : '',
+		city: !formData.city ? 'Это поле обязательно' : '',
+		categories:
+			formData.categories.length === 0 ? 'Выберите хотя бы одну категорию' : '',
+		subcategories:
+			formData.subcategories.length === 0
+				? 'Выберите хотя бы одну подкатегорию'
+				: '',
+	}
+
+	const isValid =
+		!Object.values(errors).some(error => error) && isBirthDateValid
+
+	return { isValid, errors }
+}
+
 export const validateDescription = (value: string) => {
 	if (!value.trim()) {
 		return { message: 'Описание обязательно для заполнения' }

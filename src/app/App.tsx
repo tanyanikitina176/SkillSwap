@@ -1,31 +1,33 @@
-import { BrowserRouter } from 'react-router-dom'
-import { Filtres } from '@widgets/Filtres/Filtres'
-import { Footer } from '@widgets/Footer/Footer'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import { CategoryDisplay } from '@widgets/SkillsPanel/SkillsPanel'
-import { UserCard } from '@widgets/UserCard/user-card'
-import { demoUser as user } from '@entities/User/userHelper'
+import HomePage from '../pages/HomePage/HomePage'
+import { NotFound404 } from './../pages/page-404/page-404'
+import { ConnetcError500 } from './../pages/page-500/page-500'
+// import { useEffect, useState } from 'react'
+// import { fetchUsersData } from '@api/User/User-api'
+// // import type { User } from '@entities/User/types'
 
 function App() {
-	const onLikeClick = (userId: string) => {
-		console.log(`Like clicked for user with ID: ${userId}`)
-	}
-	const onButtonClick = (userId: string) => {
-		console.log(`Button clicked for user with ID: ${userId}`)
-	}
+	// const [users, setUsers] = useState<User[]>([])
+	// useEffect(() => {
+	// 	fetchUsersData()
+	// 		.then(users => {
+	// 			console.log(users)
+	// 			setUsers(users)
+	// 		})
+	// 		.catch(error => {
+	// 			console.error('Ошибка при загрузке данных пользователей:', error)
+	// 		})
+	// }, [])
 	return (
 		<>
 			<BrowserRouter>
-				<Filtres />
-				<Footer />
-				<CategoryDisplay />
+				<Routes>
+					<Route path='/' element={<HomePage />} />
+					<Route path='*' element={<NotFound404 />} />
+					<Route path='/500' element={<ConnetcError500 />} />
+				</Routes>
 			</BrowserRouter>
-			<p>Начинаем работу</p>
-			<UserCard
-				user={user}
-				onLikeClick={onLikeClick}
-				onButtonClick={onButtonClick}
-			/>
 		</>
 	)
 }
