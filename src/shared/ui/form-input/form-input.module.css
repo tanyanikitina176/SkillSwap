@@ -39,11 +39,11 @@
   color: transparent;
 }
 
-.togglePassword:focus {
+.toggleIcon:focus {
   outline: none;
 }
 
-.togglePassword {
+.toggleIcon {
   position: absolute;
   top: 50%;
   bottom: 50%;

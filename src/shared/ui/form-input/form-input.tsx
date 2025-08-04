@@ -24,6 +24,7 @@ interface InputProps {
   error?: boolean;
   children?: ReactElement | ReactNode[];
   defaultValue?: string | number;
+  icon?: ReactNode
 }
 
 export const FormInputUI: FC<InputProps> = memo(
@@ -38,6 +39,7 @@ export const FormInputUI: FC<InputProps> = memo(
     error = false,
     children,
     defaultValue,
+      icon,
   }) => {
     const [innerValue, setInnerValue] = useState(
       defaultValue?.toString() || "",
@@ -93,11 +95,13 @@ export const FormInputUI: FC<InputProps> = memo(
             }
             aria-invalid={error}
           />
+          {/*  Добавление svg иконки в input*/}
 
-          {isPasswordType && (
+
+          {isPasswordType ? (
             <button
               type="button"
-              className={style.togglePassword}
+              className={style.toggleIcon}
               onClick={() => setShowPassword(!showPassword)}
               aria-label={showPassword ? TOGGLE_TEXT.hide : TOGGLE_TEXT.show}
             >
@@ -107,7 +111,7 @@ export const FormInputUI: FC<InputProps> = memo(
                 <Eye className={style.icon} />
               )}
             </button>
-          )}
+          ): icon && ( <div className={style.toggleIcon}> {icon}</div> )}
         </div>
         {helperText && (
           <span
