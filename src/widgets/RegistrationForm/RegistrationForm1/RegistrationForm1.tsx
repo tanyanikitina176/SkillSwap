@@ -15,12 +15,14 @@ interface RegistrationStep1Props {
     password: string;
   };
   setFormData: (data: { email: string; password: string }) => void;
+  mode?: "register" | "login"; // Юля добавила
 }
 
 export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
   onNextStep,
   formData,
-  setFormData
+  setFormData,
+  mode = "register" // Юля добавила
 }) => {
   const [errors, setErrors] = useState({
     email: '',
@@ -57,7 +59,11 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
   return (
     <div className={styles.wrapper}>
       <div className={styles.stepIndicatorContainer}>
-        <StepIndicator currentStep={1} totalSteps={3} />
+        {mode === "register" ? ( // Юля
+          <StepIndicator currentStep={1} totalSteps={3} />
+        ) : (
+          <h2 className={styles.loginTitle}>Вход</h2>
+        )}
       </div>
       
       <div className={styles.content}>
@@ -95,7 +101,11 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
               label="Email"
               name="email"
               type="email"
-              placeholder="Введите email"
+              placeholder={ // Юля
+                mode === "register"
+                  ? "Придумайте надёжный пароль"
+                  : "Введите ваш пароль"
+              }
               value={formData.email}
               onChange={handleInputChange}
               error={!!errors.email}
@@ -113,13 +123,19 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
               helperText={errors.password}
             />
 
-            <Button
+            <Button //юля
               type="primary"
               htmlType="submit"
               extraClass={styles.submitButton}
             >
-              Далее
+              {mode === "register" ? "Далее" : "Войти"}
             </Button>
+
+            {mode === "login" && (
+              <div className={styles.bottomLink}>
+                <a href="/reg">Зарегистрироваться</a>
+              </div>
+            )}
           </form>
         </div>
 
