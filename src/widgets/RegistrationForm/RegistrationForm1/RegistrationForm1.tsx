@@ -62,7 +62,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
         {mode === "register" ? ( // Юля
           <StepIndicator currentStep={1} totalSteps={3} />
         ) : (
-          <h2 className={styles.loginTitle}>Вход</h2>
+          <h2 className={styles.title}>Вход</h2>
         )}
       </div>
       
