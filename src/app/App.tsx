@@ -4,6 +4,8 @@ import HomePage from '../pages/HomePage/HomePage'
 import { NotFound404 } from './../pages/page-404/page-404'
 import { ConnetcError500 } from './../pages/page-500/page-500'
 import { RegistrationPage } from './../pages/RegistrationPage/RegistrationPage'
+import { ProfileMenu } from '@widgets/Profile/ProfileMenu'
+
 // import { useEffect, useState } from 'react'
 // import { fetchUsersData } from '@api/User/User-api'
 // // import type { User } from '@entities/User/types'
@@ -22,14 +24,13 @@ function App() {
 	// }, [])
 	return (
 		<>
-			<BrowserRouter>
 				<Routes>
 					<Route path='/' element={<HomePage />} />
 					<Route path='*' element={<NotFound404 />} />
 					<Route path='/500' element={<ConnetcError500 />} />
 					<Route path='/reg' element={<RegistrationPage />} />
 				</Routes>
-			</BrowserRouter>
+	
 		</>
 	)
 }
