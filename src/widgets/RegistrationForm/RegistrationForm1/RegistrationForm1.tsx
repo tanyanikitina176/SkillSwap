@@ -101,11 +101,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
               label="Email"
               name="email"
               type="email"
-              placeholder={ // Юля
-                mode === "register"
-                  ? "Придумайте надёжный пароль"
-                  : "Введите ваш пароль"
-              }
+              placeholder={"Введите email"}
               value={formData.email}
               onChange={handleInputChange}
               error={!!errors.email}
