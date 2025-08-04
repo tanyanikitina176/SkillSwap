@@ -8,7 +8,7 @@ import userIcon from '@assets/images/user info.svg';
 import iconAdd from '@assets/icons/Icon+Add.svg';
 import styles from './RegistrationForm2.module.css';
 import { genderOptions, cityOptions } from '@shared/ui/dropdown/dropdownConstants';
-import { categories } from '../../../../public/db/skills.json';
+import { categories } from '../../../../public/db/skills_categories.json';
 import { subcategories } from '../../../../public/db/skills_subcategories.json';
 import { validateFormInfo, type FormErrors } from '../utils/validation';
 

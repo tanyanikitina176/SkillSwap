@@ -66,6 +66,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
             <Button
               type="tertiary"
               extraClass={styles.socialButton}
+              htmlType="button"
             >
               <div className={styles.socialButtonContent}>
                 <img src={googleIcon} alt="Google" className={styles.socialIcon} />
@@ -76,6 +77,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
             <Button
               type="tertiary"
               extraClass={styles.socialButton}
+              htmlType="button"
             >
               <div className={styles.socialButtonContent}>
                 <img src={appleIcon} alt="Apple" className={styles.socialIcon} />

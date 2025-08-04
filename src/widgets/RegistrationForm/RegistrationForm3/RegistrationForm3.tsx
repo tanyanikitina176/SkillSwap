@@ -25,6 +25,7 @@ import { DragAndDropUI } from '@shared/ui/drag-and-drop/drag-and-drop'
 
 interface RegistrationStep3Props {
 	onNextStep: () => void
+	onPrevStep: () => void
 	categories: CategoryWithSubcategories[]
 	formData: {
 		skillName: string
@@ -44,6 +45,7 @@ interface RegistrationStep3Props {
 
 export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
 	onNextStep,
+	onPrevStep,
 	formData,
 	setFormData,
 	categories,
@@ -233,6 +235,7 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
 								type='secondary'
 								htmlType='button'
 								extraClass={styles.submitButton}
+								onClick={onPrevStep}
 							>
 								Назад
 							</Button>
@@ -241,6 +244,7 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
 								type='primary'
 								htmlType='submit'
 								extraClass={styles.submitButton}
+								onClick={onNextStep}
 							>
 								Далее
 							</Button>
