@@ -10,4 +10,5 @@ export type Skill = {
   updatedAt?: Date;
   location?: string;
   status?: "active" | "pending" | "completed";
+  images?: string[];
 };
