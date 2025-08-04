@@ -13,16 +13,16 @@ export const DragAndDropUI = () => {
     }
   };
 
-  const handleDrag = (e: React.DragEvent<HTMLFormElement>) => {
+  const handleDrag = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDragActive(true);
   };
-  const handleLive = (e: React.DragEvent<HTMLFormElement>) => {
+  const handleLive = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDragActive(false);
   };
 
-  const handleDrop = (e: React.DragEvent<HTMLFormElement>) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
       e.preventDefault()
       setDragActive(false)
       if( e.dataTransfer.files && e.dataTransfer.files[0]) {
@@ -32,7 +32,8 @@ export const DragAndDropUI = () => {
 
   return (
     <div className={styles.wrapper}>
-      <form
+      {/* Замена form на div т.к. ошибки в консоли из-за вложенности форм в 3-м шаге регистрации */}
+      <div
         className={`${styles.form} ${dragActive ? styles.drag : ""}`}
         onDragEnter={handleDrag}
         onDragLeave={handleLive}
@@ -65,7 +66,7 @@ export const DragAndDropUI = () => {
                   </ul>
               )}
           </div>
-      </form>
+      </div>
     </div>
   );
 };
