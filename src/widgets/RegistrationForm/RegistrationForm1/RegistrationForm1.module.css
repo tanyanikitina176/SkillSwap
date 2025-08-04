@@ -91,7 +91,7 @@
   font-size: 24px;
   font-weight: 500;
   font-family: var(--font-jost), sans-serif;
-  color: ar(--text-primary);
+  color: var(--text-primary);
 }
 
 .description {
@@ -100,4 +100,17 @@
   font-family: var(--font-roboto-regular), sans-serif;
   color: var(--text-primary);
   padding: 0 9px;
+}
+
+.bottomLink {
+  display: flex;
+  justify-content: center;
+  color: var(--text-link);
+  font-family: var(--font-roboto-regular), sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.bottomLink:hover {
+  color: var(--accent, #ABD27A);
 }
