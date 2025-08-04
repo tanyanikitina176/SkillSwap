@@ -1,52 +1,38 @@
 import type { User, City } from "../../entities/User/types";
 import type { Subcategory, Category } from "../../entities/Category/CategoryTypes";
-import type { Skill } from "@entities/Skill/SkillType";
 
-interface FetchedUser extends Omit<User, 'city' | 'teachingSkills' | 'wantToLearnSkills'> {
+interface FetchedUser extends Omit<User, 'city'> {
   cityId: string;
-  teachingSkills: string[];   
-  wantToLearnSkills: string[];   
 }
-
-export type EnrichedSkill = Skill & {
-  subcategory: Subcategory;
-  category: Category;
-};
 
 export const fetchUsersData = async (): Promise<User[]> => {
   try {
-    const [citiesRes, subcategoriesRes, categoriesRes, usersRes, skillsRes] = 
+    const [citiesRes, subcategoriesRes, categoriesRes, usersRes] = 
       await Promise.all([
         fetch('/db/cities.json').then(res => res.json()),
         fetch('/db/skills_subcategories.json').then(res => res.json()),
         fetch('/db/skills_categories.json').then(res => res.json()),
-        fetch('/db/users.json').then(res => res.json()),
-        fetch('/db/skills.json').then(res => res.json())
+        fetch('/db/users.json').then(res => res.json())
       ]);
 
     return (usersRes.users || []).map((user: FetchedUser) => {
       const cityData = citiesRes.cities.find((c: City) => c.id === user.cityId);
       const city = cityData || { id: "unknown", name: "Неизвестный город" };
 
-      const formatSkills = (skills: (string | Skill)[]):EnrichedSkill[] => {
+      const formatSkills = (skills: (string | Subcategory)[]) => {
         return skills
-          .map((element) => {
-            const skillId = typeof element === 'string' ? element : element.id;
-
-            const skill = skillsRes.skills.find((s: Skill) => s.id === skillId);
-            if (!skill) return null;
-
-             const subcategory = subcategoriesRes.subcategories.find((s: Subcategory) => s.id === skill.SubcategoryId);
+          .map((skill) => {
+            const skillId = typeof skill === 'string' ? skill : skill.id;
+            const subcategory = subcategoriesRes.subcategories.find((s: Subcategory) => s.id === skillId);
             if (!subcategory) return null;
             
-            const category = categoriesRes.categories.find((c: Category) => c.id === skill.CategoryId);
+            const category = categoriesRes.categories.find((c: Category) => c.id === subcategory.categoryId);
             return {
-              ...skill,
-              subcategory: subcategory || { id: "unknown", name: "Неизвестная подкатегория", color: "#E8ECF7", icon: "" },
+              ...subcategory,
               category: category || { id: "unknown", name: "Неизвестная категория", color: "#E8ECF7", icon: "" }
             };
           })
-          .filter(Boolean) as EnrichedSkill[];
+          .filter(Boolean) as Subcategory[];
       };
 
       return {

@@ -92,7 +92,7 @@ export const HomePage = () => {
             : user.wantToLearnSkills;
 
         const hasMatch = skillsToCheck.some(skill => 
-          filters.skills.includes(skill.subcategory.id) || 
+          filters.skills.includes(skill.id) || 
           filters.skills.includes(skill.category.id)
         );
 

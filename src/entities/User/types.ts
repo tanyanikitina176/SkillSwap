@@ -1,4 +1,4 @@
-import type { EnrichedSkill } from '@api/User/User-api'
+import type { Subcategory } from '@entities/Category/CategoryTypes'
 
 export type User = {
 	id: string
@@ -6,8 +6,8 @@ export type User = {
 	age: number
 	gender: UserGender
 	city: City
-	wantToLearnSkills: EnrichedSkill[]
-	teachingSkills: EnrichedSkill[]
+	wantToLearnSkills: Subcategory[]
+	teachingSkills: Subcategory[]
 	photo: string
 	description: string
 	likes: User[]
