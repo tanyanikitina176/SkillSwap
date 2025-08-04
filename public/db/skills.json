@@ -1,40 +1,122 @@
-{
-	"categories": [
-		{
-			"id": "1",
-			"name": "Бизнес и карьера",
-			"color": "var(--tag-business)",
-			"icon": "briefcase"
-		},
-		{
-			"id": "2",
-			"name": "Творчество и искусство",
-			"color": "var(--tag-creative)",
-			"icon": "palette"
-		},
-		{
-			"id": "3",
-			"name": "Иностранные языки",
-			"color": "var(--tag-languages)",
-			"icon": "global"
-		},
-		{
-			"id": "4",
-			"name": "Образование и развитие",
-			"color": "var(--tag-education)",
-			"icon": "book"
-		},
-		{
-			"id": "5",
-			"name": "Дом и уют",
-			"color": "var(--tag-home)",
-			"icon": "home"
-		},
-		{
-			"id": "6",
-			"name": "Здоровье и лайфстайл",
-			"color": "var(--tag-health)",
-			"icon": "lifestyle"
-		}
-	]
-}
+[
+  {
+    "id": "1",
+    "title": "Управление проектами",
+    "CategoryId": "1",
+    "SubcategoryId": "101",
+    "description": "Методологии Agile, Scrum и Kanban для эффективного управления проектами",
+    "authorId": "2",
+    "likesCount": 24,
+    "createdAt": "2025-05-10T08:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "title": "Искусство переговоров",
+    "CategoryId": "1",
+    "SubcategoryId": "102",
+    "description": "Техники ведения успешных переговоров и заключения сделок",
+    "authorId": "6",
+    "likesCount": 18,
+    "createdAt": "2025-06-15T10:30:00.000Z"
+  },
+  {
+    "id": "3",
+    "title": "Цифровая иллюстрация",
+    "CategoryId": "2",
+    "SubcategoryId": "106",
+    "description": "Создание цифровых рисунков в Adobe Photoshop и Procreate",
+    "authorId": "5",
+    "likesCount": 32,
+    "createdAt": "2025-04-22T14:15:00.000Z"
+  },
+  {
+    "id": "4",
+    "title": "Основы композиции в фотографии",
+    "CategoryId": "2",
+    "SubcategoryId": "108",
+    "description": "Правила построения кадра и работы со светом",
+    "authorId": "8",
+    "likesCount": 27,
+    "createdAt": "2025-07-05T11:45:00.000Z"
+  },
+  {
+    "id": "5",
+    "title": "Деловой английский",
+    "CategoryId": "3",
+    "SubcategoryId": "111",
+    "description": "Английский для бизнес-коммуникаций и переписки",
+    "authorId": "1",
+    "likesCount": 41,
+    "createdAt": "2025-03-18T09:20:00.000Z"
+  },
+  {
+    "id": "6",
+    "title": "Разговорный французский",
+    "CategoryId": "3",
+    "SubcategoryId": "113",
+    "description": "Практика повседневного общения на французском языке",
+    "authorId": "4",
+    "likesCount": 15,
+    "createdAt": "2025-08-01T16:10:00.000Z"
+  },
+  {
+    "id": "7",
+    "title": "Скорочтение",
+    "CategoryId": "4",
+    "SubcategoryId": "118",
+    "description": "Техники увеличения скорости чтения с сохранением понимания",
+    "authorId": "12",
+    "likesCount": 29,
+    "createdAt": "2025-02-14T13:25:00.000Z"
+  },
+  {
+    "id": "8",
+    "title": "Эмоциональный интеллект",
+    "CategoryId": "4",
+    "SubcategoryId": "117",
+    "description": "Развитие навыков распознавания и управления эмоциями",
+    "authorId": "7",
+    "likesCount": 36,
+    "createdAt": "2025-01-30T10:00:00.000Z"
+  },
+  {
+    "id": "9",
+    "title": "Основы фэн-шуй",
+    "CategoryId": "5",
+    "SubcategoryId": "127",
+    "description": "Принципы гармоничной организации пространства по правилам фэн-шуй",
+    "authorId": "3",
+    "likesCount": 14,
+    "createdAt": "2025-05-10T12:20:00.000Z"
+  },
+  {
+    "id": "10",
+    "title": "Умная уборка за 30 минут",
+    "CategoryId": "5",
+    "SubcategoryId": "127",
+    "description": "Эффективные техники быстрой уборки с минимальными усилиями",
+    "authorId": "9",
+    "likesCount": 31,
+    "createdAt": "2025-07-22T17:15:00.000Z"
+  },
+  {
+    "id": "11",
+    "title": "Основы медитации",
+    "CategoryId": "6",
+    "SubcategoryId": "121",
+    "description": "Техники релаксации и mindfulness для начинающих",
+    "authorId": "10",
+    "likesCount": 22,
+    "createdAt": "2025-06-28T15:40:00.000Z"
+  },
+  {
+    "id": "12",
+    "title": "Функциональный тренинг",
+    "CategoryId": "6",
+    "SubcategoryId": "11",
+    "description": "Упражнения для развития силы и выносливости в домашних условиях",
+    "authorId": "11",
+    "likesCount": 19,
+    "createdAt": "2025-05-05T07:50:00.000Z"
+  }
+]
