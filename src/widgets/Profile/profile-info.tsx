@@ -19,6 +19,7 @@ import {
   validatePassword,
 } from "@widgets/RegistrationForm/utils/validation";
 import isEqual from "lodash/isEqual";
+import EditIcon from "@assets/icons/edit.svg?react";
 
 const testUser: TProfileInfoUser = {
   name: "test",
@@ -161,6 +162,7 @@ export const ProfileInfo: FC = () => {
           onChange={handleEmailChange}
           error={!!errors.email}
           helperText={errors.email}
+          icon={< EditIcon />}
         />
         <span
           className={styles.change_password_block}
@@ -190,6 +192,7 @@ export const ProfileInfo: FC = () => {
           onChange={handleInputChange("name")}
           error={!!errors.name}
           helperText={errors.name}
+          icon={< EditIcon />}
         />
         <div className={styles.birth_gender_block}>
           <div className={styles.birth_block}>
