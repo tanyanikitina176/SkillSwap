@@ -1,3 +1,4 @@
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -39,11 +40,11 @@
   color: transparent;
 }
 
-.togglePassword:focus {
+.toggleIcon:focus {
   outline: none;
 }
 
-.togglePassword {
+.toggleIcon {
   position: absolute;
   top: 50%;
   bottom: 50%;
@@ -62,7 +63,6 @@
   width: 24px;
   height: 24px;
   display: block;
-  margin: auto 0;
 }
 
 .helperText.errorText {
@@ -81,4 +81,8 @@
   font-size: 12px;
   line-height: 16px;
   font-family: var(--font-roboto-regular, sans-serif);
+}
+
+.children {
+  display: none;
 }
