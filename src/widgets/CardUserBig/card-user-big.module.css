@@ -5,6 +5,13 @@
     padding: 24px;
     background-color: #253017;
 }
+
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 400px;
+}
 .title {
     font-size: 32px;
     line-height: 40px;
@@ -21,6 +28,18 @@
     line-height: 16px;
     letter-spacing: 0.02em;
     font-family: var(--font-roboto-regular, sans-serif);
+}
+
+.description {
+    padding-top: 20px;
+    padding-bottom: 28px;
+    font-family: var(--font-roboto-regular, sans-serif);
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.02em;
+    font-weight: 400;
+    color: var(--text-primary, #253017);
+
 }
 
 .container {
