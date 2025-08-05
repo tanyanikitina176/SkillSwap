@@ -8,9 +8,11 @@ import dayjs from "dayjs";
 interface DatePickerProps {
   date?: number | null;
   onChange?: (date: number | null) => void;
+  helperText?: string;
+  error?: boolean;
 }
 
-export const DatePicker: React.FC<DatePickerProps> = ({ onChange,  date}) => {
+export const DatePicker: React.FC<DatePickerProps> = ({ onChange,  date, helperText, error}) => {
   const handleChange: AntdDatePickerProps["onChange"] = (date) => {
     if (!!onChange) {
       onChange(
@@ -24,7 +26,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({ onChange,  date}) => {
       <Space direction="vertical">
         <label className="label" id="dataPicker">
           <AntdDatePicker
-            defaultValue={dayjs(date)}
+            value={!!date ? dayjs(date) : null}
             onChange={handleChange}
             placeholder="дд.мм.гггг"
             className="container"
@@ -32,6 +34,13 @@ export const DatePicker: React.FC<DatePickerProps> = ({ onChange,  date}) => {
             format={"DD-MM-YYYY"}
           />
         </label>
+        {helperText && (
+      <span
+        className={`helperText ${error ? 'errorText' : ""}`}
+      >
+        {helperText}
+      </span>
+    )}
       </Space>
     </ConfigProvider>
   );

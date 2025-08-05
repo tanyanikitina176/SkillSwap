@@ -15,6 +15,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
   onChange,
   placeholder = "Выберите...",
   className,
+  error,
+  helperText
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -116,6 +118,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
             if (!isOpen) {
               setIsOpen(true);
               if (selectedValues.length > 0) {
+                console.log(getDisplayText());
                 setSearchQuery(getDisplayText());
               }
             }
@@ -184,9 +187,10 @@ export const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div className={clsx(styles.searchSelect, className)} ref={dropdownRef}>
       <div
-        className={styles.content}
+        className={`${styles.content} ${error ? styles.error : ""}`}
         style={{ zIndex: isOpen ? 10 : undefined }}
       >
+        
         <div
           className={styles.controls}
           style={{
@@ -197,8 +201,15 @@ export const Dropdown: React.FC<DropdownProps> = ({
           {renderIcon()}
         </div>
 
-        {isOpen && <ul className={styles.selectMenu}>{renderOptions()}</ul>}
-      </div>
+         {isOpen && <ul className={styles.selectMenu}>{renderOptions()}</ul>}
     </div>
-  );
+    {helperText && (
+      <span
+        className={`${styles.helperText} ${error ? styles.errorText : ""}`}
+      >
+        {helperText}
+      </span>
+    )}
+  </div>
+);
 };

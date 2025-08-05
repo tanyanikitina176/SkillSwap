@@ -42,3 +42,14 @@
 .ant-picker-date-panel .ant-picker-content th {
   color: #508826;
 }
+
+.helperText.errorText {
+  color: rgba(191, 57, 32, 1);
+  font-size: 12px;
+  line-height: 16px;
+  font-family: var(--font-roboto-regular, sans-serif);
+}
+
+.error {
+  border: 1px solid rgba(191, 57, 32, 1);
+}

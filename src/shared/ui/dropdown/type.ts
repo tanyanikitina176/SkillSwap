@@ -12,4 +12,6 @@ export type DropdownProps = {
   onChange?: (value: string | string[]) => void;
   placeholder?: string;
   className?: string;
+  error?: boolean;
+  helperText?: string;
 };

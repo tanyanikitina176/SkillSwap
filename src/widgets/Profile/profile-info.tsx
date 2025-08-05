@@ -10,49 +10,125 @@ import {
 import { DatePicker } from "@shared/ui/date-picker/date-picker";
 import { useEffect, useState, type FC } from "react";
 import editIcon from "@assets/icons/gallery-edit.svg";
+import {
+  validateDateOfBirth,
+  validateDescription,
+  validateDropdown,
+  validateEmail,
+  validateInput,
+  validatePassword,
+} from "@widgets/RegistrationForm/utils/validation";
+import isEqual from "lodash/isEqual";
 
-const testUser = {
+const testUser: TProfileInfoUser = {
   name: "test",
   email: "test@test.ru",
   password: "123",
   dateOfBirth: new Date().getTime(),
   gender: "2", //Женский
   city: "1", //Москва
-  aboutMe: "",
   myAvatar: "../../../db/users-photo/viktoria.jpg",
   description: "",
 };
 
+const INITIAL_ERRORS = {
+  name: "",
+  email: "",
+  password: "",
+  gender: "",
+  city: "",
+  description: "",
+  dateOfBirth: "",
+};
+
+export type TProfileInfoUser = {
+  name: string;
+  email: string;
+  password: string;
+  dateOfBirth: number | null;
+  gender: string;
+  city: string;
+  myAvatar: string;
+  description: string;
+};
+
 export const ProfileInfo: FC = () => {
-  const user = testUser;
+  const user: TProfileInfoUser = testUser;
   const [showPasswordField, setShowPasswordField] = useState(false);
 
-  const [formValue, setFormValue] = useState({
+  const [formValue, setFormValue] = useState<TProfileInfoUser>({
     name: "",
     email: "",
     password: "",
-    dateOfBirth: new Date().getTime(),
+    dateOfBirth: null,
     gender: "",
     city: "",
-    aboutMe: "",
     myAvatar: "",
     description: "",
   });
 
+  const [errors, setErrors] = useState(INITIAL_ERRORS);
+  const [isDisabledButton, setIsDisabledButton] = useState(false);
   useEffect(() => {
     if (user) {
       setFormValue({ ...user });
     }
   }, [user]);
 
-  const handleInputChange = (
-    field: keyof typeof formValue,
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setData(field, e.target.value);
+  useEffect(() => {
+    const isDisabled =
+      isEqual(user, formValue) || !isEqual(INITIAL_ERRORS, errors);
+    setIsDisabledButton(isDisabled);
+  }, [user, formValue, errors]);
+
+  const handleInputChange =
+    (field: keyof TProfileInfoUser) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { message } = validateInput(e.target.value);
+      setErrors((prev) => ({ ...prev, [field]: message || "" }));
+      setData(field, e.target.value);
+    };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { message } = validateEmail(e.target.value);
+    setErrors((prev) => ({ ...prev, email: message || "" }));
+    setData("email", e.target.value);
   };
 
-  const setData = <T,>(field: keyof typeof formValue, value: T) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { message } = validatePassword(e.target.value);
+    setErrors((prev) => ({ ...prev, password: message || "" }));
+    setData("password", e.target.value);
+  };
+
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { message } = validateDescription(e.target.value);
+    setErrors((prev) => ({ ...prev, description: message || "" }));
+    setData("description", e.target.value);
+  };
+
+  const handleGenderChange = (value: string | string[]) => {
+    if (typeof value === "string") {
+      const { message } = validateDropdown(value);
+      setErrors((prev) => ({ ...prev, gender: message || "" }));
+      setData("gender", value);
+    }
+  };
+
+  const handleCityChange = (value: string | string[]) => {
+    if (typeof value === "string") {
+      const { message } = validateDropdown(value);
+      setErrors((prev) => ({ ...prev, city: message || "" }));
+      setData("city", value);
+    }
+  };
+
+  const setData = <K extends keyof TProfileInfoUser>(
+    field: K,
+    value: TProfileInfoUser[K]
+  ) => {
     setFormValue((prev) => ({
       ...prev,
       [field]: value,
@@ -63,22 +139,28 @@ export const ProfileInfo: FC = () => {
     setShowPasswordField((showPasswordField) => !showPasswordField);
   };
 
-  const changeDate = (date: number | null) => {
+  const hadleChangeDate = (date: number | null) => {
+    const { message } = validateDateOfBirth(date);
+    setErrors((prev) => ({ ...prev, dateOfBirth: message || "" }));
     setData("dateOfBirth", date);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
   };
 
   return (
     <div className={styles.profile_info__container}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <FormInputUI
           label="Почта"
           name="email"
           type="email"
           placeholder="Введите email"
           value={formValue.email}
-          onChange={(e) => handleInputChange("email", e)}
-          error={false}
-          helperText=""
+          onChange={handleEmailChange}
+          error={!!errors.email}
+          helperText={errors.email}
         />
         <span
           className={styles.change_password_block}
@@ -93,9 +175,9 @@ export const ProfileInfo: FC = () => {
             type="password"
             placeholder="Введите ваш пароль"
             value={formValue.password}
-            onChange={(e) => handleInputChange("password", e)}
-            error={false}
-            helperText="Пароль должен содержать не менее 8 символов"
+            onChange={handlePasswordChange}
+            error={!!errors.password}
+            helperText={errors.password}
           />
         )}
 
@@ -105,13 +187,19 @@ export const ProfileInfo: FC = () => {
           type="text"
           placeholder="Введите имя"
           value={formValue.name}
-          onChange={(e) => handleInputChange("name", e)}
-          error={false}
+          onChange={handleInputChange("name")}
+          error={!!errors.name}
+          helperText={errors.name}
         />
         <div className={styles.birth_gender_block}>
           <div className={styles.birth_block}>
             <label className={styles.label}>Дата рождения</label>
-            <DatePicker onChange={changeDate} date={formValue.dateOfBirth} />
+            <DatePicker
+              onChange={hadleChangeDate}
+              date={formValue.dateOfBirth}
+              error={!!errors.dateOfBirth}
+              helperText={errors.dateOfBirth}
+            />
           </div>
           <div className={styles.gender_block}>
             <label className={styles.label}>Пол</label>
@@ -120,7 +208,9 @@ export const ProfileInfo: FC = () => {
               type="input"
               placeholder="Не выбран"
               value={formValue.gender}
-              onChange={() => {}}
+              onChange={handleGenderChange}
+              error={!!errors.gender}
+              helperText={errors.gender}
             />
           </div>
         </div>
@@ -131,20 +221,24 @@ export const ProfileInfo: FC = () => {
             type="input"
             placeholder="Не указан"
             value={formValue.city}
-            onChange={() => {}}
+            onChange={handleCityChange}
+            error={!!errors.city}
+            helperText={errors.city}
           />
         </div>
         <FormTextArea
           label="О себе"
           placeholder="Расскажите немного о себе"
           value={formValue.description}
-          onChange={(e) => handleInputChange("description", e)}
+          onChange={handleDescriptionChange}
+          helperText={errors.description}
+          error={!!errors.description}
         />
         <Button
           type="primary"
           extraClass={styles.button_save}
-          onClick={() => {}}
           htmlType="submit"
+          disabled={isDisabledButton}
         >
           Сохранить
         </Button>
