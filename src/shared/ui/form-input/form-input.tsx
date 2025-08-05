@@ -97,7 +97,6 @@ export const FormInputUI: FC<InputProps> = memo(
           />
           {/*  Добавление svg иконки в input*/}
 
-
           {isPasswordType ? (
             <button
               type="button"
