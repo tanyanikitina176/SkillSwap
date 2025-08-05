@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Button } from '@shared/ui/button/button';
 import { FormInputUI } from '@shared/ui/form-input/form-input';
-import { DataPicker } from '@shared/ui/data-picker/data-picker';
+import { DatePicker } from '@shared/ui/date-picker/date-picker';
 import { Dropdown } from '@shared/ui/dropdown/dropdown';
 import { StepIndicator } from '@shared/ui/stepIndicator/stepIndicator';
 import userIcon from '@assets/images/user info.svg';
@@ -17,7 +17,7 @@ interface RegistrationStep2Props {
   onPrevStep: () => void;
   formData: {
     name: string;
-    birthDate: string;
+    birthDate: number;
     gender: string;
     city: string;
     categories: string[];
@@ -62,11 +62,11 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
     validateField(name, value);
   };
 
-  const handleDateChange = (dateString: string) => {
-    setFormData({ ...formData, birthDate: dateString });
+  const handleDateChange = (newDate: number) => {
+    setFormData({ ...formData, birthDate: newDate });
     
     const now = new Date();
-    const date = new Date(dateString);
+    const date = new Date(newDate);
     setErrors(prev => ({
       ...prev,
       birthDate: date > now ? 'Дата рождения не может быть в будущем' : ''
@@ -187,7 +187,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
             <div className={styles.row}>
               <div className={styles.column}>
                 <label className={styles.label}>Дата рождения</label>
-                <DataPicker onChange={(dateString: string) => handleDateChange(dateString)} />
+                <DatePicker onChange={handleDateChange} />
                 {errors.birthDate && <div className={styles.errorText}>{errors.birthDate}</div>}
               </div>
               <div className={styles.column}>

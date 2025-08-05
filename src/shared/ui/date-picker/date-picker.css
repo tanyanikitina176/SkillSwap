@@ -7,6 +7,7 @@
 
 .container .ant-picker-input {
   font-size: 16px;
+  font-family: var(--font-roboto-regular);
 }
 
 .container:hover {
@@ -39,5 +40,5 @@
 }
 
 .ant-picker-date-panel .ant-picker-content th {
-    color: #508826;
+  color: #508826;
 }

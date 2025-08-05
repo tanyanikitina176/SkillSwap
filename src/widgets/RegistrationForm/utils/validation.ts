@@ -76,7 +76,7 @@ export type FormErrors = {
 
 export const validateFormInfo = (formData: {
 	name: string
-	birthDate: string
+	birthDate: number
 	gender: string
 	city: string
 	categories: string[]
