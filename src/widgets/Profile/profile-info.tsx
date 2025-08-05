@@ -63,7 +63,7 @@ export const ProfileInfo: FC = () => {
     setShowPasswordField((showPasswordField) => !showPasswordField);
   };
 
-  const changeDate = (date: number) => {
+  const changeDate = (date: number | null) => {
     setData("dateOfBirth", date);
   };
 

@@ -7,13 +7,15 @@ import dayjs from "dayjs";
 
 interface DatePickerProps {
   date?: number | null;
-  onChange?: (date: number) => void;
+  onChange?: (date: number | null) => void;
 }
 
 export const DatePicker: React.FC<DatePickerProps> = ({ onChange,  date}) => {
   const handleChange: AntdDatePickerProps["onChange"] = (date) => {
     if (!!onChange) {
-      onChange(date.valueOf());
+      onChange(
+        !!date ?  date.valueOf() : null
+      );
     }
   };
 
