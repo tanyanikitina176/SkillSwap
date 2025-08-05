@@ -6,6 +6,7 @@ import { ConnetcError500 } from './../pages/page-500/page-500'
 import { RegistrationPage } from './../pages/RegistrationPage/RegistrationPage'
 import { ProfileMenu } from '@widgets/Profile/ProfileMenu'
 import {LoginPage} from "../pages/LoginPage/LoginPage.tsx";
+import { ProfilePage } from '../pages/ProfilePage/ProfilePage'
 
 // import { useEffect, useState } from 'react'
 // import { fetchUsersData } from '@api/User/User-api'
@@ -31,6 +32,7 @@ function App() {
 					<Route path='/500' element={<ConnetcError500 />} />
 					<Route path='/reg' element={<RegistrationPage />} />
 					<Route path='/login' element={<LoginPage />} />
+					<Route path='/profile' element={<ProfilePage />} />
 
 				</Routes>
 	
