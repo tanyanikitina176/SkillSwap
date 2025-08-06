@@ -1,15 +1,18 @@
 import { CardUserBig } from "@widgets/CardUserBig/card-user-big.tsx";
 import { Button } from "@shared/ui/button/button.tsx";
 import styles from "./SkillInfo.module.css";
-import LikeIcon from '@assets/icons/like.svg';
-import ShareIcon from '@assets/icons/share.svg';
-import MoreSquareIcon from '@assets/icons/more-square.svg';
-import {UserCardSkillInfo} from "@widgets/SkillInfo/UserCardSkillInfo.tsx";
-import type {FC} from "react";
-import type { User } from '@entities/User/types'
-import type {Skill} from "@entities/Skill/SkillType.ts";
-import type {Category, Subcategory} from '@entities/Category/CategoryTypes.ts'
-
+import LikeIcon from "@assets/icons/like.svg";
+import ShareIcon from "@assets/icons/share.svg";
+import clockIcon from "@assets/icons/clock.svg";
+import MoreSquareIcon from "@assets/icons/more-square.svg";
+import { UserCardSkillInfo } from "@widgets/SkillInfo/UserCardSkillInfo.tsx";
+import { type FC, useState } from "react";
+import type { User } from "@entities/User/types";
+import type { Skill } from "@entities/Skill/SkillType.ts";
+import type {
+  Category,
+  Subcategory,
+} from "@entities/Category/CategoryTypes.ts";
 
 interface SkillInfoProps {
   user: User;
@@ -17,12 +20,26 @@ interface SkillInfoProps {
   categories: Category[];
   subcategories: Subcategory[];
 }
-export const SkillInfo: FC<SkillInfoProps> = ({ user, skill, categories, subcategories}) => {
-  const category = categories.find(cat => cat.id === skill.CategoryId);
-  const subcategory = subcategories.find(sub => sub.id === skill.SubcategoryId);
+
+export const SkillInfo: FC<SkillInfoProps> = ({
+  user,
+  skill,
+  categories,
+  subcategories,
+}) => {
+  const category = categories.find((cat) => cat.id === skill.CategoryId);
+  const subcategory = subcategories.find(
+    (sub) => sub.id === skill.SubcategoryId,
+  );
 
   const categoryName = category?.name || "Без категории";
   const subcategoryName = subcategory?.name || "";
+
+  const [exchangeOffered, setExchangeOffered] = useState(false);
+
+  const handleOfferClick = () => {
+    setExchangeOffered(true);
+  };
 
   return (
     <div className={styles.gridSkillInfo}>
@@ -46,7 +63,14 @@ export const SkillInfo: FC<SkillInfoProps> = ({ user, skill, categories, subcate
         category={categoryName}
         subcategory={subcategoryName}
         buttonsSlot={
-          <Button style={{ width: "100%" }}>Предложить обмен</Button>
+          <Button
+            style={{ width: "100%" }}
+            onClick={handleOfferClick}
+            type={exchangeOffered ? "tertiary" : "primary"}
+            startIcon={exchangeOffered ? <img src={clockIcon} alt="Ожидание" /> : undefined}
+          >
+            {exchangeOffered ? "Обмен предложен" : "Предложить обмен"}
+          </Button>
         }
       ></CardUserBig>
     </div>
