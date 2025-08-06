@@ -11,7 +11,7 @@ export type User = {
 	photo: string
 	description: string
 	likes: User[]
-	liked: User[]
+	likedSkills: User[]
 	createdAt?: string
 }
 
