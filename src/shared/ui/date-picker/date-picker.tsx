@@ -29,12 +29,12 @@ export const DatePicker: React.FC<DatePickerProps> = ({
       <Space direction="vertical">
         <label className="label" id="dataPicker">
           <AntdDatePicker
-            value={date ? dayjs(date) : null}
+            defaultValue={date ? dayjs(date) : null}
             onChange={handleChange}
             placeholder="дд.мм.гггг"
             className="container"
             id="dataPicker"
-            format={"DD-MM-YYYY"}
+            format={"DD.MM.YYYY"}
           />
         </label>
         {helperText && (
