@@ -114,7 +114,7 @@ export const HomePage = () => {
   }, [users, filters]);
 
   const onClickButtonShowNew = () => {
-    setisClickButtonShowNew(true);
+    setisClickButtonShowNew(!isClickButtonShowNew);
   };
 
   const skillsUsers = skills.skills;
@@ -165,7 +165,7 @@ export const HomePage = () => {
                     onClick={onClickButtonShowNew}
                     htmlType="button"
                   >
-                    Сначала новые
+                    {!isClickButtonShowNew ? "Сначала новые" : "Показать все"}
                   </Button>
                 </div>
                 <div className={styles.usersGrid}>
