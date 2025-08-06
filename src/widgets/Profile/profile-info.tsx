@@ -236,6 +236,7 @@ export const ProfileInfo: FC = () => {
           onChange={handleDescriptionChange}
           helperText={errors.description}
           error={!!errors.description}
+          withIcon={true}
         />
         <Button
           type="primary"
