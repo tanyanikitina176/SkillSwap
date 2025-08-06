@@ -21,22 +21,24 @@ export const CardUserBig: FC<CardUserBigProps> = ({
 }) => {
   return (
     <div className={styles.bigcontainer}>
-      {header}
       <div className={styles.container}>
-        <div className={styles.bt}>
-          <div className={styles.textContainer}>
-            <h2 className={styles.title}>{title}</h2>
-            <p className={styles.skills}>
-              {category} / {subcategory}
-            </p>
-            <p className={styles.description}>{description}</p>
-            <div className={styles.buttonWrapper}>
-              {buttonsSlot}
+        {header}
+        <div className={styles.contentContainer}>
+          <div className={styles.ContainerWithButton}>
+            <div className={styles.textContainer}>
+              <h2 className={styles.title}>{title}</h2>
+              <p className={styles.skills}>
+                {category} / {subcategory}
+              </p>
+              <p className={styles.description}>{description}</p>
+              <div className={styles.buttonWrapper}>
+                {buttonsSlot}
+              </div>
             </div>
           </div>
-        </div>
-        <div className={styles.containerPhoto}>
-          <div className={styles.photo}></div>
+          <div className={styles.containerPhoto}>
+            <div className={styles.photo}></div>
+          </div>
         </div>
       </div>
     </div>

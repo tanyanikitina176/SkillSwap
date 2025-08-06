@@ -44,10 +44,16 @@
 
 .container {
     display: flex;
-    grid-column: 2 / 5;
+    flex-direction: column;
     background: var(--card-bg, #ffffff );
     padding: 32px 52px;
     border-radius: 12px;
+    gap: 24px;
+}
+
+.contentContainer {
+    display: flex;
+    grid-column: 2 / 5;
     gap: 77px;
 }
 /*заглушка*/
