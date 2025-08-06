@@ -5,9 +5,9 @@ import { NotFound404 } from "./../pages/page-404/page-404";
 import { ConnetcError500 } from "./../pages/page-500/page-500";
 import { RegistrationPage } from "./../pages/RegistrationPage/RegistrationPage";
 import { LoginPage } from "../pages/LoginPage/LoginPage.tsx";
-import { ProfileInfo } from "@widgets/Profile/profile-info.tsx";
 import { ProtectedRoute } from "./protected-route/Protected-route.tsx";
 import { SkillPage } from "./../pages/SkillPage/SkillPage.tsx";
+import { ProfilePage } from "./../pages/ProfilePage/ProfilePage.tsx";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
           path="/profile"
           element={
             <ProtectedRoute>
-              <ProfileInfo />
+             <ProfilePage/>
             </ProtectedRoute>
           }
         />
