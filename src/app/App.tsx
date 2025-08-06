@@ -4,10 +4,8 @@ import HomePage from '../pages/HomePage/HomePage'
 import { NotFound404 } from './../pages/page-404/page-404'
 import { ConnetcError500 } from './../pages/page-500/page-500'
 import { RegistrationPage } from './../pages/RegistrationPage/RegistrationPage'
-import { ProfileMenu } from '@widgets/Profile/ProfileMenu'
 import {LoginPage} from "../pages/LoginPage/LoginPage.tsx";
-import {CardUserBig} from "@widgets/CardUserBig/card-user-big.tsx";
-import {TestCardUserBigPage} from "@widgets/CardUserBig/testPageCardUserBig.tsx";
+import {SkillInfo} from "@widgets/SkillInfo/SkillInfo.tsx";
 
 // import { useEffect, useState } from 'react'
 // import { fetchUsersData } from '@api/User/User-api'
@@ -33,6 +31,7 @@ function App() {
 					<Route path='/500' element={<ConnetcError500 />} />
 					<Route path='/reg' element={<RegistrationPage />} />
 					<Route path='/login' element={<LoginPage />} />
+					<Route path='/test' element={<SkillInfo />} />
 				</Routes>
 	
 		</>

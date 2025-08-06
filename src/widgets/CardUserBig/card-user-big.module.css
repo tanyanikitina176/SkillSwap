@@ -1,6 +1,13 @@
+.bt {
+    display: flex;
+    justify-content: space-between;
+}
+
 .textContainer {
     display: flex;
     flex-direction: column;
+    overflow-wrap: break-word;
+    flex: 1;
     justify-content: space-between;
     width: 400px;
 }
@@ -50,4 +57,8 @@
     align-items: start;
     max-width: 440px;
     height: 324px;
+}
+
+.buttonWrapper {
+    margin-top: auto;
 }

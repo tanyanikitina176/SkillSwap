@@ -1,8 +1,6 @@
 import styles from "./card-user-big.module.css";
 import React, { type FC } from "react";
 
-
-
 interface CardUserBigProps {
   title: string;
   category: string;
@@ -19,21 +17,23 @@ export const CardUserBig: FC<CardUserBigProps> = ({
   subcategory,
   description,
   header,
-  buttonsSlot
+  buttonsSlot,
 }) => {
   return (
     <div className={styles.bigcontainer}>
       {header}
       <div className={styles.container}>
-        <div className={styles.textContainer}>
-          <h2 className={styles.title}>{title}</h2>
-          <p className={styles.skills}>
-            {category} / {subcategory}
-          </p>
-          <p className={styles.description}>
-            {description}
-          </p>
-          {buttonsSlot}
+        <div className={styles.bt}>
+          <div className={styles.textContainer}>
+            <h2 className={styles.title}>{title}</h2>
+            <p className={styles.skills}>
+              {category} / {subcategory}
+            </p>
+            <p className={styles.description}>{description}</p>
+            <div className={styles.buttonWrapper}>
+              {buttonsSlot}
+            </div>
+          </div>
         </div>
         <div className={styles.containerPhoto}>
           <div className={styles.photo}></div>
