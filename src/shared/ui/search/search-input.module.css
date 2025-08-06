@@ -1,8 +1,10 @@
 .wrapper {
+  flex-grow: 1;
   display: flex;
   align-items: center;
   gap: 8px;
   min-width: 527px;
+  max-width: 648px;
   height: 48px;
   background: var(--card-bg, #ffffff);
   padding: 12px;
@@ -11,6 +13,7 @@
 }
 
 .inputWrapper {
+  width: 100%;
   display: flex;
   gap: 8px;
 }

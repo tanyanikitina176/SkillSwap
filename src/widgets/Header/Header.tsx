@@ -1,18 +1,37 @@
-import styles from "./Header.module.css";
-import logo from "@assets/images/logo.svg";
-import topic from "@assets/icons/moon.svg";
-import chevronDown from "@assets/icons/chevron-down.svg";
-import chevronUp from "@assets/icons/chevron-up.svg";
-import { SearchInputUI } from "@shared/ui/search";
-import { Button } from "@shared/ui/button/button";
-import { CategoryDisplay } from "@widgets/SkillsPanel/SkillsPanel";
-import { useRef, useState } from "react";
-import clsx from "clsx";
-import { NavLink } from "react-router-dom";
+import styles from './Header.module.css';
+import logo from '@assets/images/logo.svg';
+import topic from '@assets/icons/moon.svg';
+import chevronDown from '@assets/icons/chevron-down.svg';
+import chevronUp from '@assets/icons/chevron-up.svg';
+import { SearchInputUI } from '@shared/ui/search';
+import { Button } from '@shared/ui/button/button';
+import { CategoryDisplay } from '@widgets/SkillsPanel/SkillsPanel';
+import { useRef, useState } from 'react';
+import clsx from 'clsx';
+import { NavLink } from 'react-router-dom';
+import { HeaderLoggedIn } from '@shared/ui/header-logged-in/header-logged-in';
+
 
 export const AppHeaderUI = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+
+  const userData = localStorage.getItem('user');
+  let userName = '';
+  let userAvatar = '';
+
+  if (userData) {
+    try {
+      const user = JSON.parse(userData);
+      userName = user.name;
+      userAvatar = user.avatar;
+    } catch (err) {
+      console.error('Ошибка при получении user из localStorage:', err);
+    }
+  }
+
+  const isAuth = !!userName;
 
   return (
     <header className={styles.header}>
@@ -38,7 +57,7 @@ export const AppHeaderUI = () => {
             </button>
 
             <div
-              className={`${styles.dropdownContent} ${isDropdownOpen ? styles.active : ""}`}
+              className={`${styles.dropdownContent} ${isDropdownOpen ? styles.active : ''}`}
               ref={dropdownRef}
             >
               <CategoryDisplay />
@@ -48,20 +67,28 @@ export const AppHeaderUI = () => {
 
         <SearchInputUI />
 
-        <div className={styles.topic}>
-          <button title="Темная тема" className={styles.topicButton}>
-            <img src={topic} alt="Тема" className={styles.icon} />
-          </button>
-        </div>
+        {isAuth ? (
+          <HeaderLoggedIn name={userName} avatar={userAvatar} />
+        ) : (
+          <>
+            <div className={styles.topic}>
+              <button title="Темная тема" className={styles.topicButton}>
+                <img src={topic} alt="Тема" className={styles.icon} />
+              </button>
+            </div>
 
-        <div className={styles.buttonsWrapper}>
-          <NavLink to="/login">
-            <Button type="secondary">Войти</Button>
-          </NavLink>
-          <NavLink to="/reg">
-            <Button type="primary">Зарегистрироваться</Button>
-          </NavLink>
-        </div>
+
+            <div className={styles.buttonsWrapper}>
+              <NavLink to="/login">
+                <Button type="secondary">Войти</Button>
+              </NavLink>
+              <NavLink to="/reg">
+                <Button type="primary">Зарегистрироваться</Button>
+              </NavLink>
+            </div>
+          </>
+        )}
+
       </nav>
     </header>
   );
