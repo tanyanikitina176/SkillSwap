@@ -5,8 +5,7 @@ import type { FC } from "react";
 export const ProfileMenu: FC = () => {
   return (
     <>
-      <ProfileMenuUI profileMenuItems={ProfileMenuItems}/>
+      <ProfileMenuUI profileMenuItems={ProfileMenuItems} />
     </>
-  )
-}
-
+  );
+};

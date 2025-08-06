@@ -14,11 +14,7 @@ interface ISkillListProps {
   isShortList: boolean; //отображаем короткий список или выводим все карточки
 }
 
-const SkillList = ({
-  users,
-  title,
-  isShortList,
-}: ISkillListProps) => {
+const SkillList = ({ users, title, isShortList }: ISkillListProps) => {
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
   useEffect(() => {

@@ -103,7 +103,7 @@ export const ProfileInfo: FC = () => {
   };
 
   const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { message } = validateDescription(e.target.value);
     setErrors((prev) => ({ ...prev, description: message || "" }));
@@ -128,7 +128,7 @@ export const ProfileInfo: FC = () => {
 
   const setData = <K extends keyof TProfileInfoUser>(
     field: K,
-    value: TProfileInfoUser[K]
+    value: TProfileInfoUser[K],
   ) => {
     setFormValue((prev) => ({
       ...prev,
@@ -162,7 +162,7 @@ export const ProfileInfo: FC = () => {
           onChange={handleEmailChange}
           error={!!errors.email}
           helperText={errors.email}
-          icon={< EditIcon />}
+          icon={<EditIcon />}
         />
         <span
           className={styles.change_password_block}
@@ -192,7 +192,7 @@ export const ProfileInfo: FC = () => {
           onChange={handleInputChange("name")}
           error={!!errors.name}
           helperText={errors.name}
-          icon={< EditIcon />}
+          icon={<EditIcon />}
         />
         <div className={styles.birth_gender_block}>
           <div className={styles.birth_block}>

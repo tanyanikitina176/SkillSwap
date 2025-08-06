@@ -18,7 +18,7 @@
   letter-spacing: -0.01em;
   line-height: 125%;
   font-size: 32px;
-  font-family:  var(--font-jost, sans-serif);
+  font-family: var(--font-jost, sans-serif);
   font-weight: 500;
   color: var(--text-primary, #253017);
 }

@@ -8,12 +8,11 @@ import { Button } from "@shared/ui/button/button";
 import { CategoryDisplay } from "@widgets/SkillsPanel/SkillsPanel";
 import { useRef, useState } from "react";
 import clsx from "clsx";
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 
 export const AppHeaderUI = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
 
   return (
     <header className={styles.header}>
@@ -24,7 +23,6 @@ export const AppHeaderUI = () => {
 
         <div className={styles.linksWrapper}>
           <span className={styles.text}>О проекте</span>
-
 
           <div className={styles.dropdownWrapper} ref={dropdownRef}>
             <button
@@ -46,7 +44,6 @@ export const AppHeaderUI = () => {
               <CategoryDisplay />
             </div>
           </div>
-
         </div>
 
         <SearchInputUI />
@@ -62,9 +59,7 @@ export const AppHeaderUI = () => {
             <Button type="secondary">Войти</Button>
           </NavLink>
           <NavLink to="/reg">
-            <Button type="primary">
-              Зарегистрироваться
-            </Button>
+            <Button type="primary">Зарегистрироваться</Button>
           </NavLink>
         </div>
       </nav>

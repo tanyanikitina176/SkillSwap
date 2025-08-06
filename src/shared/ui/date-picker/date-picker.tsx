@@ -1,5 +1,5 @@
 import React from "react";
-import type { DatePickerProps as AntdDatePickerProps} from "antd";
+import type { DatePickerProps as AntdDatePickerProps } from "antd";
 import { ConfigProvider, DatePicker as AntdDatePicker, Space } from "antd";
 import ruRU from "antd/lib/locale/ru_RU";
 import "./date-picker.css";
@@ -12,12 +12,15 @@ interface DatePickerProps {
   error?: boolean;
 }
 
-export const DatePicker: React.FC<DatePickerProps> = ({ onChange,  date, helperText, error}) => {
+export const DatePicker: React.FC<DatePickerProps> = ({
+  onChange,
+  date,
+  helperText,
+  error,
+}) => {
   const handleChange: AntdDatePickerProps["onChange"] = (date) => {
-    if (!!onChange) {
-      onChange(
-        !!date ?  date.valueOf() : null
-      );
+    if (onChange) {
+      onChange(date ? date.valueOf() : null);
     }
   };
 
@@ -26,7 +29,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({ onChange,  date, helperT
       <Space direction="vertical">
         <label className="label" id="dataPicker">
           <AntdDatePicker
-            value={!!date ? dayjs(date) : null}
+            value={date ? dayjs(date) : null}
             onChange={handleChange}
             placeholder="дд.мм.гггг"
             className="container"
@@ -35,12 +38,10 @@ export const DatePicker: React.FC<DatePickerProps> = ({ onChange,  date, helperT
           />
         </label>
         {helperText && (
-      <span
-        className={`helperText ${error ? 'errorText' : ""}`}
-      >
-        {helperText}
-      </span>
-    )}
+          <span className={`helperText ${error ? "errorText" : ""}`}>
+            {helperText}
+          </span>
+        )}
       </Space>
     </ConfigProvider>
   );

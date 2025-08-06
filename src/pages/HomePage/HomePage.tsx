@@ -103,7 +103,7 @@ export const HomePage = () => {
         const hasMatch = skillsToCheck.some(
           (skill) =>
             filters.skills.includes(skill.id) ||
-            filters.skills.includes(skill.category.id)
+            filters.skills.includes(skill.category.id),
         );
 
         if (!hasMatch) return false;
