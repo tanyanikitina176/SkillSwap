@@ -1,4 +1,4 @@
-.bt {
+.ContainerWithButton {
     display: flex;
     justify-content: space-between;
 }
@@ -58,7 +58,15 @@
     max-width: 440px;
     height: 324px;
 }
+.photo {
+    width: 440px;
+    height: 324px;
+    aspect-ratio: 1 / 1;
+    background-color: #253017;
+}
 
 .buttonWrapper {
     margin-top: auto;
+    display: flex;
+    width: 100%;
 }
