@@ -7,6 +7,7 @@ import { RegistrationPage } from './../pages/RegistrationPage/RegistrationPage'
 import { ProfileMenu } from '@widgets/Profile/ProfileMenu'
 import {LoginPage} from "../pages/LoginPage/LoginPage.tsx";
 import {CardUserBig} from "@widgets/CardUserBig/card-user-big.tsx";
+import {TestCardUserBigPage} from "@widgets/CardUserBig/testPageCardUserBig.tsx";
 
 // import { useEffect, useState } from 'react'
 // import { fetchUsersData } from '@api/User/User-api'
@@ -32,7 +33,7 @@ function App() {
 					<Route path='/500' element={<ConnetcError500 />} />
 					<Route path='/reg' element={<RegistrationPage />} />
 					<Route path='/login' element={<LoginPage />} />
-					<Route path='/card' element={<CardUserBig />} />
+					<Route path='/card' element={<TestCardUserBigPage />} />
 				</Routes>
 	
 		</>

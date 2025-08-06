@@ -5,12 +5,27 @@
     padding: 24px;
     background-color: #253017;
 }
+.header {
+    display: flex;
+    background-color: var(--card-bg, #ffffff);
+    align-items: center;
+    justify-content: center;
+    padding: 32px 52px;
+}
 
 .textContainer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 400px;
+}
+
+.iconsSlot {
+    display: flex;
+    justify-content: flex-end;
+    background-color: var(--card-bg, #ffffff);
+    padding: 32px 52px;
+
 }
 .title {
     font-size: 32px;
@@ -78,4 +93,11 @@
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
+}
+
+.photo {
+    background-color: var(--accent);
+    height: 100%;
+    width: 100%;
+    aspect-ratio: 1 / 1;
 }

@@ -1,55 +1,22 @@
 import styles from "./card-user-big.module.css";
 import { Button } from "@shared/ui/button/button.tsx";
-import {UserCard} from "@widgets/UserCard/user-card.tsx";
+import React, { type FC, type ReactNode } from "react";
 
 
-const mockUser = {
-  id: '1',
-  name: 'Анна',
-  age: 28,
-  gender: 'male' as const,
-  city: { id: '1', name: 'Москва' },
-  photo: '/db/users-photo/anna.jpg',
-  description: 'Описание Анны...',
-  likes: ['2', '5', '8', '9'],
-  teachingSkills: [
-    {
-      id: '111',
-      name: 'Английский язык',
-      category: { color: '#FFD700' }
-    },
-    {
-      id: '127',
-      name: 'Программирование',
-      category: { color: '#87CEFA' }
-    },
-    {
-      id: '999',
-      name: 'Скейтбординг',
-      category: { color: '#fddde6' }
-    }
-  ],
-  wantToLearnSkills: [
-    {
-      id: '106',
-      name: 'Рисование',
-      category: { color: '#90EE90' }
-    },
-    {
-      id: '124',
-      name: 'Кулинария',
-      category: { color: '#FFC0CB' }
-    }
-  ]
+
+interface CardUserBigProps {
+  header?: React.ReactNode;
+  buttonSlot?: React.ReactNode;
+  children?: React.ReactNode;
 }
-export const CardUserBig = () => {
 
-
-
-
+export const CardUserBig: FC<CardUserBigProps> = ({
+  header,
+  buttonSlot
+}) => {
   return (
-    <div className={styles.gridContainer}>
-      <UserCard user={mockUser} />
+    <div className={styles.bigcontainer}>
+      {header}
       <div className={styles.container}>
         <div className={styles.textContainer}>
           <h2 className={styles.title}>Игра на барабанах</h2>
@@ -63,10 +30,11 @@ export const CardUserBig = () => {
             разбирать песни, импровизировать и звучать уверенно даже без
             паритуры
           </p>
-
-          <Button>Предложить обмен</Button>
+          {buttonSlot}
         </div>
-        <div className={styles.containerPhoto}></div>
+        <div className={styles.containerPhoto}>
+          <div className={styles.photo}></div>
+        </div>
       </div>
     </div>
   );
