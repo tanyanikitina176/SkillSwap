@@ -5,51 +5,28 @@ import LikeIcon from '@assets/icons/like.svg';
 import ShareIcon from '@assets/icons/share.svg';
 import MoreSquareIcon from '@assets/icons/more-square.svg';
 import {UserCardSkillInfo} from "@widgets/SkillInfo/UserCardSkillInfo.tsx";
+import type {FC} from "react";
+import type { User } from '@entities/User/types'
+import type {Skill} from "@entities/Skill/SkillType.ts";
+import type {Category, Subcategory} from '@entities/Category/CategoryTypes.ts'
 
 
-const mockUser = {
-  id: "1",
-  name: "Анна",
-  age: 28,
-  gender: "male" as const,
-  city: { id: "1", name: "Москва" },
-  photo: "/db/users-photo/anna.jpg",
-  description: "Описание Анны...",
-  likes: ["2", "5", "8", "9"],
-  teachingSkills: [
-    {
-      id: "111",
-      name: "Английский язык",
-      category: { color: "#FFD700" },
-    },
-    {
-      id: "127",
-      name: "Программирование",
-      category: { color: "#87CEFA" },
-    },
-    {
-      id: "999",
-      name: "Скейтбординг",
-      category: { color: "#fddde6" },
-    },
-  ],
-  wantToLearnSkills: [
-    {
-      id: "106",
-      name: "Рисование",
-      category: { color: "#90EE90" },
-    },
-    {
-      id: "124",
-      name: "Кулинария",
-      category: { color: "#FFC0CB" },
-    },
-  ],
-};
-export const SkillInfo = () => {
+interface SkillInfoProps {
+  user: User;
+  skill: Skill;
+  categories: Category[];
+  subcategories: Subcategory[];
+}
+export const SkillInfo: FC<SkillInfoProps> = ({ user, skill, categories, subcategories}) => {
+  const category = categories.find(cat => cat.id === skill.CategoryId);
+  const subcategory = subcategories.find(sub => sub.id === skill.SubcategoryId);
+
+  const categoryName = category?.name || "Без категории";
+  const subcategoryName = subcategory?.name || "";
+
   return (
     <div className={styles.gridSkillInfo}>
-      <UserCardSkillInfo user={mockUser} />
+      <UserCardSkillInfo user={user} />
       <CardUserBig
         header={
           <div className={styles.headerIcons}>
@@ -64,10 +41,10 @@ export const SkillInfo = () => {
             </button>
           </div>
         }
-        title={"fыаыsdsfsfdfsfsfsfsfsfsgsgdgdgdgdааыаыаыаыаы"}
-        description={"fsfыаdfsfsfsfsfsfsfsfsfsfsfsfsfыаыааыаыаыа"}
-        category={"sfdsfsfsfsfsfsfsfsfsыаыаыf"}
-        subcategory={"sfыаыsfsfsfsfsfsfsfsfsfsfsаыfs"}
+        title={skill.name}
+        description={skill.description}
+        category={categoryName}
+        subcategory={subcategoryName}
         buttonsSlot={
           <Button style={{ width: "100%" }}>Предложить обмен</Button>
         }
