@@ -8,7 +8,7 @@
 	flex-direction: column;
 	gap: 4px;
 	max-width: 436px;
-	position: relative;
+	/* position: absolute; */
 }
 
 .label {
@@ -81,4 +81,37 @@
 	font-size: 12px;
 	line-height: 16px;
 	font-family: var(--font-roboto-regular, sans-serif);
+}
+
+.textareaWithIconContainer {
+	position: relative;
+	width: 100%;
+}
+
+.textareaWithIcon {
+	width: 100%;
+	padding: 10px;
+	padding-right: 50px;
+	box-sizing: border-box;
+	resize: vertical;
+	min-height: 100px;
+}
+
+.iconContainer {
+	position: absolute;
+	right: 20px;
+	top: 50%;
+	transform: translateY(-50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none;
+}
+
+.editIcon {
+	display: flex;
+	width: 24px;
+	height: 24px;
+	justify-content: center;
+	align-items: center;
 }

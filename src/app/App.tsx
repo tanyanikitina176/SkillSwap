@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import HomePage from "../pages/HomePage/HomePage";
@@ -10,10 +9,6 @@ import { LoginPage } from "../pages/LoginPage/LoginPage.tsx";
 import { ProfileInfo } from "@widgets/Profile/profile-info.tsx";
 import { ProtectedRoute } from "./protected-route/Protected-route.tsx";
 
-
-// import { useEffect, useState } from 'react'
-// import { fetchUsersData } from '@api/User/User-api'
-// // import type { User } from '@entities/User/types'
 
 function App() {
   return (
@@ -35,6 +30,7 @@ function App() {
       </Routes>
     </>
   );
+
 }
 
 export default App;

@@ -1,6 +1,7 @@
 import { useState, type FC, type ReactNode } from 'react'
 import style from './text-area.module.css'
 import TextArea from 'antd/es/input/TextArea'
+import editIcon from '@assets/icons/edit.svg'
 
 interface InputProps {
 	label?: string
@@ -11,6 +12,7 @@ interface InputProps {
 	helperText?: string
 	error?: boolean
 	children?: ReactNode
+	withIcon?: boolean
 }
 
 export const FormTextArea: FC<InputProps> = ({
@@ -22,6 +24,7 @@ export const FormTextArea: FC<InputProps> = ({
 	error = false,
 	children,
 	name = '',
+	withIcon = false,
 }) => {
 	const [innerValue, setInnerValue] = useState('')
 
@@ -43,14 +46,23 @@ export const FormTextArea: FC<InputProps> = ({
 						{label}
 					</label>
 				)}
-				<TextArea
-					id={name}
-					className={`${style.input} ${error ? style.error : ''}`}
-					placeholder={placeholder}
-					value={inputValue}
-					onChange={handleChange}
-					name={name}
-				/>
+				<div className={withIcon ? style.textareaWithIconContainer : ''}>
+					<TextArea
+						id={name}
+						className={`${style.input} ${withIcon ? style.textareaWithIcon : ''} ${error ? style.error : ''}`}
+						placeholder={placeholder}
+						value={inputValue}
+						onChange={handleChange}
+						name={name}
+					/>
+					{withIcon && (
+						<div className={style.iconContainer}>
+							<div className={style.editIcon}>
+								<img src={editIcon} alt='Изображение карандаша' />
+							</div>
+						</div>
+					)}
+				</div>
 			</div>
 			{helperText && (
 				<span
