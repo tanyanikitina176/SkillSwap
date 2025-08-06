@@ -44,7 +44,7 @@ export const LoginPage = () => {
       localStorage.setItem('isAuthenticated', 'true');
       
       // Перенаправляем на страницу профиля
-      navigate("/profile");
+      navigate("/");
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Ошибка входа');
     } finally {
