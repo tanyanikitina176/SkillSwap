@@ -11,9 +11,11 @@ import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import { HeaderLoggedIn } from '@shared/ui/header-logged-in/header-logged-in';
 
+
 export const AppHeaderUI = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
 
   const userData = localStorage.getItem('user');
   let userName = '';
@@ -75,6 +77,7 @@ export const AppHeaderUI = () => {
               </button>
             </div>
 
+
             <div className={styles.buttonsWrapper}>
               <NavLink to="/login">
                 <Button type="secondary">Войти</Button>
@@ -85,6 +88,7 @@ export const AppHeaderUI = () => {
             </div>
           </>
         )}
+
       </nav>
     </header>
   );

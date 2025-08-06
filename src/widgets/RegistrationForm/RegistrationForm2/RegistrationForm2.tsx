@@ -11,7 +11,7 @@ import {
   genderOptions,
   cityOptions,
 } from "@shared/ui/dropdown/dropdownConstants";
-import { categories } from '../../../../public/db/skills_categories.json';
+import { categories } from "../../../../public/db/skills_categories.json";
 import { subcategories } from "../../../../public/db/skills_subcategories.json";
 import { validateFormInfo, type FormErrors } from "../utils/validation";
 
@@ -47,7 +47,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
 
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>(
-    []
+    [],
   );
 
   const subcategoriesOptions = useMemo(() => {
@@ -55,7 +55,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
 
     return subcategories
       .filter((subcategory) =>
-        selectedCategories.includes(subcategory.categoryId)
+        selectedCategories.includes(subcategory.categoryId),
       )
       .map((subcategory) => ({
         value: subcategory.id,

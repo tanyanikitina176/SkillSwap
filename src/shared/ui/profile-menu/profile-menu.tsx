@@ -36,7 +36,7 @@ const ProfileMenuItem = ({
 };
 
 export const ProfileMenuUI: FC<IProfileMenuProps> = (
-  profileMenuProps: IProfileMenuProps
+  profileMenuProps: IProfileMenuProps,
 ) => {
   const { profileMenuItems } = profileMenuProps;
   const [currentId, setCurrentId] = useState<string>();
