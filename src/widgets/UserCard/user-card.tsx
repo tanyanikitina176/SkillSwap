@@ -3,12 +3,22 @@ import styles from './user-card.module.css'
 import { Tag } from '@shared/ui/tag/tag'
 import { Button } from '@shared/ui/button/button'
 import type { UserCardProps } from './type'
+import { useNavigate } from 'react-router-dom';
 
 export const UserCard: FC<UserCardProps> = ({
 	user,
 	onLikeClick,
 	onButtonClick,
 }) => {
+	const navigate = useNavigate();
+
+	const handleDetailsClick = () => {
+		if (onButtonClick) {
+		onButtonClick(user.id);
+		}
+		// Переходим на страницу /skill с передачей пользователя
+		navigate(`/skill/`, { state: { user } });
+	};
 	return (
 		<div className={styles.card}>
 			<button
@@ -90,7 +100,8 @@ export const UserCard: FC<UserCardProps> = ({
 			<Button
 				type='primary'
 				htmlType='button'
-				onClick={() => onButtonClick?.(user.id)}
+				// onClick={() => onButtonClick?.(user.id)}
+				onClick={handleDetailsClick}
 				extraClass={styles.card__button}
 			>
 				Подробнее

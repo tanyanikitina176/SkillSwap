@@ -8,6 +8,7 @@ import { ProfileMenu } from "@widgets/Profile/ProfileMenu";
 import { LoginPage } from "../pages/LoginPage/LoginPage.tsx";
 import { ProfileInfo } from "@widgets/Profile/profile-info.tsx";
 import { ProtectedRoute } from "./protected-route/Protected-route.tsx";
+import { SkillPage } from "./../pages/SkillPage/SkillPage.tsx";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/500" element={<ConnetcError500 />} />
         <Route path="/reg" element={<RegistrationPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/skill" element={<SkillPage />} />
         <Route
           path="/profile"
           element={
