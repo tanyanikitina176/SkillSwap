@@ -1,0 +1,32 @@
+.gridSkillInfo {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    padding: 24px;
+    background-color: #253017;
+
+}
+
+.headerIcons {
+    display: flex;
+    justify-content: end;
+    gap: 16px;
+}
+
+.iconButton {
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconButton svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--text-primary, #253017);
+}
