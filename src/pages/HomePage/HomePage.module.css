@@ -30,6 +30,11 @@
   gap: 24px;
 }
 
+.section__header {
+  display: flex;
+  justify-content: space-between;
+}
+
 @media (max-width: 1024px) {
   .layout {
     flex-direction: column;
