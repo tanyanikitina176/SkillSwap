@@ -3,11 +3,12 @@
   border-radius: 12px;
   flex-direction: column;
   align-items: center;
-  height: 42rem;
+  height: 752px;
   background-color: var(--card-bg, #ffffff);
   padding: 40px;
   font-family: "Roboto", sans-serif;
-  width: max-content;
+  width: 324px;
+  flex-shrink: 0;
   gap: 8px;
 }
 

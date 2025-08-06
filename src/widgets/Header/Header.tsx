@@ -58,7 +58,9 @@ export const AppHeaderUI = () => {
         </div>
 
         <div className={styles.buttonsWrapper}>
-          <Button type="secondary">Войти</Button>
+          <NavLink to="/login">
+            <Button type="secondary">Войти</Button>
+          </NavLink>
           <NavLink to="/reg">
             <Button type="primary">
               Зарегистрироваться
