@@ -23,12 +23,12 @@ export const DragAndDropUI = () => {
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-      e.preventDefault()
-      setDragActive(false)
-      if( e.dataTransfer.files && e.dataTransfer.files[0]) {
-          setFiles([...e.dataTransfer.files])
-      }
-  }
+    e.preventDefault();
+    setDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      setFiles([...e.dataTransfer.files]);
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -44,7 +44,6 @@ export const DragAndDropUI = () => {
           Перетащите или выберите изображения навыка
         </span>
         <label className={styles.label}>
-
           <Icon className={styles.icon} />
           <input
             type="file"
@@ -53,19 +52,19 @@ export const DragAndDropUI = () => {
             onChange={handleFilesChange}
           />
           <span className={styles.text}>Выбрать изображение</span>
-
-
         </label>
 
-          <div className={styles.file}>
-              {files.length > 0 && (
-                  <ul className={styles.fileList}>
-                      {files.map(({ name }, id) => (
-                          <li key={id} className={styles.title}>{name}</li>
-                      ))}
-                  </ul>
-              )}
-          </div>
+        <div className={styles.file}>
+          {files.length > 0 && (
+            <ul className={styles.fileList}>
+              {files.map(({ name }, id) => (
+                <li key={id} className={styles.title}>
+                  {name}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );

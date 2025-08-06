@@ -12,11 +12,41 @@ export const LoginPage = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = () => {
-    // логика входа
-    console.log("Logging in with:", formData);
-    navigate("/"); // переход после нажатия на клавишу вход
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const userDataString = localStorage.getItem("user");
+
+      if (!userDataString) {
+        throw new Error("Пользователь не найден. Зарегистрируйтесь.");
+      }
+
+      const userData = JSON.parse(userDataString);
+
+      if (userData.email !== formData.email) {
+        throw new Error("Неверный email");
+      }
+
+      // В реальном приложении пароль не храним в localStorage и должен проверяться через хеширование!
+      if (userData.password !== formData.password) {
+        throw new Error("Неверный пароль");
+      }
+
+      // Сохраняем флаг авторизации
+      localStorage.setItem("isAuthenticated", "true");
+
+      // Перенаправляем на страницу профиля
+      navigate("/");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Ошибка входа");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleClose = () => {
@@ -40,12 +70,19 @@ export const LoginPage = () => {
           </Button>
         </div>
       </header>
-      <RegistrationStep1
-        onNextStep={handleLogin}
-        formData={formData}
-        setFormData={setFormData}
-        mode="login"
-      />
+
+      {error && <div className={styles.errorMessage}>{error}</div>}
+
+      {isLoading ? (
+        <div className={styles.loader}>Вход...</div>
+      ) : (
+        <RegistrationStep1
+          onNextStep={handleLogin}
+          formData={formData}
+          setFormData={setFormData}
+          mode="login"
+        />
+      )}
     </div>
   );
 };

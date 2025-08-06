@@ -3,7 +3,7 @@
 
   --font-jost: "Jost";
   --font-roboto-regular: "Roboto-Regular";
-  --font-roboto-medium: "Roboto-Medium"; 
+  --font-roboto-medium: "Roboto-Medium";
 
   /* ======= Основные цвета текста ======= */
 
@@ -20,7 +20,7 @@
   --text-disabled-hsl: 90deg 5% 61%;
 
   --text-black: #000000;
-  --modal-overlay-color:#8E8E8E99;
+  --modal-overlay-color: #8e8e8e99;
 
   /* ======= Кнопки и интерактив ======= */
 
