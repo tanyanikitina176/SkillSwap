@@ -158,6 +158,9 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
     setErrors((prev) => ({ ...prev, skillImage: message || "" }));
   };
 
+  const validationResult = validateFormStep3(values);
+  const isFormValid = validationResult.isValid;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.stepIndicatorContainer}>
@@ -232,7 +235,9 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
               helperText={errors.description}
             />
 
-            <DragAndDropUI />
+            <DragAndDropUI 
+              onFileChange={handleFileChange}
+            />
 
             <div className={styles.buttonsContainer}>
               <Button
@@ -248,9 +253,10 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
                 type="primary"
                 htmlType="submit"
                 extraClass={styles.submitButton}
+                disabled={!isFormValid}
                 onClick={onNextStep}
               >
-                Далее
+                Продолжить
               </Button>
             </div>
           </form>

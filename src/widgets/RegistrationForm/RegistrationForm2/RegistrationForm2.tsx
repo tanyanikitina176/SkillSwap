@@ -159,6 +159,9 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
     label: category.name,
   }));
 
+  const validationResult = validateFormInfo(formData);
+  const isFormValid = validationResult.isValid;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.stepIndicatorContainer}>
@@ -281,6 +284,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
                 type="primary"
                 htmlType="submit"
                 extraClass={styles.submitButton}
+                disabled={!isFormValid}
               >
                 Продолжить
               </Button>

@@ -77,10 +77,16 @@ export const ProfileInfo: FC = () => {
   }, [user]);
 
   useEffect(() => {
-    const isDisabled =
-      isEqual(user, formValue) || !isEqual(INITIAL_ERRORS, errors);
-    setIsDisabledButton(isDisabled);
-  }, [user, formValue, errors]);
+    const hasErrors = Object.values(errors).some(error => error !== "");
+    const isFormEmpty = 
+      formValue.name.trim() === "" ||
+      formValue.email.trim() === "" ||
+      formValue.gender === "" ||
+      formValue.city === "" ||
+      formValue.dateOfBirth === null;
+    
+    setIsDisabledButton(hasErrors || isFormEmpty);
+  }, [errors, formValue]);
 
   const handleInputChange =
     (field: keyof TProfileInfoUser) =>
