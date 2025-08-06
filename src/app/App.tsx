@@ -33,7 +33,6 @@ function App() {
 					<Route path='/500' element={<ConnetcError500 />} />
 					<Route path='/reg' element={<RegistrationPage />} />
 					<Route path='/login' element={<LoginPage />} />
-					<Route path='/card' element={<TestCardUserBigPage />} />
 				</Routes>
 	
 		</>

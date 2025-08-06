@@ -1,5 +1,5 @@
 import styles from "./card-user-big.module.css";
-import React, { type FC, type ReactNode } from "react";
+import React, { type FC } from "react";
 
 
 
