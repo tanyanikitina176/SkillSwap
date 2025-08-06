@@ -15,14 +15,14 @@ interface RegistrationStep1Props {
     password: string;
   };
   setFormData: (data: { email: string; password: string }) => void;
-  mode?: "register" | "login"; // Юля добавила
+  mode?: "register" | "login";
 }
 
 export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
   onNextStep,
   formData,
   setFormData,
-  mode = "register" // Юля добавила
+  mode = "register"
 }) => {
   const [errors, setErrors] = useState({
     email: '',
@@ -59,7 +59,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
   return (
     <div className={styles.wrapper}>
       <div className={styles.stepIndicatorContainer}>
-        {mode === "register" ? ( // Юля
+        {mode === "register" ? (
           <StepIndicator currentStep={1} totalSteps={3} />
         ) : (
           <h2 className={styles.title}>Вход</h2>
@@ -101,7 +101,11 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
               label="Email"
               name="email"
               type="email"
-              placeholder={"Введите email"}
+              placeholder={ // Юля
+                mode === "register"
+                  ? "Придумайте надёжный пароль"
+                  : "Введите ваш пароль"
+              }
               value={formData.email}
               onChange={handleInputChange}
               error={!!errors.email}
@@ -112,14 +116,18 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
               label="Пароль"
               name="password"
               type="password"
-              placeholder="Придумайте надёжный пароль"
+              placeholder={
+                mode === "register"
+                  ? "Придумайте надёжный пароль"
+                  : "Введите ваш пароль"
+              }
               value={formData.password}
               onChange={handleInputChange}
               error={!!errors.password}
               helperText={errors.password}
             />
 
-            <Button //юля
+            <Button
               type="primary"
               htmlType="submit"
               extraClass={styles.submitButton}

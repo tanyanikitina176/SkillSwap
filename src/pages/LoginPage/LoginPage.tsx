@@ -16,9 +16,6 @@ export const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = () => {
-    // // логика входа
-    // console.log("Logging in with:", formData);
-    // navigate("/"); // переход после нажатия на клавишу вход
     setIsLoading(true);
     setError(null);
 
