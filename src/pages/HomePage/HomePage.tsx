@@ -8,9 +8,13 @@ import styles from "./HomePage.module.css";
 import skillListStyles from "../../widgets/SkillList/skill-list.module.css";
 import type { User } from "../../entities/User/types";
 import { fetchUsersData } from "../../api/User/User-api";
+import { Button } from "@shared/ui/button/button";
+import SortIcon from "@assets/icons/sort.svg?react";
+import skills from "@public/db/skills.json";
+import { sortUsersByCreatedAt } from "@shared/lib/utils/sortedUsersByDate";
 
-type RoleType = 'Всё' | 'Хочу научиться' | 'Могу научить';
-type GenderType = 'Не имеет значения' | 'Мужской' | 'Женский';
+type RoleType = "Всё" | "Хочу научиться" | "Могу научить";
+type GenderType = "Не имеет значения" | "Мужской" | "Женский";
 
 interface HomeFilters {
   role: RoleType;
@@ -24,9 +28,10 @@ const MemoizedUserCard = memo(UserCard);
 export const HomePage = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isClickButtonShowNew, setisClickButtonShowNew] = useState(false);
   const [filters, setFilters] = useState<HomeFilters>({
-    role: 'Всё',
-    gender: 'Не имеет значения',
+    role: "Всё",
+    gender: "Не имеет значения",
     cities: [],
     skills: [],
   });
@@ -47,23 +52,23 @@ export const HomePage = () => {
   }, []);
 
   const handleRoleChange = useCallback((role: string) => {
-    if (['Всё', 'Хочу научиться', 'Могу научить'].includes(role)) {
-      setFilters(prev => ({ ...prev, role: role as RoleType }));
+    if (["Всё", "Хочу научиться", "Могу научить"].includes(role)) {
+      setFilters((prev) => ({ ...prev, role: role as RoleType }));
     }
   }, []);
 
   const handleGenderChange = useCallback((gender: string) => {
-    if (['Не имеет значения', 'Мужской', 'Женский'].includes(gender)) {
-      setFilters(prev => ({ ...prev, gender: gender as GenderType }));
+    if (["Не имеет значения", "Мужской", "Женский"].includes(gender)) {
+      setFilters((prev) => ({ ...prev, gender: gender as GenderType }));
     }
   }, []);
 
   const handleCitiesChange = useCallback((cities: string[]) => {
-    setFilters(prev => ({ ...prev, cities }));
+    setFilters((prev) => ({ ...prev, cities }));
   }, []);
 
   const handleSkillsChange = useCallback((skills: string[]) => {
-    setFilters(prev => ({ ...prev, skills }));
+    setFilters((prev) => ({ ...prev, skills }));
   }, []);
 
   const handleDetailsClick = useCallback((userId: string) => {
@@ -71,29 +76,34 @@ export const HomePage = () => {
   }, []);
 
   const filteredUsers = useMemo(() => {
-    return users.filter(user => {
-      if (filters.gender !== 'Не имеет значения') {
+    return users.filter((user) => {
+      if (filters.gender !== "Не имеет значения") {
         const genderMap = {
-          'Мужской': 'male',
-          'Женский': 'female'
+          Мужской: "male",
+          Женский: "female",
         };
         if (user.gender !== genderMap[filters.gender]) return false;
       }
 
-      if (filters.cities.length > 0 && !filters.cities.includes(user.city.name)) {
+      if (
+        filters.cities.length > 0 &&
+        !filters.cities.includes(user.city.name)
+      ) {
         return false;
       }
 
       if (filters.skills.length > 0) {
-        const skillsToCheck = filters.role === 'Всё'
-          ? [...user.teachingSkills, ...user.wantToLearnSkills]
-          : filters.role === 'Могу научить'
-            ? user.teachingSkills
-            : user.wantToLearnSkills;
+        const skillsToCheck =
+          filters.role === "Всё"
+            ? [...user.teachingSkills, ...user.wantToLearnSkills]
+            : filters.role === "Могу научить"
+              ? user.teachingSkills
+              : user.wantToLearnSkills;
 
-        const hasMatch = skillsToCheck.some(skill => 
-          filters.skills.includes(skill.id) || 
-          filters.skills.includes(skill.category.id)
+        const hasMatch = skillsToCheck.some(
+          (skill) =>
+            filters.skills.includes(skill.id) ||
+            filters.skills.includes(skill.category.id)
         );
 
         if (!hasMatch) return false;
@@ -103,12 +113,21 @@ export const HomePage = () => {
     });
   }, [users, filters]);
 
+  const onClickButtonShowNew = () => {
+    setisClickButtonShowNew(!isClickButtonShowNew);
+  };
+
+  const skillsUsers = skills.skills;
+  const sortedUsersByDate = sortUsersByCreatedAt(filteredUsers, skillsUsers);
+
   // Проверяем, установлены ли дефолтные фильтры
   const isDefaultFilters = useMemo(() => {
-    return filters.role === 'Всё' && 
-           filters.gender === 'Не имеет значения' && 
-           filters.cities.length === 0 && 
-           filters.skills.length === 0;
+    return (
+      filters.role === "Всё" &&
+      filters.gender === "Не имеет значения" &&
+      filters.cities.length === 0 &&
+      filters.skills.length === 0
+    );
   }, [filters]);
 
   if (loading) {
@@ -121,29 +140,50 @@ export const HomePage = () => {
 
       <main className={styles.main}>
         <div className={styles.layout}>
-          <Filtres 
+          <Filtres
             onRoleChange={handleRoleChange}
             onGenderChange={handleGenderChange}
             onCitiesChange={handleCitiesChange}
             onSkillsChange={handleSkillsChange}
           />
-        
+
           <div className={styles.content}>
             {isDefaultFilters ? (
               <SkillListContainer users={filteredUsers} />
             ) : (
               <section className={styles.section}>
-                <h2 className={skillListStyles.header__title} style={{ marginBottom: '36px' }}>
-                  Подходящие предложения: {filteredUsers.length}
-                </h2>
+                <div className={styles.section__header}>
+                  <h2
+                    className={skillListStyles.header__title}
+                    style={{ marginBottom: "36px" }}
+                  >
+                    Подходящие предложения: {filteredUsers.length}
+                  </h2>
+                  <Button
+                    type="tertiary"
+                    startIcon={<SortIcon />}
+                    onClick={onClickButtonShowNew}
+                    htmlType="button"
+                  >
+                    {!isClickButtonShowNew ? "Сначала новые" : "Показать все"}
+                  </Button>
+                </div>
                 <div className={styles.usersGrid}>
-                  {filteredUsers.map(user => (
-                    <MemoizedUserCard
-                      key={user.id}
-                      user={user}
-                      onButtonClick={handleDetailsClick}
-                    />
-                  ))}
+                  {isClickButtonShowNew
+                    ? sortedUsersByDate.map((user) => (
+                        <MemoizedUserCard
+                          key={user.id}
+                          user={user}
+                          onButtonClick={handleDetailsClick}
+                        />
+                      ))
+                    : filteredUsers.map((user) => (
+                        <MemoizedUserCard
+                          key={user.id}
+                          user={user}
+                          onButtonClick={handleDetailsClick}
+                        />
+                      ))}
                 </div>
               </section>
             )}

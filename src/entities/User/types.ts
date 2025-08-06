@@ -11,6 +11,19 @@ export type User = {
 	photo: string
 	description: string
 	likes: User[]
+	createdAt?: string
+}
+
+export type Skill = {
+  id: string;
+  name: string;
+  CategoryId: string;
+  SubcategoryId: string;
+  description: string;
+  authorId: string;
+  likesCount: number;
+  createdAt: string;
+  images: string[];
 }
 
 export type UserGender = 'male' | 'female'
