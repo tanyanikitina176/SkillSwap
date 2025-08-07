@@ -3,15 +3,17 @@ import type { User } from "@entities/User/types";
 import { SameOffers } from "@widgets/Offers/SameOffers";
 import { useState, useEffect } from "react";
 import { fetchUsersData } from "../../api/User/User-api";
+import { fetchSkillsData } from "../../api/Skill/Skill-api";
 import { AppHeaderUI } from "@widgets/Header";
 import styles from "./SkillPage.module.css";
 import { Footer } from "@widgets/Footer/Footer";
 import { Tag } from "@shared/ui/tag/tag";
+import type { Skill } from "../../entities/Skill/SkillType";
 
 export const SkillPage = () => {
   const location = useLocation();
   const [users, setUsers] = useState<User[]>([]);
-
+  
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -23,6 +25,21 @@ export const SkillPage = () => {
     };
     loadData();
   }, []);
+
+  const [skills, setSkills] = useState<Skill[]>([]);
+
+  useEffect(() => {
+    const loadSkills = async () => {
+      try {
+        const skillsData = await fetchSkillsData();
+        setSkills(skillsData);
+      } catch (error) {
+        console.error("Error loading skills:", error);
+      }
+    };
+    loadSkills();
+  }, []);
+  console.log(skills); // отображение работа fetchSkillsData, после удалить
 
   const currentUser = location.state?.user as User;
   if (!currentUser) {
