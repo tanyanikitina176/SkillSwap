@@ -34,57 +34,20 @@ const INITIAL_ERRORS = {
   birthDate: "",
 };
 
-const INITIAL_FORM_VALUE = {
-  name: "",
-  email: "",
-  password: "",
-  birthDate: null,
-  gender: "",
-  city: "",
-  categories: [],
-  subcategories: [],
-  skills: {
-    id: "",
-    name: "",
-    color: "",
-    icon: "",
-    subcategories: [
-      {
-        id: "",
-        name: "",
-        category: { id: "", name: "", color: "", icon: "" },
-      },
-    ],
-  },
-  avatar: undefined,
-  skillImage: "",
-  description: "",
-};
-
 export const ProfileInfo: FC = () => {
-  const [user, setUser] = useState<UserInLocalStorage | null>(null);
+  const user = getUserFromLocalStorage();
   const [showPasswordField, setShowPasswordField] = useState(false);
   const [formValue, setFormValue] =
-    useState<UserInLocalStorage>(INITIAL_FORM_VALUE);
+    useState<UserInLocalStorage>(user || {} as UserInLocalStorage);
   const [errors, setErrors] = useState(INITIAL_ERRORS);
   const [isDisabledButton, setIsDisabledButton] = useState(true);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    const fetchedUser = getUserFromLocalStorage();
-    setUser(fetchedUser);
-    if (fetchedUser) {
-      setFormValue(fetchedUser);
-    }
-  }, []);
-
-  useEffect(() => {
-    const isFormUnchanged = user
-      ? isEqual(user, formValue)
-      : isEqual(INITIAL_FORM_VALUE, formValue);
-    const hasErrors = Object.values(errors).some((error) => error !== "");
-    setIsDisabledButton(isFormUnchanged || hasErrors);
-  }, [formValue, errors]);
+    const isDisabled =
+      isEqual(user, formValue) || !isEqual(INITIAL_ERRORS, errors);
+    setIsDisabledButton(isDisabled);
+  }, [user, formValue, errors]);
 
   const handleInputChange =
     (field: keyof UserInLocalStorage) =>
@@ -146,7 +109,7 @@ export const ProfileInfo: FC = () => {
 
   const handleChangeDate = (date: number | null) => {
     const { message } = validateDateOfBirth(date);
-    setErrors((prev) => ({ ...prev, dateOfBirth: message || "" }));
+    setErrors((prev) => ({ ...prev, birthDate: message || "" }));
     setData("birthDate", date);
   };
 
