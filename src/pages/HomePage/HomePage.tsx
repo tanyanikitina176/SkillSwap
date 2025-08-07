@@ -14,6 +14,8 @@ import skills from "@public/db/skills.json";
 import { sortUsersByCreatedAt } from "@shared/lib/utils/sortedUsersByDate";
 import useDebounce from "@shared/hooks/useDebounce.ts";
 
+import subcategoriesData from "@public/db/skills_subcategories.json";
+
 type RoleType = "Всё" | "Хочу научиться" | "Могу научить";
 type GenderType = "Не имеет значения" | "Мужской" | "Женский";
 
@@ -31,6 +33,7 @@ export const HomePage = () => {
   // поиск карточек по навыку
   const [searchQuery, setSearchQuery] = useState("");
   const debouncedSearch = useDebounce(searchQuery, 400);
+  // поиск карточек по навыку
 
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -118,6 +121,38 @@ export const HomePage = () => {
       return true;
     });
   }, [users, filters]);
+
+
+  //поиск карточек
+  const subcategoryNameMap = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const sub of subcategoriesData.subcategories) {
+      map.set(sub.id, sub.name.toLowerCase());
+    }
+    return map;
+  }, []);
+
+  const searchedUsers = useMemo(() => {
+    if (!debouncedSearch) return filteredUsers;
+
+    const query = debouncedSearch.toLowerCase();
+
+    return filteredUsers.filter((user) => {
+      const skillsToCheck =
+        filters.role === "Всё"
+          ? [...user.teachingSkills, ...user.wantToLearnSkills]
+          : filters.role === "Могу научить"
+            ? user.teachingSkills
+            : user.wantToLearnSkills;
+
+      return skillsToCheck.some((skill) =>
+        skill.name.toLowerCase().includes(query) ||
+        skill.category.name.toLowerCase().includes(query)
+      );
+    });
+  }, [debouncedSearch, filteredUsers, filters.role]);
+
+  //поиск карточек
 
   const onClickButtonShowNew = () => {
     setisClickButtonShowNew(!isClickButtonShowNew);
