@@ -65,3 +65,13 @@ export const fetchSkillsData = async (): Promise<Skill[]> => {
     throw error;
   }
 };
+export const fetchSkillByAuthorId = async (authorId: string): Promise<Skill | null> => {
+  try {
+    const skills = await fetchSkillsData();
+    const skill = skills.find(s => s.authorId === authorId);
+    return skill || null;
+  } catch (error) {
+    console.error("Error finding skill by author:", error);
+    throw error;
+  }
+};

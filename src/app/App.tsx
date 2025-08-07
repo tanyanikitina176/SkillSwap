@@ -18,7 +18,7 @@ function App() {
         <Route path="/500" element={<ConnetcError500 />} />
         <Route path="/reg" element={<RegistrationPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/skill" element={<SkillPage />} />
+        <Route path="/skill/:userId" element={<SkillPage />} />
         <Route
           path="/profile"
           element={
