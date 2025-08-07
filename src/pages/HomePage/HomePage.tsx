@@ -142,7 +142,7 @@ export const HomePage = () => {
 
   return (
     <div className={styles.homePage}>
-      <AppHeaderUI />
+      <AppHeaderUI searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
       <main className={styles.main}>
         <div className={styles.layout}>
