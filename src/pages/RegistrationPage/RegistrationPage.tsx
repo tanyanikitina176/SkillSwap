@@ -14,6 +14,7 @@ import logo from "@assets/images/logo.svg";
 import closeIcon from "@assets/icons/cross.svg";
 import styles from "./RegistrationForm.module.css";
 import { Button } from "@shared/ui/button/button";
+import { convertFileToBase64 } from "@shared/lib/utils/convertFileToBase64";
 
 const prepareCategories = (): CategoryWithSubcategories[] => {
   return rawCategories.map((category) => {
@@ -92,8 +93,9 @@ export const RegistrationPage = () => {
           subcategory: formData.skillSubCategory,
           description: formData.description,
         },
-        avatar: formData.avatar ? await fileToBase64(formData.avatar) : null,
+        avatar: formData.avatar ? await convertFileToBase64(formData.avatar) : null,
         skillImage: formData.skillImage,
+        description: formData.description
       };
 
       // Сохранение в localStorage
@@ -108,15 +110,6 @@ export const RegistrationPage = () => {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const fileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
   };
 
   const handleClose = () => {

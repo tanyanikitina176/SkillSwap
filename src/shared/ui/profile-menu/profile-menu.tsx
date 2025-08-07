@@ -1,6 +1,6 @@
-import { useState, type FC } from "react";
+import { useCallback, useEffect, useState, type FC } from "react";
 import styles from "./profile-menu.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import type { IProfileMenuItemProps, IProfileMenuProps } from "./type";
 
 const ProfileMenuItem = ({
@@ -36,13 +36,21 @@ const ProfileMenuItem = ({
 };
 
 export const ProfileMenuUI: FC<IProfileMenuProps> = (
-  profileMenuProps: IProfileMenuProps,
+  profileMenuProps: IProfileMenuProps
 ) => {
+  const location = useLocation();
   const { profileMenuItems } = profileMenuProps;
-  const [currentId, setCurrentId] = useState<string>();
-  const onClick = (id: string) => {
+  const activeItem = profileMenuItems.find(
+    (item) => item.path === location.pathname
+  );
+  const [currentId, setCurrentId] = useState<string | undefined>(
+    activeItem?.id
+  );
+
+  const onClick = useCallback((id: string) => {
     setCurrentId(id);
-  };
+  }, []);
+
   return (
     <>
       <aside className={styles.sidebar_cover}>

@@ -8,7 +8,7 @@ import {
   genderOptions,
 } from "@shared/ui/dropdown/dropdownConstants";
 import { DatePicker } from "@shared/ui/date-picker/date-picker";
-import { useEffect, useState, type FC } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 import editIcon from "@assets/icons/gallery-edit.svg";
 import {
   validateDateOfBirth,
@@ -20,17 +20,9 @@ import {
 } from "@widgets/RegistrationForm/utils/validation";
 import isEqual from "lodash/isEqual";
 import EditIcon from "@assets/icons/edit.svg?react";
-
-const testUser: TProfileInfoUser = {
-  name: "test",
-  email: "test@test.ru",
-  password: "123",
-  dateOfBirth: new Date().getTime(),
-  gender: "2", //Женский
-  city: "1", //Москва
-  myAvatar: "../../../db/users-photo/viktoria.jpg",
-  description: "",
-};
+import type { UserInLocalStorage } from "@entities/User/types";
+import { getUserFromLocalStorage } from "@shared/lib/utils/getUserFromLocalStorage";
+import { convertFileToBase64 } from "@shared/lib/utils/convertFileToBase64";
 
 const INITIAL_ERRORS = {
   name: "",
@@ -39,57 +31,26 @@ const INITIAL_ERRORS = {
   gender: "",
   city: "",
   description: "",
-  dateOfBirth: "",
-};
-
-export type TProfileInfoUser = {
-  name: string;
-  email: string;
-  password: string;
-  dateOfBirth: number | null;
-  gender: string;
-  city: string;
-  myAvatar: string;
-  description: string;
+  birthDate: "",
 };
 
 export const ProfileInfo: FC = () => {
-  const user: TProfileInfoUser = testUser;
+  const user = getUserFromLocalStorage();
   const [showPasswordField, setShowPasswordField] = useState(false);
-
-  const [formValue, setFormValue] = useState<TProfileInfoUser>({
-    name: "",
-    email: "",
-    password: "",
-    dateOfBirth: null,
-    gender: "",
-    city: "",
-    myAvatar: "",
-    description: "",
-  });
-
+  const [formValue, setFormValue] =
+    useState<UserInLocalStorage>(user || {} as UserInLocalStorage);
   const [errors, setErrors] = useState(INITIAL_ERRORS);
-  const [isDisabledButton, setIsDisabledButton] = useState(false);
-  useEffect(() => {
-    if (user) {
-      setFormValue({ ...user });
-    }
-  }, [user]);
+  const [isDisabledButton, setIsDisabledButton] = useState(true);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    const hasErrors = Object.values(errors).some(error => error !== "");
-    const isFormEmpty = 
-      formValue.name.trim() === "" ||
-      formValue.email.trim() === "" ||
-      formValue.gender === "" ||
-      formValue.city === "" ||
-      formValue.dateOfBirth === null;
-    
-    setIsDisabledButton(hasErrors || isFormEmpty);
-  }, [errors, formValue]);
+    const isDisabled =
+      isEqual(user, formValue) || !isEqual(INITIAL_ERRORS, errors);
+    setIsDisabledButton(isDisabled);
+  }, [user, formValue, errors]);
 
   const handleInputChange =
-    (field: keyof TProfileInfoUser) =>
+    (field: keyof UserInLocalStorage) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { message } = validateInput(e.target.value);
       setErrors((prev) => ({ ...prev, [field]: message || "" }));
@@ -109,7 +70,7 @@ export const ProfileInfo: FC = () => {
   };
 
   const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { message } = validateDescription(e.target.value);
     setErrors((prev) => ({ ...prev, description: message || "" }));
@@ -132,9 +93,9 @@ export const ProfileInfo: FC = () => {
     }
   };
 
-  const setData = <K extends keyof TProfileInfoUser>(
+  const setData = <K extends keyof UserInLocalStorage>(
     field: K,
-    value: TProfileInfoUser[K],
+    value: UserInLocalStorage[K]
   ) => {
     setFormValue((prev) => ({
       ...prev,
@@ -146,14 +107,40 @@ export const ProfileInfo: FC = () => {
     setShowPasswordField((showPasswordField) => !showPasswordField);
   };
 
-  const hadleChangeDate = (date: number | null) => {
+  const handleChangeDate = (date: number | null) => {
     const { message } = validateDateOfBirth(date);
-    setErrors((prev) => ({ ...prev, dateOfBirth: message || "" }));
-    setData("dateOfBirth", date);
+    setErrors((prev) => ({ ...prev, birthDate: message || "" }));
+    setData("birthDate", date);
+  };
+
+  const handleImageClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click(); // Открываем диалог выбора файла
+    }
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newAvatar = e.target.files?.[0];
+    if (newAvatar) {
+      try {
+        const changeAvatar = await convertFileToBase64(newAvatar);
+        setData("avatar", changeAvatar); // Обновляем аватар
+        console.log("Аватар успешно изменен");
+      } catch (error) {
+        console.error("Ошибка при преобразовании файла в base64:", error);
+      }
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      localStorage.setItem("user", JSON.stringify(formValue));
+      console.log("Данные пользователя успешно сохранены в localStorage");
+      setIsDisabledButton(true);
+    } catch (error) {
+      console.log("Ошибка при сохранении данных в localStorage:", error);
+    }
   };
 
   return (
@@ -204,10 +191,10 @@ export const ProfileInfo: FC = () => {
           <div className={styles.birth_block}>
             <label className={styles.label}>Дата рождения</label>
             <DatePicker
-              onChange={hadleChangeDate}
-              date={formValue.dateOfBirth}
-              error={!!errors.dateOfBirth}
-              helperText={errors.dateOfBirth}
+              onChange={handleChangeDate}
+              date={formValue.birthDate}
+              error={!!errors.birthDate}
+              helperText={errors.birthDate}
             />
           </div>
           <div className={styles.gender_block}>
@@ -255,7 +242,7 @@ export const ProfileInfo: FC = () => {
       </form>
       <div className={styles.card_wrapper}>
         <img
-          src={formValue.myAvatar}
+          src={formValue.avatar as string}
           className={styles.card__avatar}
           alt="Аватар пользователя"
         />
@@ -263,6 +250,15 @@ export const ProfileInfo: FC = () => {
           src={editIcon}
           alt="Иконка редактирования"
           className={styles.edit_icon}
+          onClick={handleImageClick}
+        />
+        <input
+          type="file"
+          id="avatar"
+          onChange={handleFileChange}
+          accept="image/*"
+          style={{ display: "none" }}
+          ref={fileInputRef}
         />
       </div>
     </div>
