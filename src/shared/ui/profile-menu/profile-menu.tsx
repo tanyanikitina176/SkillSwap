@@ -1,6 +1,6 @@
-import { useState, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 import styles from "./profile-menu.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import type { IProfileMenuItemProps, IProfileMenuProps } from "./type";
 
 const ProfileMenuItem = ({
@@ -36,10 +36,23 @@ const ProfileMenuItem = ({
 };
 
 export const ProfileMenuUI: FC<IProfileMenuProps> = (
-  profileMenuProps: IProfileMenuProps,
+  profileMenuProps: IProfileMenuProps
 ) => {
+  const location = useLocation();
   const { profileMenuItems } = profileMenuProps;
-  const [currentId, setCurrentId] = useState<string>();
+  const activeItem = profileMenuItems.find(
+    (item) => item.path === location.pathname
+  );
+  const [currentId, setCurrentId] = useState<string | undefined>(() => {
+    return activeItem ? activeItem.id : undefined;
+  });
+
+  useEffect(() => {
+    if (activeItem) {
+      setCurrentId(activeItem.id);
+    }
+  }, [location.pathname, profileMenuItems]);
+
   const onClick = (id: string) => {
     setCurrentId(id);
   };
