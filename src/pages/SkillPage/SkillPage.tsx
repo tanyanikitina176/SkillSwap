@@ -56,7 +56,7 @@ export const SkillPage = () => {
         */}
         <h1 key={currentUser.id}>Профиль пользователя: {currentUser.name}</h1>
         <p>{currentUser.description}</p>
-        <p>{currentSkill?.name}</p>
+        <h1 key={currentSkill?.id}>Мой навык: {currentSkill?.name}</h1>
         <p>{currentSkill?.description}</p>
         <div className={styles.card__skills}>
           <span className={styles.card__skills_title}>Может научить:</span>
