@@ -2,8 +2,12 @@ import { useState, type FC } from "react";
 import style from "./search-input.module.css";
 import icon from "../../../assets/icons/search.svg";
 import button from "../../../assets/icons/cross.svg";
+interface SearchInputUIProps {
+  value: string;
+  onChange: (value: string) => void;
+}
 
-export const SearchInputUI: FC = () => {
+export const SearchInputUI: FC<SearchInputUIProps> = () => {
   const [value, setValue] = useState("");
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {

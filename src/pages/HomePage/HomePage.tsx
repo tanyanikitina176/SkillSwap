@@ -12,6 +12,7 @@ import { Button } from "@shared/ui/button/button";
 import SortIcon from "@assets/icons/sort.svg?react";
 import skills from "@public/db/skills.json";
 import { sortUsersByCreatedAt } from "@shared/lib/utils/sortedUsersByDate";
+import useDebounce from "@shared/hooks/useDebounce.ts";
 
 type RoleType = "Всё" | "Хочу научиться" | "Могу научить";
 type GenderType = "Не имеет значения" | "Мужской" | "Женский";
@@ -26,6 +27,11 @@ interface HomeFilters {
 const MemoizedUserCard = memo(UserCard);
 
 export const HomePage = () => {
+
+  // поиск карточек по навыку
+  const [searchQuery, setSearchQuery] = useState("");
+  const debouncedSearch = useDebounce(searchQuery, 400);
+
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [isClickButtonShowNew, setisClickButtonShowNew] = useState(false);
