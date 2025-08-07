@@ -60,6 +60,12 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
     }
   };
 
+  const isFormValid = 
+    !validateEmail(formData.email).message &&
+    !validatePassword(formData.password).message &&
+    formData.email.trim() !== "" && 
+    formData.password.trim() !== "";
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.stepIndicatorContainer}>
@@ -113,12 +119,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
               label="Email"
               name="email"
               type="email"
-              placeholder={
-                // Юля
-                mode === "register"
-                  ? "Придумайте надёжный пароль"
-                  : "Введите ваш пароль"
-              }
+              placeholder={"Введите ваш emai"}
               value={formData.email}
               onChange={handleInputChange}
               error={!!errors.email}
@@ -144,6 +145,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
               type="primary"
               htmlType="submit"
               extraClass={styles.submitButton}
+              disabled={!isFormValid}
             >
               {mode === "register" ? "Далее" : "Войти"}
             </Button>

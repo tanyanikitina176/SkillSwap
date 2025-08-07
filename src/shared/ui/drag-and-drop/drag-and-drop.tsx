@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import styles from "./drag-and-drop.module.css";
 import { Icon } from "./icon.tsx";
 
-export const DragAndDropUI = () => {
+interface DragAndDropUIProps {
+  onFileChange?: (file: File | null) => void;
+}
+
+export const DragAndDropUI: React.FC<DragAndDropUIProps> = ({ onFileChange }) => {
   const [files, setFiles] = useState<File[]>([]);
   const [dragActive, setDragActive] = useState<boolean>(false);
 
   const handleFilesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
-      setFiles([...e.target.files]);
+      const selectedFile = e.target.files[0];
+      setFiles([selectedFile]);
+      if (onFileChange) onFileChange(selectedFile);
     }
   };
 
@@ -17,6 +23,7 @@ export const DragAndDropUI = () => {
     e.preventDefault();
     setDragActive(true);
   };
+
   const handleLive = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDragActive(false);
@@ -26,13 +33,14 @@ export const DragAndDropUI = () => {
     e.preventDefault();
     setDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setFiles([...e.dataTransfer.files]);
+      const droppedFile = e.dataTransfer.files[0];
+      setFiles([droppedFile]);
+      if (onFileChange) onFileChange(droppedFile);
     }
   };
 
   return (
     <div className={styles.wrapper}>
-      {/* Замена form на div т.к. ошибки в консоли из-за вложенности форм в 3-м шаге регистрации */}
       <div
         className={`${styles.form} ${dragActive ? styles.drag : ""}`}
         onDragEnter={handleDrag}
@@ -48,7 +56,7 @@ export const DragAndDropUI = () => {
           <input
             type="file"
             className={styles.input}
-            multiple={true}
+            multiple={false}
             onChange={handleFilesChange}
           />
           <span className={styles.text}>Выбрать изображение</span>
