@@ -139,7 +139,7 @@ export const RegistrationPage = () => {
           <Button
             type="secondary"
             onClick={handleClose}
-            endIcon={<Cross className={styles.closeIcon} />}
+            endIcon={<Cross className={styles.closeIcon} aria-hidden="true" />}
             extraClass={styles.closeButton}
           >
             Закрыть
@@ -147,7 +147,7 @@ export const RegistrationPage = () => {
         </div>
       </header>
 
-      {error && <div className={styles.errorMessage}>{error}</div>}
+      {error && <div className={styles.errorMessage} role="alert" aria-live="assertive">{error}</div>}
 
       <div className={styles.content}>
         {isLoading ? (
