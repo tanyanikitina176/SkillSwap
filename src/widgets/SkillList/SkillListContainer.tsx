@@ -18,24 +18,17 @@ export const SkillListContainer = ({ users }: ISkillListContainer) => {
     <div className={styles.skill_list__container}>
       <SkillList
         users={popularUsers}
-        onButtonClick={() => {}}
-        onLikeClick={() => {}}
         title="Популярное"
         isShortList={true}
       />
       <SkillList
         users={sortedUsersByDate}
-        onButtonClick={() => {}}
-        onLikeClick={() => {}}
         title="Новое"
         isShortList={true}
       />
       <SkillList
         users={users}
-        onButtonClick={() => {}}
-        onLikeClick={() => {}}
         title="Рекомендуем"
-        isShortList={false}
       />
     </div>
   );

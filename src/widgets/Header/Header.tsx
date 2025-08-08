@@ -6,30 +6,35 @@ import chevronUp from '@assets/icons/chevron-up.svg';
 import { SearchInputUI } from '@shared/ui/search';
 import { Button } from '@shared/ui/button/button';
 import { CategoryDisplay } from '@widgets/SkillsPanel/SkillsPanel';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import { HeaderLoggedIn } from '@shared/ui/header-logged-in/header-logged-in';
-
+import type { UserInLocalStorage } from '@entities/User/types';
+import { EventEmitterWrapper } from '@shared/lib/event/EventEmitter';
+import { getUserFromLocalStorage } from '@shared/lib/utils/getDataFromLocalStorage';
 
 export const AppHeaderUI = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [userName, setUserName] = useState<string>("");
+  const [userAvatar, setUserAvatar] = useState<string | undefined>("");
 
-
-  const userData = localStorage.getItem('user');
-  let userName = '';
-  let userAvatar = '';
-
-  if (userData) {
-    try {
-      const user = JSON.parse(userData);
-      userName = user.name;
-      userAvatar = user.avatar;
-    } catch (err) {
-      console.error('Ошибка при получении user из localStorage:', err);
+  useEffect(() => {
+    const updateUserState = (user: UserInLocalStorage | null) => {
+      if (user) {
+        setUserName(user.name);
+        setUserAvatar(user.avatar as string);
+      }
     }
-  }
+
+    const user = getUserFromLocalStorage();
+    updateUserState(user);
+
+    EventEmitterWrapper.subcribeUserUpdate(updateUserState);
+
+    return () => EventEmitterWrapper.unsubcribeUserUpdate(updateUserState);
+  }, []);
 
   const isAuth = !!userName;
 

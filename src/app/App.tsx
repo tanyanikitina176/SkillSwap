@@ -8,6 +8,8 @@ import { LoginPage } from "../pages/LoginPage/LoginPage.tsx";
 import { ProtectedRoute } from "./protected-route/Protected-route.tsx";
 import { SkillPage } from "./../pages/SkillPage/SkillPage.tsx";
 import { ProfilePage } from "./../pages/ProfilePage/ProfilePage.tsx";
+import { ProfileFavourites } from "@widgets/Profile/profile-favourites.tsx";
+import { ProfileInfo } from "@widgets/Profile/profile-info.tsx";
 
 function App() {
   return (
@@ -23,10 +25,16 @@ function App() {
           path="/profile"
           element={
             <ProtectedRoute>
-             <ProfilePage/>
+              <ProfilePage />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route index element={<ProfileInfo />} />
+          <Route
+            path="favourites"
+            element={<ProfileFavourites />}
+          />
+        </Route>
       </Routes>
     </>
   );
