@@ -61,6 +61,15 @@ const prepareCategories = (): CategoryWithSubcategories[] => {
     .filter((c): c is CategoryWithSubcategories => c !== null);
 };
 
+const validateUserData = (data: {
+  email: string;
+  name: string;
+  password: string;
+  [key: string]: any;
+}): boolean => {
+  return !!data.email && !!data.name && !!data.password;
+};
+
 export const RegistrationPage = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
@@ -117,9 +126,16 @@ export const RegistrationPage = () => {
         skillImage,
       };
 
-      localStorage.setItem("user", JSON.stringify(userData));
+      if (validateUserData(userData)) {
+        localStorage.setItem("user", JSON.stringify(userData));
+      } else {
+        localStorage.removeItem("user");
+        throw new Error('Некорректные данные пользователя');
+      }
+      
       navigate("/");
     } catch (err) {
+      localStorage.removeItem("user");
       setError(err instanceof Error ? err.message : "Ошибка регистрации");
       setStep(1);
     } finally {
