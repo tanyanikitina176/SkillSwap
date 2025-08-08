@@ -17,25 +17,48 @@ import { Button } from "@shared/ui/button/button";
 import { convertFileToBase64 } from "@shared/lib/utils/convertFileToBase64";
 
 const prepareCategories = (): CategoryWithSubcategories[] => {
-  return rawCategories.map((category) => {
-    const categorySubcategories = rawSubcategories
-      .filter((sub) => sub.categoryId === category.id)
-      .map((sub) => ({
-        id: sub.id,
-        name: sub.name,
-        category: {
-          id: category.id,
-          name: category.name,
-          color: category.color,
-          icon: category.icon,
-        },
-      }));
+  if (!Array.isArray(rawCategories)) {
+    console.warn('Некорректные данные категорий: ожидался массив');
+    return [];
+  }
+  
+  if (!Array.isArray(rawSubcategories)) {
+    console.warn('Некорректные данные подкатегорий: ожидался массив');
+    return [];
+  }
 
-    return {
-      ...category,
-      subcategories: categorySubcategories,
-    };
-  });
+  return rawCategories
+    .map((category) => {
+      if (!category?.id || !category?.name) {
+        console.warn('Некорректная категория: отсутствует id или name', category);
+        return null;
+      }
+
+      const categorySubcategories = rawSubcategories
+        .filter((sub) => {
+          if (!sub?.id || !sub?.name || !sub?.categoryId) {
+            console.warn('Некорректная подкатегория: отсутствуют обязательные поля', sub);
+            return false;
+          }
+          return sub.categoryId === category.id;
+        })
+        .map((sub) => ({
+          id: sub.id,
+          name: sub.name,
+          category: {
+            id: category.id,
+            name: category.name,
+            color: category.color,
+            icon: category.icon,
+          },
+        }));
+
+      return {
+        ...category,
+        subcategories: categorySubcategories,
+      };
+    })
+    .filter((c): c is CategoryWithSubcategories => c !== null);
 };
 
 export const RegistrationPage = () => {
