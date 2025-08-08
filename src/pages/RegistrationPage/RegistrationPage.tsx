@@ -43,69 +43,61 @@ export const RegistrationPage = () => {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    name: "",
-    birthDate: 0 as number,
-    gender: "",
-    city: "",
-    categories: [] as string[],
-    subcategories: [] as string[],
-    avatar: undefined as File | undefined,
-    skillName: "",
-    skillCategory: null as Category | null,
-    skillSubCategory: null as Subcategory | null,
-    description: "",
-    skillImage: "",
-  });
+  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
+  const [name, setName] = useState("");
+  const [birthDate, setBirthDate] = useState(0);
+  const [gender, setGender] = useState("");
+  const [city, setCity] = useState("");
+  const [categories, setCategories] = useState<string[]>([]);
+  const [subcategories, setSubcategories] = useState<string[]>([]);
+  const [avatar, setAvatar] = useState<File | undefined>();
+  
+  const [skillName, setSkillName] = useState("");
+  const [skillCategory, setSkillCategory] = useState<Category | null>(null);
+  const [skillSubCategory, setSkillSubCategory] = useState<Subcategory | null>(null);
+  const [description, setDescription] = useState("");
+  const [skillImage, setSkillImage] = useState("");
 
   const categoriesWithSubcategories = React.useMemo(prepareCategories, []);
 
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
 
-  const handleFormDataChange = (newData: Partial<typeof formData>) => {
-    setFormData((prev) => ({ ...prev, ...newData }));
-  };
-
   const handleSubmitAll = async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      if (!formData.email || !formData.password || !formData.name) {
+      if (!email || !password || !name) {
         throw new Error("Заполните обязательные поля");
       }
 
       const userData = {
-        email: formData.email,
-        name: formData.name,
-        password: formData.password,
-        birthDate: formData.birthDate,
-        gender: formData.gender,
-        city: formData.city,
-        categories: formData.categories,
-        subcategories: formData.subcategories,
+        email,
+        name,
+        password,
+        birthDate,
+        gender,
+        city,
+        categories,
+        subcategories,
         skills: {
-          name: formData.skillName,
-          category: formData.skillCategory,
-          subcategory: formData.skillSubCategory,
-          description: formData.description,
+          name: skillName,
+          category: skillCategory,
+          subcategory: skillSubCategory,
+          description,
         },
-        avatar: formData.avatar ? await convertFileToBase64(formData.avatar) : null,
-        skillImage: formData.skillImage,
-        description: formData.description
+        avatar: avatar ? await convertFileToBase64(avatar) : null,
+        skillImage,
       };
 
-      // Сохранение в localStorage
       localStorage.setItem("user", JSON.stringify(userData));
-
-      // Перенаправление на главную
       navigate("/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Ошибка регистрации");
-      // Возвращаем на первый шаг при ошибке
       setStep(1);
     } finally {
       setIsLoading(false);
@@ -124,9 +116,7 @@ export const RegistrationPage = () => {
           <Button
             type="secondary"
             onClick={handleClose}
-            endIcon={
-              <Cross className={styles.closeIcon} />
-            }
+            endIcon={<Cross className={styles.closeIcon} />}
             extraClass={styles.closeButton}
           >
             Закрыть
@@ -144,11 +134,10 @@ export const RegistrationPage = () => {
             {step === 1 && (
               <RegistrationStep1
                 onNextStep={nextStep}
-                formData={{
-                  email: formData.email,
-                  password: formData.password,
-                }}
-                setFormData={handleFormDataChange}
+                email={email}
+                password={password}
+                setEmail={setEmail}
+                setPassword={setPassword}
               />
             )}
 
@@ -156,16 +145,20 @@ export const RegistrationPage = () => {
               <RegistrationStep2
                 onNextStep={nextStep}
                 onPrevStep={prevStep}
-                formData={{
-                  name: formData.name,
-                  birthDate: formData.birthDate,
-                  gender: formData.gender,
-                  city: formData.city,
-                  categories: formData.categories,
-                  subcategories: formData.subcategories,
-                  avatar: formData.avatar,
-                }}
-                setFormData={handleFormDataChange}
+                name={name}
+                birthDate={birthDate}
+                gender={gender}
+                city={city}
+                categories={categories}
+                subcategories={subcategories}
+                avatar={avatar}
+                setName={setName}
+                setBirthDate={setBirthDate}
+                setGender={setGender}
+                setCity={setCity}
+                setCategories={setCategories}
+                setSubcategories={setSubcategories}
+                setAvatar={setAvatar}
               />
             )}
 
@@ -174,14 +167,16 @@ export const RegistrationPage = () => {
                 onNextStep={handleSubmitAll}
                 onPrevStep={prevStep}
                 categories={categoriesWithSubcategories}
-                formData={{
-                  skillName: formData.skillName,
-                  skillCategory: formData.skillCategory,
-                  skillSubCategory: formData.skillSubCategory,
-                  description: formData.description,
-                  skillImage: formData.skillImage,
-                }}
-                setFormData={handleFormDataChange}
+                skillName={skillName}
+                skillCategory={skillCategory}
+                skillSubCategory={skillSubCategory}
+                description={description}
+                skillImage={skillImage}
+                setSkillName={setSkillName}
+                setSkillCategory={setSkillCategory}
+                setSkillSubCategory={setSkillSubCategory}
+                setDescription={setDescription}
+                setSkillImage={setSkillImage}
               />
             )}
           </>
