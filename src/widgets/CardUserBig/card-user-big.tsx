@@ -2,7 +2,7 @@ import styles from "./card-user-big.module.css";
 import React, { type FC } from "react";
 
 interface CardUserBigProps {
-  title: string;
+  title: string ;
   category: string;
   subcategory: string;
   description: string;
