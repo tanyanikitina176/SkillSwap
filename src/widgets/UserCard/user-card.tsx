@@ -17,7 +17,7 @@ export const UserCard: FC<UserCardProps> = ({
       onButtonClick(user.id);
     }
     // Переходим на страницу /skill с передачей пользователя
-    navigate(`/skill/`, { state: { user } });
+    navigate(`/skill/${user.id}`, { state: { user } });
   };
   return (
     <div className={styles.card}>
