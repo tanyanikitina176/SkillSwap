@@ -71,7 +71,7 @@ export const RegistrationPage = () => {
   const [password, setPassword] = useState("");
   
   const [name, setName] = useState("");
-  const [birthDate, setBirthDate] = useState(0);
+  const [birthDate, setBirthDate] = useState<Date | null>(null);
   const [gender, setGender] = useState("");
   const [city, setCity] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
@@ -102,7 +102,7 @@ export const RegistrationPage = () => {
         email,
         name,
         password,
-        birthDate,
+        birthDate: birthDate ? birthDate.getTime() : null,
         gender,
         city,
         categories,

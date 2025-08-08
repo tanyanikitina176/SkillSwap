@@ -37,8 +37,13 @@ const INITIAL_ERRORS = {
 export const ProfileInfo: FC = () => {
   const user = getUserFromLocalStorage();
   const [showPasswordField, setShowPasswordField] = useState(false);
-  const [formValue, setFormValue] =
-    useState<UserInLocalStorage>(user || {} as UserInLocalStorage);
+  const [formValue, setFormValue] = useState<UserInLocalStorage>(() => {
+    const user = getUserFromLocalStorage();
+    return user ? {
+      ...user,
+      birthDate: user.birthDate ? new Date(user.birthDate) : null
+    } : {} as UserInLocalStorage;
+  });
   const [errors, setErrors] = useState(INITIAL_ERRORS);
   const [isDisabledButton, setIsDisabledButton] = useState(true);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -108,9 +113,10 @@ export const ProfileInfo: FC = () => {
   };
 
   const handleChangeDate = (date: number | null) => {
+    const dateObj = date ? new Date(date) : null;
     const { message } = validateDateOfBirth(date);
     setErrors((prev) => ({ ...prev, birthDate: message || "" }));
-    setData("birthDate", date);
+    setData("birthDate", dateObj);
   };
 
   const handleImageClick = () => {
@@ -191,8 +197,8 @@ export const ProfileInfo: FC = () => {
           <div className={styles.birth_block}>
             <label className={styles.label}>Дата рождения</label>
             <DatePicker
-              onChange={handleChangeDate}
-              date={formValue.birthDate}
+              onChange={(timestamp) => handleChangeDate(timestamp)}
+              date={formValue.birthDate ? formValue.birthDate.getTime() : null}
               error={!!errors.birthDate}
               helperText={errors.birthDate}
             />

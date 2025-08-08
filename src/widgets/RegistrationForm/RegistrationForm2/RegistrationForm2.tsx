@@ -19,14 +19,14 @@ interface RegistrationStep2Props {
   onNextStep: () => void;
   onPrevStep: () => void;
   name: string;
-  birthDate: number;
+  birthDate: Date | null;
   gender: string;
   city: string;
   categories: string[];
   subcategories: string[];
   avatar?: File;
   setName: (name: string) => void;
-  setBirthDate: (date: number) => void;
+  setBirthDate: (date: Date | null) => void;
   setGender: (gender: string) => void;
   setCity: (city: string) => void;
   setCategories: (categories: string[]) => void;
@@ -83,15 +83,22 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
     }
   };
 
-  const handleDateChange = (newDate: number | null) => {
-    setBirthDate(newDate || 0);
-    if (newDate === null) return;
+  const handleDateChange = (date: number | null) => {
+    const dateObj = date ? new Date(date) : null;
+    setBirthDate(dateObj);
+    
+    if (date === null) {
+      setErrors((prev) => ({
+        ...prev,
+        birthDate: "Поле обязательно для заполнения",
+      }));
+      return;
+    }
     
     const now = new Date();
-    const date = new Date(newDate);
     setErrors((prev) => ({
       ...prev,
-      birthDate: date > now ? "Дата рождения не может быть в будущем" : "",
+      birthDate: dateObj && dateObj > now ? "Дата рождения не может быть в будущем" : "",
     }));
   };
 
@@ -238,7 +245,10 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
             <div className={styles.row}>
               <div className={styles.column}>
                 <label className={styles.label}>Дата рождения</label>
-                <DatePicker onChange={handleDateChange} />
+                <DatePicker 
+                  onChange={handleDateChange} 
+                  date={birthDate ? birthDate.getTime() : null}
+                />
                 {errors.birthDate && (
                   <div className={styles.errorText}>{errors.birthDate}</div>
                 )}
