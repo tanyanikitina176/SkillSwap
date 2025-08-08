@@ -100,7 +100,7 @@ export const RegistrationPage = () => {
 
       // Сохранение в localStorage
       localStorage.setItem("user", JSON.stringify(userData));
-
+      localStorage.setItem("isAuthenticated", "true");
       // Перенаправление на главную
       navigate("/");
     } catch (err) {
