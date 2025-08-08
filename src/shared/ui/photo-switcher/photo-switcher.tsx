@@ -59,7 +59,7 @@ export const PhotoSwitcherUI = ({ skillId }: PhotoSwitcherProps) => {
 
       <div className={styles.sideImages}>
         {/* показываем первые 3 изображения в миниатюрах*/}
-        {images.slice(0, 3).map((image, i) => (
+        {images.filter((_, i)  => i !== currentIndex).slice(0, 3).map((image, i) => (
           <img
             src={image.replace("..", "")}
             alt={`image-${image}`}
@@ -71,7 +71,7 @@ export const PhotoSwitcherUI = ({ skillId }: PhotoSwitcherProps) => {
         {/* показываем +N, если больше 3 изображений */}
         {images.length > 3 && (
           <div className={styles.more}>
-            <span>+ {images.length - 1}</span>
+            <span>+ {images.length - 3}</span>
           </div>
         )}
       </div>
