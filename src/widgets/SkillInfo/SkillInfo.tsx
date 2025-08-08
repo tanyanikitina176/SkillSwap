@@ -8,38 +8,24 @@ import MoreSquareIcon from "@assets/icons/more-square.svg";
 import { UserCardSkillInfo } from "@widgets/SkillInfo/UserCardSkillInfo.tsx";
 import { type FC, useState } from "react";
 import type { User } from "@entities/User/types";
-import type { Skill } from "@entities/Skill/SkillType.ts";
-import type {
-  Category,
-  Subcategory,
-} from "@entities/Category/CategoryTypes.ts";
+import type { UserSkill } from "@entities/Skill/SkillType.ts";
+import { PhotoSwitcherUI } from "@shared/ui/photo-switcher";
 
 interface SkillInfoProps {
   user: User;
-  skill: Skill;
-  categories: Category[];
-  subcategories: Subcategory[];
+  skill: UserSkill | null;
 }
 
-export const SkillInfo: FC<SkillInfoProps> = ({
-  user,
-  skill,
-  categories,
-  subcategories,
-}) => {
-  const category = categories.find((cat) => cat.id === skill.CategoryId);
-  const subcategory = subcategories.find(
-    (sub) => sub.id === skill.SubcategoryId,
-  );
-
-  const categoryName = category?.name || "Без категории";
-  const subcategoryName = subcategory?.name || "";
-
+export const SkillInfo: FC<SkillInfoProps> = ({ user, skill,}) => {
   const [exchangeOffered, setExchangeOffered] = useState(false);
 
   const handleOfferClick = () => {
     setExchangeOffered(true);
   };
+  // Проверяем наличие skill
+  if (!skill) {
+    return <div>Информация о навыке не найдена</div>;
+  }
 
   return (
     <div className={styles.gridSkillInfo}>
@@ -60,8 +46,8 @@ export const SkillInfo: FC<SkillInfoProps> = ({
         }
         title={skill.name}
         description={skill.description}
-        category={categoryName}
-        subcategory={subcategoryName}
+        category={skill.category?.name || "Без категории"}
+        subcategory={skill.subcategory?.name || ""}
         buttonsSlot={
           <Button
             style={{ width: "100%" }}
@@ -71,6 +57,10 @@ export const SkillInfo: FC<SkillInfoProps> = ({
           >
             {exchangeOffered ? "Обмен предложен" : "Предложить обмен"}
           </Button>
+        }
+        // <PhotoSwitcherUI skillId/>
+        photoSlot={
+          <PhotoSwitcherUI skillId = {skill.id}/>
         }
       ></CardUserBig>
     </div>
