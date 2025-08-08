@@ -12,9 +12,7 @@ import { Button } from "@shared/ui/button/button";
 import SortIcon from "@assets/icons/sort.svg?react";
 import skills from "@public/db/skills.json";
 import { sortUsersByCreatedAt } from "@shared/lib/utils/sortedUsersByDate";
-import useDebounce from "@shared/hooks/useDebounce.ts";
-
-import subcategoriesData from "@public/db/skills_subcategories.json";
+import useDebounce from "@shared/hooks/useDebounce";
 
 type RoleType = "Всё" | "Хочу научиться" | "Могу научить";
 type GenderType = "Не имеет значения" | "Мужской" | "Женский";
@@ -29,15 +27,14 @@ interface HomeFilters {
 const MemoizedUserCard = memo(UserCard);
 
 export const HomePage = () => {
-
-  // поиск карточек по навыку
+  // поиск (контролируем из хедера)
   const [searchQuery, setSearchQuery] = useState("");
   const debouncedSearch = useDebounce(searchQuery, 400);
-  // поиск карточек по навыку
 
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [isClickButtonShowNew, setisClickButtonShowNew] = useState(false);
+
   const [filters, setFilters] = useState<HomeFilters>({
     role: "Всё",
     gender: "Не имеет значения",
@@ -56,7 +53,6 @@ export const HomePage = () => {
         setLoading(false);
       }
     };
-
     loadData();
   }, []);
 
@@ -84,20 +80,18 @@ export const HomePage = () => {
     console.log("Подробнее о пользователе:", userId);
   }, []);
 
+  // данные навыков (для сортировки “сначала новые”)
+  const skillsUsers = useMemo(() => skills.skills, []);
+
+  // базовые фильтры (пол, город, выбранные навыки/категории из сайдбара)
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {
       if (filters.gender !== "Не имеет значения") {
-        const genderMap = {
-          Мужской: "male",
-          Женский: "female",
-        };
-        if (user.gender !== genderMap[filters.gender]) return false;
+        const genderMap = { Мужской: "male", Женский: "female" } as const;
+        if (user.gender !== genderMap[filters.gender as keyof typeof genderMap]) return false;
       }
 
-      if (
-        filters.cities.length > 0 &&
-        !filters.cities.includes(user.city.name)
-      ) {
+      if (filters.cities.length > 0 && !filters.cities.includes(user.city.name)) {
         return false;
       }
 
@@ -110,11 +104,8 @@ export const HomePage = () => {
               : user.wantToLearnSkills;
 
         const hasMatch = skillsToCheck.some(
-          (skill) =>
-            filters.skills.includes(skill.id) ||
-            filters.skills.includes(skill.category.id),
+          (skill) => filters.skills.includes(skill.id) || filters.skills.includes(skill.category.id)
         );
-
         if (!hasMatch) return false;
       }
 
@@ -122,16 +113,7 @@ export const HomePage = () => {
     });
   }, [users, filters]);
 
-
-  //поиск карточек
-  const subcategoryNameMap = useMemo(() => {
-    const map = new Map<string, string>();
-    for (const sub of subcategoriesData.subcategories) {
-      map.set(sub.id, sub.name.toLowerCase());
-    }
-    return map;
-  }, []);
-
+  // поиск по имени навыка или названию подкатегории
   const searchedUsers = useMemo(() => {
     if (!debouncedSearch) return filteredUsers;
 
@@ -145,31 +127,37 @@ export const HomePage = () => {
             ? user.teachingSkills
             : user.wantToLearnSkills;
 
-      return skillsToCheck.some((skill) =>
-        skill.name.toLowerCase().includes(query) ||
-        skill.category.name.toLowerCase().includes(query)
+      return skillsToCheck.some(
+        (skill) =>
+          skill.name.toLowerCase().includes(query) ||
+          skill.category.name.toLowerCase().includes(query)
       );
     });
   }, [debouncedSearch, filteredUsers, filters.role]);
 
-  //поиск карточек
+  const isSearchActive = useMemo(() => debouncedSearch.trim().length > 0, [debouncedSearch]);
+  const resultsCount = searchedUsers.length;
 
-  const onClickButtonShowNew = () => {
-    setisClickButtonShowNew(!isClickButtonShowNew);
-  };
+  // итоговый список: при включённой сортировке — сортируем итог поиска
+  const listToRender = useMemo(() => {
+    return isClickButtonShowNew
+      ? sortUsersByCreatedAt(searchedUsers, skillsUsers)
+      : searchedUsers;
+  }, [isClickButtonShowNew, searchedUsers, skillsUsers]);
 
-  const skillsUsers = skills.skills;
-  const sortedUsersByDate = sortUsersByCreatedAt(filteredUsers, skillsUsers);
-
-  // Проверяем, установлены ли дефолтные фильтры
-  const isDefaultFilters = useMemo(() => {
-    return (
+  // дефолтное состояние (когда не выбран ни один фильтр и нет поиска)
+  const isDefaultFilters = useMemo(
+    () =>
       filters.role === "Всё" &&
       filters.gender === "Не имеет значения" &&
       filters.cities.length === 0 &&
-      filters.skills.length === 0
-    );
-  }, [filters]);
+      filters.skills.length === 0,
+    [filters]
+  );
+
+  const onClickButtonShowNew = () => {
+    setisClickButtonShowNew((v) => !v);
+  };
 
   if (loading) {
     return <div className={styles.loading}>Загрузка данных...</div>;
@@ -189,16 +177,13 @@ export const HomePage = () => {
           />
 
           <div className={styles.content}>
-            {isDefaultFilters ? (
+            {isDefaultFilters && !isSearchActive ? (
               <SkillListContainer users={filteredUsers} />
             ) : (
               <section className={styles.section}>
                 <div className={styles.section__header}>
-                  <h2
-                    className={skillListStyles.header__title}
-                    style={{ marginBottom: "36px" }}
-                  >
-                    Подходящие предложения: {filteredUsers.length}
+                  <h2 className={skillListStyles.header__title} style={{ marginBottom: "36px" }}>
+                    Подходящие предложения: {resultsCount}
                   </h2>
                   <Button
                     type="tertiary"
@@ -209,23 +194,20 @@ export const HomePage = () => {
                     {!isClickButtonShowNew ? "Сначала новые" : "Показать все"}
                   </Button>
                 </div>
-                <div className={styles.usersGrid}>
-                  {isClickButtonShowNew
-                    ? sortedUsersByDate.map((user) => (
-                        <MemoizedUserCard
-                          key={user.id}
-                          user={user}
-                          onButtonClick={handleDetailsClick}
-                        />
-                      ))
-                    : filteredUsers.map((user) => (
-                        <MemoizedUserCard
-                          key={user.id}
-                          user={user}
-                          onButtonClick={handleDetailsClick}
-                        />
-                      ))}
-                </div>
+
+                {resultsCount === 0 ? (
+                  <div className={styles.emptyState}>По запросу ничего не найдено</div>
+                ) : (
+                  <div className={styles.usersGrid}>
+                    {listToRender.map((user) => (
+                      <MemoizedUserCard
+                        key={user.id}
+                        user={user}
+                        onButtonClick={handleDetailsClick}
+                      />
+                    ))}
+                  </div>
+                )}
               </section>
             )}
           </div>
