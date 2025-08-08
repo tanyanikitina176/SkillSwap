@@ -28,7 +28,7 @@ export const HeaderLoggedIn: React.FC<Props> = ({ name, avatar }) => {
         <button type="button" className={styles.button}>
           <Notification className={styles.icon} />
         </button>
-        <NavLink to="profile/favorites" className={styles.link}>
+        <NavLink to="/profile/favourites" className={styles.link} end>
           <button type="button" className={styles.button}>
             <Like className={styles.icon} />
           </button>

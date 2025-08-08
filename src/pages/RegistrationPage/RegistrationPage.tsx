@@ -126,6 +126,7 @@ export const RegistrationPage = () => {
         skillImage,
       };
 
+
       if (validateUserData(userData)) {
         localStorage.setItem("user", JSON.stringify(userData));
       } else {

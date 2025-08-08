@@ -31,6 +31,7 @@ export type UserInLocalStorage = {
   avatar: string | undefined | File;
   skillImage: string;
   description: string;
+  likedSkills: string[];
 };
 
 export type Skill = {

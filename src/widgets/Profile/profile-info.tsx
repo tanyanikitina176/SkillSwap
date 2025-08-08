@@ -21,7 +21,7 @@ import {
 import isEqual from "lodash/isEqual";
 import EditIcon from "@assets/icons/edit.svg?react";
 import type { UserInLocalStorage } from "@entities/User/types";
-import { getUserFromLocalStorage } from "@shared/lib/utils/getUserFromLocalStorage";
+import { getUserFromLocalStorage, updateUserInStorage } from "@shared/lib/utils/getDataFromLocalStorage";
 import { convertFileToBase64 } from "@shared/lib/utils/convertFileToBase64";
 
 const INITIAL_ERRORS = {
@@ -141,7 +141,7 @@ export const ProfileInfo: FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      localStorage.setItem("user", JSON.stringify(formValue));
+      updateUserInStorage(formValue);
       console.log("Данные пользователя успешно сохранены в localStorage");
       setIsDisabledButton(true);
     } catch (error) {
