@@ -196,7 +196,7 @@ export const HomePage = () => {
                 </div>
 
                 {resultsCount === 0 ? (
-                  <div className={styles.emptyState}>По запросу ничего не найдено</div>
+                  <div className={styles.emptyState}>Таких талантов в нашей базе нет… Может, пора добавить</div>
                 ) : (
                   <div className={styles.usersGrid}>
                     {listToRender.map((user) => (
