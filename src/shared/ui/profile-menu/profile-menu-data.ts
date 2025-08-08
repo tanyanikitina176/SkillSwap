@@ -19,7 +19,7 @@ export const ProfileMenuItems: IProfileMenuItem[] = [
   {
     id: "like",
     title: "Избранное",
-    path: "/favourites",
+    path: "/profile/favourites",
     icon: like,
   },
   {
