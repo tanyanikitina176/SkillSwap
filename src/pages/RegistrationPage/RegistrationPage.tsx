@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { RegistrationStep1 } from "../../widgets/RegistrationForm/RegistrationForm1/RegistrationForm1";
-import { RegistrationStep2 } from "../../widgets/RegistrationForm/RegistrationForm2/RegistrationForm2";
-import { RegistrationStep3 } from "../../widgets/RegistrationForm/RegistrationForm3/RegistrationForm3";
-import { categories as rawCategories } from "../../../public/db/skills_categories.json";
-import { subcategories as rawSubcategories } from "../../../public/db/skills_subcategories.json";
+import { RegistrationStep1 } from "@widgets/RegistrationForm/RegistrationForm1/RegistrationForm1";
+import { RegistrationStep2 } from "@widgets/RegistrationForm/RegistrationForm2/RegistrationForm2";
+import { RegistrationStep3 } from "@widgets/RegistrationForm/RegistrationForm3/RegistrationForm3";
+import { categories as rawCategories } from "@public/db/skills_categories.json";
+import { subcategories as rawSubcategories } from "@public/db/skills_subcategories.json";
 import type {
   Category,
   CategoryWithSubcategories,
@@ -11,7 +11,7 @@ import type {
 } from "@entities/Category/CategoryTypes";
 import { useNavigate } from "react-router-dom";
 import logo from "@assets/images/logo.svg";
-import closeIcon from "@assets/icons/cross.svg";
+import Cross from "@assets/icons/cross.svg?react";
 import styles from "./RegistrationForm.module.css";
 import { Button } from "@shared/ui/button/button";
 import { convertFileToBase64 } from "@shared/lib/utils/convertFileToBase64";
@@ -125,7 +125,7 @@ export const RegistrationPage = () => {
             type="secondary"
             onClick={handleClose}
             endIcon={
-              <img src={closeIcon} alt="Закрыть" className={styles.closeIcon} />
+              <Cross className={styles.closeIcon} />
             }
             extraClass={styles.closeButton}
           >

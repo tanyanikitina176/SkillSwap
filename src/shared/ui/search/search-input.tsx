@@ -1,7 +1,7 @@
 import { useState, type FC } from "react";
 import style from "./search-input.module.css";
-import icon from "../../../assets/icons/search.svg";
-import button from "../../../assets/icons/cross.svg";
+import Search from "@assets/icons/search.svg?react";
+import Cross from "@assets/icons/cross.svg?react";
 
 export const SearchInputUI: FC = () => {
   const [value, setValue] = useState("");
@@ -12,7 +12,7 @@ export const SearchInputUI: FC = () => {
   return (
     <div className={style.wrapper}>
       <div className={style.inputWrapper}>
-        <img src={icon} aria-label="Лупа" className={style.icon} />
+        <Search className={style.icon} />
         <input
           type="search"
           placeholder="Искать навык"
@@ -24,7 +24,7 @@ export const SearchInputUI: FC = () => {
 
       {value && (
         <button className={style.button} onClick={() => setValue("")}>
-          <img src={button} alt="Крестик" className={style.icon} />
+          <Cross className={style.icon} />
         </button>
       )}
     </div>

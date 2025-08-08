@@ -1,6 +1,6 @@
 import styles from "./photo-switcher.module.css";
-import Left from "@assets/icons/chevron-right.svg";
-import Right from "@assets/icons/chevron-right.svg";
+import Left from "@assets/icons/chevron-right.svg?react";
+import Right from "@assets/icons/chevron-right.svg?react";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import skillsData from "@public/db/skills.json";
@@ -43,7 +43,7 @@ export const PhotoSwitcherUI = ({ skillId }: PhotoSwitcherProps) => {
           className={clsx(styles.arrow, styles.left)}
           onClick={prevImages}
         >
-          <img className={styles.icon} alt="left" src={Left} />
+          <Left className={styles.icon} />
         </button>
         <img
           src={images[currentIndex].replace("..", "")}
@@ -53,7 +53,7 @@ export const PhotoSwitcherUI = ({ skillId }: PhotoSwitcherProps) => {
           className={clsx(styles.arrow, styles.right)}
           onClick={nextImages}
         >
-          <img className={styles.icon} src={Right} alt="right" />
+          <Right className={styles.icon} />
         </button>
       </div>
 

@@ -4,7 +4,7 @@ import { RegistrationStep1 } from "@widgets/RegistrationForm/RegistrationForm1/R
 import styles from "../RegistrationPage/RegistrationForm.module.css";
 import logo from "@assets/images/logo.svg";
 import { Button } from "@shared/ui/button/button.tsx";
-import closeIcon from "@assets/icons/cross.svg";
+import Cross from "@assets/icons/cross.svg?react";
 import { usePreviousUrl } from "@shared/hooks/usePreviousUrl";
 
 export const LoginPage = () => {
@@ -66,7 +66,7 @@ export const LoginPage = () => {
             type="secondary"
             onClick={handleClose}
             endIcon={
-              <img src={closeIcon} alt="Закрыть" className={styles.closeIcon} />
+              <Cross className={styles.closeIcon} />
             }
             extraClass={styles.closeButton}
           >

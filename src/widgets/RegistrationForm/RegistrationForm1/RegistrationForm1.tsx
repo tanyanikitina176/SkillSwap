@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import googleIcon from "@assets/icons/google.svg";
-import appleIcon from "@assets/icons/apple.svg";
+import Google from "@assets/icons/google.svg?react";
+import Apple from "@assets/icons/apple.svg?react";
 import lightIcon from "@assets/images/light-bulb.svg";
 import { Button } from "@shared/ui/button/button";
 import { FormInputUI } from "@shared/ui/form-input/form-input";
@@ -85,11 +85,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
               htmlType="button"
             >
               <div className={styles.socialButtonContent}>
-                <img
-                  src={googleIcon}
-                  alt="Google"
-                  className={styles.socialIcon}
-                />
+                <Google className={styles.socialIcon} />
                 <span>Продолжить с Google</span>
               </div>
             </Button>
@@ -100,11 +96,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
               htmlType="button"
             >
               <div className={styles.socialButtonContent}>
-                <img
-                  src={appleIcon}
-                  alt="Apple"
-                  className={styles.socialIcon}
-                />
+                <Apple className={styles.socialIcon} />
                 <span>Продолжить с Apple</span>
               </div>
             </Button>
