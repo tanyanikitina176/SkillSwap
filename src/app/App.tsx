@@ -8,8 +8,12 @@ import { LoginPage } from "../pages/LoginPage/LoginPage.tsx";
 import { ProtectedRoute } from "./protected-route/Protected-route.tsx";
 import { SkillPage } from "./../pages/SkillPage/SkillPage.tsx";
 import { ProfilePage } from "./../pages/ProfilePage/ProfilePage.tsx";
+import { usePreviousUrl } from "../shared/hooks/usePreviousUrl";
 
 function App() {
+  // Инициализируем хук для отслеживания предыдущего URL
+  usePreviousUrl();
+
   return (
     <>
       <Routes>

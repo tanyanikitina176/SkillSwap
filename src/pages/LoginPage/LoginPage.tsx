@@ -5,9 +5,11 @@ import styles from "../RegistrationPage/RegistrationForm.module.css";
 import logo from "@assets/images/logo.svg";
 import { Button } from "@shared/ui/button/button.tsx";
 import closeIcon from "@assets/icons/cross.svg";
+import { usePreviousUrl } from "@shared/hooks/usePreviousUrl";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
+  const { getPreviousUrl, clearPreviousUrl } = usePreviousUrl();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -40,8 +42,10 @@ export const LoginPage = () => {
       // Сохраняем флаг авторизации
       localStorage.setItem("isAuthenticated", "true");
 
-      // Перенаправляем на страницу профиля
-      navigate("/");
+      // Получаем предыдущий URL и перенаправляем туда
+      const previousUrl = getPreviousUrl();
+      clearPreviousUrl(); // Очищаем сохраненный URL
+      navigate(previousUrl);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Ошибка входа");
     } finally {
