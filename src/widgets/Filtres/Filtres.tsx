@@ -4,7 +4,7 @@ import { GeoFilter } from "./GeoFilter";
 import { SkillsFilter } from "./SkillsFilter";
 import { RoleFilter } from "./RoleFilter";
 import styles from "./Filtres.module.css";
-import closeIcon from "@assets/icons/cross.svg";
+import Cross from "@assets/icons/cross.svg?react";
 
 interface FiltresProps {
   onRoleChange: (role: string) => void;
@@ -76,11 +76,7 @@ export const Filtres: React.FC<FiltresProps> = ({
         {activeFiltersCount > 0 && (
           <button className={styles.resetButton} onClick={resetFilters}>
             <span>Сбросить</span>
-            <img
-              src={closeIcon}
-              alt="Сбросить фильтры"
-              className={styles.closeIcon}
-            />
+            <Cross className={styles.closeIcon} />
           </button>
         )}
       </div>

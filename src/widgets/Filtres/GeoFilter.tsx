@@ -3,8 +3,8 @@ import { Checkbox } from "@shared/ui/checkbox/checkbox";
 import { cityOptions } from "@shared/ui/dropdown/dropdownConstants";
 import styles from "./Filtres.module.css";
 
-import chevronDownIcon from "../../assets/icons/chevron-down.svg";
-import chevronUpIcon from "../../assets/icons/chevron-up.svg";
+import ChevronDown from "@assets/icons/chevron-down.svg?react";
+import ChevronUp from "@assets/icons/chevron-up.svg?react";
 
 interface GeoFilterProps {
   selectedCities: string[];
@@ -47,11 +47,7 @@ export const GeoFilter: React.FC<GeoFilterProps> = ({
         <span className={styles.toggleText}>
           {showAllCities ? "Свернуть" : "Все города"}
         </span>
-        <img
-          src={showAllCities ? chevronUpIcon : chevronDownIcon}
-          alt={showAllCities ? "Свернуть список" : "Развернуть список"}
-          className={styles.chevronIcon}
-        />
+        { showAllCities ? <ChevronUp className={styles.chevronIcon} /> : <ChevronDown className={styles.chevronIcon} /> }
       </button>
     </div>
   );

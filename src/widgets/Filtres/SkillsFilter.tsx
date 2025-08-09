@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Checkbox } from "@shared/ui/checkbox/checkbox";
 import { CATEGORIES } from "@shared/lib/helpers/categoryHelpers";
 import styles from "./Filtres.module.css";
-import chevronDownIcon from "@assets/icons/chevron-down.svg";
-import chevronUpIcon from "@assets/icons/chevron-up.svg";
+import ChevronDown from "@assets/icons/chevron-down.svg?react";
+import ChevronUp from "@assets/icons/chevron-up.svg?react";
 
 interface SkillsFilterProps {
   selectedSkills: string[];
@@ -57,19 +57,7 @@ export const SkillsFilter: React.FC<SkillsFilterProps> = ({
               onChange={() => toggleSkill(category.id)}
             />
             {category.subcategories && (
-              <img
-                src={
-                  expandedCategories[category.id]
-                    ? chevronUpIcon
-                    : chevronDownIcon
-                }
-                alt={
-                  expandedCategories[category.id]
-                    ? "Свернуть категорию"
-                    : "Развернуть категорию"
-                }
-                className={styles.chevronIcon}
-              />
+              expandedCategories[category.id] ? <ChevronUp className={styles.chevronIcon} /> : <ChevronDown className={styles.chevronIcon} />
             )}
           </div>
 
@@ -97,11 +85,7 @@ export const SkillsFilter: React.FC<SkillsFilterProps> = ({
         <span className={styles.toggleText}>
           {showAllSkills ? "Свернуть" : "Все категории"}
         </span>
-        <img
-          src={showAllSkills ? chevronUpIcon : chevronDownIcon}
-          alt={showAllSkills ? "Свернуть список" : "Развернуть список"}
-          className={styles.chevronIcon}
-        />
+        { showAllSkills ? <ChevronUp className={styles.chevronIcon} /> : <ChevronDown className={styles.chevronIcon} />}
       </button>
     </div>
   );

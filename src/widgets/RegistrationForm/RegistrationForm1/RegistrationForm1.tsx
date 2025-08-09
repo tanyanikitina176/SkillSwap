@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import googleIcon from "@assets/icons/google.svg";
-import appleIcon from "@assets/icons/apple.svg";
+import Google from "@assets/icons/google.svg?react";
+import Apple from "@assets/icons/apple.svg?react";
 import lightIcon from "@assets/images/light-bulb.svg";
 import { Button } from "@shared/ui/button/button";
 import { FormInputUI } from "@shared/ui/form-input/form-input";
@@ -14,18 +14,19 @@ import styles from "./RegistrationForm1.module.css";
 
 interface RegistrationStep1Props {
   onNextStep: () => void;
-  formData: {
-    email: string;
-    password: string;
-  };
-  setFormData: (data: { email: string; password: string }) => void;
+  email: string;
+  password: string;
+  setEmail: (email: string) => void;
+  setPassword: (password: string) => void;
   mode?: "register" | "login";
 }
 
 export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
   onNextStep,
-  formData,
-  setFormData,
+  email,
+  password,
+  setEmail,
+  setPassword,
   mode = "register",
 }) => {
   const [errors, setErrors] = useState({
@@ -35,12 +36,13 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-
+    
     if (name === "email") {
+      setEmail(value);
       const { message } = validateEmail(value);
       setErrors((prev) => ({ ...prev, email: message || "" }));
     } else if (name === "password") {
+      setPassword(value);
       const { message } = validatePassword(value);
       setErrors((prev) => ({ ...prev, password: message || "" }));
     }
@@ -49,7 +51,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const validation = validateForm(formData.email, formData.password);
+    const validation = validateForm(email, password);
     setErrors({
       email: validation.errors.email || "",
       password: validation.errors.password || "",
@@ -61,10 +63,10 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
   };
 
   const isFormValid = 
-    !validateEmail(formData.email).message &&
-    !validatePassword(formData.password).message &&
-    formData.email.trim() !== "" && 
-    formData.password.trim() !== "";
+    !validateEmail(email).message &&
+    !validatePassword(password).message &&
+    email.trim() !== "" && 
+    password.trim() !== "";
 
   return (
     <div className={styles.wrapper}>
@@ -85,11 +87,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
               htmlType="button"
             >
               <div className={styles.socialButtonContent}>
-                <img
-                  src={googleIcon}
-                  alt="Google"
-                  className={styles.socialIcon}
-                />
+                <Google className={styles.socialIcon} />
                 <span>Продолжить с Google</span>
               </div>
             </Button>
@@ -100,11 +98,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
               htmlType="button"
             >
               <div className={styles.socialButtonContent}>
-                <img
-                  src={appleIcon}
-                  alt="Apple"
-                  className={styles.socialIcon}
-                />
+                <Apple className={styles.socialIcon} />
                 <span>Продолжить с Apple</span>
               </div>
             </Button>
@@ -120,7 +114,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
               name="email"
               type="email"
               placeholder={"Введите ваш emai"}
-              value={formData.email}
+              value={email}
               onChange={handleInputChange}
               error={!!errors.email}
               helperText={errors.email}
@@ -135,7 +129,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
                   ? "Придумайте надёжный пароль"
                   : "Введите ваш пароль"
               }
-              value={formData.password}
+              value={password}
               onChange={handleInputChange}
               error={!!errors.password}
               helperText={errors.password}

@@ -22,7 +22,7 @@ export type UserInLocalStorage = {
   email: string;
   name: string;
   password: string;
-  birthDate: number | null;
+  birthDate: Date | null;
   gender: string;
   city: string;
   categories: string[];

@@ -1,19 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import { useState } from "react";
 import { RegistrationStep1 } from "@widgets/RegistrationForm/RegistrationForm1/RegistrationForm1.tsx";
 import styles from "../RegistrationPage/RegistrationForm.module.css";
 import logo from "@assets/images/logo.svg";
 import { Button } from "@shared/ui/button/button.tsx";
-import closeIcon from "@assets/icons/cross.svg";
+import Cross from "@assets/icons/cross.svg?react";
 import { usePreviousUrl } from "@shared/hooks/usePreviousUrl";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
   const { getPreviousUrl, clearPreviousUrl } = usePreviousUrl();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,12 +28,12 @@ export const LoginPage = () => {
 
       const userData = JSON.parse(userDataString);
 
-      if (userData.email !== formData.email) {
+      if (userData.email !== email) {
         throw new Error("Неверный email");
       }
 
       // В реальном приложении пароль не храним в localStorage и должен проверяться через хеширование!
-      if (userData.password !== formData.password) {
+      if (userData.password !== password) {
         throw new Error("Неверный пароль");
       }
 
@@ -65,9 +63,7 @@ export const LoginPage = () => {
           <Button
             type="secondary"
             onClick={handleClose}
-            endIcon={
-              <img src={closeIcon} alt="Закрыть" className={styles.closeIcon} />
-            }
+            endIcon={<Cross className={styles.closeIcon} aria-hidden="true" />}
             extraClass={styles.closeButton}
           >
             Закрыть
@@ -75,15 +71,17 @@ export const LoginPage = () => {
         </div>
       </header>
 
-      {error && <div className={styles.errorMessage}>{error}</div>}
+      {error && <div className={styles.errorMessage} role="alert" aria-live="assertive">{error}</div>}
 
       {isLoading ? (
         <div className={styles.loader}>Вход...</div>
       ) : (
         <RegistrationStep1
           onNextStep={handleLogin}
-          formData={formData}
-          setFormData={setFormData}
+          email={email}
+          password={password}
+          setEmail={setEmail}
+          setPassword={setPassword}
           mode="login"
         />
       )}

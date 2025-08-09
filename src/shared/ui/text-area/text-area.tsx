@@ -1,7 +1,7 @@
 import { useState, type FC, type ReactNode } from "react";
 import style from "./text-area.module.css";
 import TextArea from "antd/es/input/TextArea";
-import editIcon from "@assets/icons/edit.svg";
+import Edit from "@assets/icons/edit.svg?react";
 
 interface InputProps {
   label?: string;
@@ -58,7 +58,7 @@ export const FormTextArea: FC<InputProps> = ({
           {withIcon && (
             <div className={style.iconContainer}>
               <div className={style.editIcon}>
-                <img src={editIcon} alt="Изображение карандаша" />
+                <Edit />
               </div>
             </div>
           )}

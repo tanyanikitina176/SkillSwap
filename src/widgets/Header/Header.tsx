@@ -1,8 +1,8 @@
 import styles from './Header.module.css';
 import logo from '@assets/images/logo.svg';
-import topic from '@assets/icons/moon.svg';
-import chevronDown from '@assets/icons/chevron-down.svg';
-import chevronUp from '@assets/icons/chevron-up.svg';
+import Moon from '@assets/icons/moon.svg?react';
+import ChevronDown from '@assets/icons/chevron-down.svg?react';
+import ChevronUp from '@assets/icons/chevron-up.svg?react';
 import { SearchInputUI } from '@shared/ui/search';
 import { Button } from '@shared/ui/button/button';
 import { CategoryDisplay } from '@widgets/SkillsPanel/SkillsPanel';
@@ -54,11 +54,7 @@ export const AppHeaderUI = () => {
               onClick={() => setDropdownOpen(!isDropdownOpen)}
             >
               Все навыки
-              <img
-                src={isDropdownOpen ? chevronUp : chevronDown}
-                alt="Стрелка вниз"
-                className={styles.chevronDown}
-              />
+              {isDropdownOpen ? <ChevronUp className={styles.chevronIcon} /> : <ChevronDown className={styles.chevronIcon} />}
             </button>
 
             <div
@@ -78,7 +74,7 @@ export const AppHeaderUI = () => {
           <>
             <div className={styles.topic}>
               <button title="Темная тема" className={styles.topicButton}>
-                <img src={topic} alt="Тема" className={styles.icon} />
+                <Moon className={styles.icon} />
               </button>
             </div>
 

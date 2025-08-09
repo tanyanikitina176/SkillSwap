@@ -86,11 +86,12 @@
   margin: 0;
   border: none;
   padding: 0;
-  background: transparent url("../../assets/icons/like.svg") no-repeat;
+  background: transparent url("@assets/icons/like.svg") no-repeat;
   background-size: 24px 24px;
   cursor: pointer;
 }
 
+
 .liked {
-  background: transparent url("../../assets/icons/likeFill.svg") no-repeat;
+  background: transparent url("@assets/icons/likeFill.svg") no-repeat;
 }

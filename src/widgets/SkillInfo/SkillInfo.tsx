@@ -1,10 +1,10 @@
 import { CardUserBig } from "@widgets/CardUserBig/card-user-big.tsx";
 import { Button } from "@shared/ui/button/button.tsx";
 import styles from "./SkillInfo.module.css";
-import LikeIcon from "@assets/icons/like.svg";
-import ShareIcon from "@assets/icons/share.svg";
-import clockIcon from "@assets/icons/clock.svg";
-import MoreSquareIcon from "@assets/icons/more-square.svg";
+import LikeIcon from "@assets/icons/like.svg?react";
+import ShareIcon from "@assets/icons/share.svg?react";
+import ClockIcon from "@assets/icons/clock.svg?react";
+import MoreSquareIcon from "@assets/icons/more-square.svg?react";
 import { UserCardSkillInfo } from "@widgets/SkillInfo/UserCardSkillInfo.tsx";
 import { type FC, useState } from "react";
 import type { User } from "@entities/User/types";
@@ -34,13 +34,13 @@ export const SkillInfo: FC<SkillInfoProps> = ({ user, skill,}) => {
         header={
           <div className={styles.headerIcons}>
             <button className={styles.iconButton}>
-              <img src={LikeIcon} alt="Нравится" />
+              <LikeIcon />
             </button>
             <button className={styles.iconButton}>
-              <img src={ShareIcon} alt="Поделиться" />
+              <ShareIcon />
             </button>
             <button className={styles.iconButton}>
-              <img src={MoreSquareIcon} alt="Узнать больше" />
+              <MoreSquareIcon />
             </button>
           </div>
         }
@@ -53,7 +53,7 @@ export const SkillInfo: FC<SkillInfoProps> = ({ user, skill,}) => {
             style={{ width: "100%" }}
             onClick={handleOfferClick}
             type={exchangeOffered ? "tertiary" : "primary"}
-            startIcon={exchangeOffered ? <img src={clockIcon} alt="Ожидание" /> : undefined}
+            startIcon={exchangeOffered ? <ClockIcon /> : undefined}
           >
             {exchangeOffered ? "Обмен предложен" : "Предложить обмен"}
           </Button>
