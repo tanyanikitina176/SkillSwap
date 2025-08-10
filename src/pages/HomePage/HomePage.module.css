@@ -51,3 +51,9 @@
     grid-template-columns: 1fr;
   }
 }
+
+.emptyState {
+  font-family: var(--font-roboto-regular, sans-serif);
+  font-weight: 400;
+  font-size: 16px;
+}

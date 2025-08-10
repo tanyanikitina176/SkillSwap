@@ -1,13 +1,16 @@
-import { useState, type FC } from "react";
+import React, { type FC } from "react";
 import style from "./search-input.module.css";
 import Search from "@assets/icons/search.svg?react";
 import Cross from "@assets/icons/cross.svg?react";
 
-export const SearchInputUI: FC = () => {
-  const [value, setValue] = useState("");
+interface SearchInputUIProps {
+  value: string;
+  onChange: (value: string) => void;
+}
 
+export const SearchInputUI: FC<SearchInputUIProps> = ({ value, onChange }) => {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    onChange(e.target.value);
   };
   return (
     <div className={style.wrapper}>
@@ -23,7 +26,7 @@ export const SearchInputUI: FC = () => {
       </div>
 
       {value && (
-        <button className={style.button} onClick={() => setValue("")}>
+        <button className={style.button} onClick={() => onChange("")}>
           <Cross className={style.icon} />
         </button>
       )}

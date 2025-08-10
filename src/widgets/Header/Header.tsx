@@ -1,20 +1,28 @@
-import styles from './Header.module.css';
-import logo from '@assets/images/logo.svg';
-import Moon from '@assets/icons/moon.svg?react';
-import ChevronDown from '@assets/icons/chevron-down.svg?react';
-import ChevronUp from '@assets/icons/chevron-up.svg?react';
-import { SearchInputUI } from '@shared/ui/search';
-import { Button } from '@shared/ui/button/button';
-import { CategoryDisplay } from '@widgets/SkillsPanel/SkillsPanel';
-import { useEffect, useRef, useState } from 'react';
-import clsx from 'clsx';
-import { NavLink } from 'react-router-dom';
-import { HeaderLoggedIn } from '@shared/ui/header-logged-in/header-logged-in';
-import type { UserInLocalStorage } from '@entities/User/types';
-import { EventEmitterWrapper } from '@shared/lib/event/EventEmitter';
-import { getUserFromLocalStorage } from '@shared/lib/utils/getDataFromLocalStorage';
+import styles from "./Header.module.css";
+import logo from "@assets/images/logo.svg";
+import Moon from "@assets/icons/moon.svg?react";
+import ChevronDown from "@assets/icons/chevron-down.svg?react";
+import ChevronUp from "@assets/icons/chevron-up.svg?react";
+import { SearchInputUI } from "@shared/ui/search";
+import { Button } from "@shared/ui/button/button";
+import { CategoryDisplay } from "@widgets/SkillsPanel/SkillsPanel";
+import { type FC, useEffect, useRef, useState } from "react";
+import clsx from "clsx";
+import { NavLink } from "react-router-dom";
+import { HeaderLoggedIn } from "@shared/ui/header-logged-in/header-logged-in";
+import type { UserInLocalStorage } from "@entities/User/types";
+import { EventEmitterWrapper } from "@shared/lib/event/EventEmitter";
+import { getUserFromLocalStorage } from "@shared/lib/utils/getDataFromLocalStorage";
 
-export const AppHeaderUI = () => {
+interface AppHeaderUIProps {
+  searchQuery: string;
+  onSearchChange: (value: string) => void;
+}
+
+export const AppHeaderUI: FC<AppHeaderUIProps> = ({
+  searchQuery,
+  onSearchChange,
+}) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [userName, setUserName] = useState<string>("");
@@ -26,7 +34,7 @@ export const AppHeaderUI = () => {
         setUserName(user.name);
         setUserAvatar(user.avatar as string);
       }
-    }
+    };
 
     const user = getUserFromLocalStorage();
     updateUserState(user);
@@ -54,11 +62,15 @@ export const AppHeaderUI = () => {
               onClick={() => setDropdownOpen(!isDropdownOpen)}
             >
               Все навыки
-              {isDropdownOpen ? <ChevronUp className={styles.chevronIcon} /> : <ChevronDown className={styles.chevronIcon} />}
+              {isDropdownOpen ? (
+                <ChevronUp className={styles.chevronIcon} />
+              ) : (
+                <ChevronDown className={styles.chevronIcon} />
+              )}
             </button>
 
             <div
-              className={`${styles.dropdownContent} ${isDropdownOpen ? styles.active : ''}`}
+              className={`${styles.dropdownContent} ${isDropdownOpen ? styles.active : ""}`}
               ref={dropdownRef}
             >
               <CategoryDisplay />
@@ -66,7 +78,7 @@ export const AppHeaderUI = () => {
           </div>
         </div>
 
-        <SearchInputUI />
+        <SearchInputUI value={searchQuery} onChange={onSearchChange} />
 
         {isAuth ? (
           <HeaderLoggedIn name={userName} avatar={userAvatar} />
@@ -78,7 +90,6 @@ export const AppHeaderUI = () => {
               </button>
             </div>
 
-
             <div className={styles.buttonsWrapper}>
               <NavLink to="/login">
                 <Button type="secondary">Войти</Button>
@@ -89,7 +100,6 @@ export const AppHeaderUI = () => {
             </div>
           </>
         )}
-
       </nav>
     </header>
   );
