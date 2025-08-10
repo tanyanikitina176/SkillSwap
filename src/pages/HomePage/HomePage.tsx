@@ -27,7 +27,7 @@ interface HomeFilters {
 const MemoizedUserCard = memo(UserCard);
 
 export const HomePage = () => {
-  // поиск (контролируем из хедера)
+
   const [searchQuery, setSearchQuery] = useState("");
   const debouncedSearch = useDebounce(searchQuery, 400);
 
@@ -80,10 +80,23 @@ export const HomePage = () => {
     console.log("Подробнее о пользователе:", userId);
   }, []);
 
-  // данные навыков (для сортировки “сначала новые”)
+
   const skillsUsers = useMemo(() => skills.skills, []);
 
-  // базовые фильтры (пол, город, выбранные навыки/категории из сайдбара)
+
+  const skillNamesBySubId = useMemo(() => {
+    const m = new Map<string, string[]>();
+    for (const s of skillsUsers) {
+      const key = s.SubcategoryId;
+      if (!key) continue;
+      const arr = m.get(key) ?? [];
+      arr.push(s.name.toLowerCase());
+      m.set(key, arr);
+    }
+    return m;
+  }, [skillsUsers]);
+
+
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {
       if (filters.gender !== "Не имеет значения") {
@@ -113,7 +126,7 @@ export const HomePage = () => {
     });
   }, [users, filters]);
 
-  // поиск по имени навыка или названию подкатегории
+
   const searchedUsers = useMemo(() => {
     if (!debouncedSearch) return filteredUsers;
 
@@ -127,25 +140,30 @@ export const HomePage = () => {
             ? user.teachingSkills
             : user.wantToLearnSkills;
 
-      return skillsToCheck.some(
-        (skill) =>
-          skill.name.toLowerCase().includes(query) ||
-          skill.category.name.toLowerCase().includes(query)
-      );
+      return skillsToCheck.some((subcat) => {
+
+        const namesInThisSub = skillNamesBySubId.get(subcat.id) ?? [];
+
+        return (
+          subcat.name.toLowerCase().includes(query) ||
+          subcat.category.name.toLowerCase().includes(query) ||
+          namesInThisSub.some((n) => n.includes(query))
+        );
+      });
     });
-  }, [debouncedSearch, filteredUsers, filters.role]);
+  }, [debouncedSearch, filteredUsers, filters.role, skillNamesBySubId]);
 
   const isSearchActive = useMemo(() => debouncedSearch.trim().length > 0, [debouncedSearch]);
   const resultsCount = searchedUsers.length;
 
-  // итоговый список: при включённой сортировке — сортируем итог поиска
+
   const listToRender = useMemo(() => {
     return isClickButtonShowNew
       ? sortUsersByCreatedAt(searchedUsers, skillsUsers)
       : searchedUsers;
   }, [isClickButtonShowNew, searchedUsers, skillsUsers]);
 
-  // дефолтное состояние (когда не выбран ни один фильтр и нет поиска)
+
   const isDefaultFilters = useMemo(
     () =>
       filters.role === "Всё" &&
@@ -196,7 +214,9 @@ export const HomePage = () => {
                 </div>
 
                 {resultsCount === 0 ? (
-                  <div className={styles.emptyState}>Таких талантов в нашей базе нет… Может, пора добавить</div>
+                  <div className={styles.emptyState}>
+                    Таких талантов в нашей базе нет… Может, пора добавить?
+                  </div>
                 ) : (
                   <div className={styles.usersGrid}>
                     {listToRender.map((user) => (
