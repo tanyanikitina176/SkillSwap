@@ -27,27 +27,31 @@ interface RegistrationStep3Props {
   onNextStep: () => void;
   onPrevStep: () => void;
   categories: CategoryWithSubcategories[];
-  formData: {
-    skillName: string;
-    skillCategory: Category | null;
-    skillSubCategory: Subcategory | null;
-    description: string;
-    skillImage: string;
-  };
-  setFormData: (data: {
-    skillName: string;
-    skillCategory: Category | null;
-    skillSubCategory: Subcategory | null;
-    description: string;
-    skillImage: string;
-  }) => void;
+  skillName: string;
+  skillCategory: Category | null;
+  skillSubCategory: Subcategory | null;
+  description: string;
+  skillImage: string;
+  setSkillName: (name: string) => void;
+  setSkillCategory: (category: Category | null) => void;
+  setSkillSubCategory: (subcategory: Subcategory | null) => void;
+  setDescription: (description: string) => void;
+  setSkillImage: (image: string) => void;
 }
 
 export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
   onNextStep,
   onPrevStep,
-  formData,
-  setFormData,
+  skillName,
+  skillCategory,
+  skillSubCategory,
+  description,
+  skillImage,
+  setSkillName,
+  setSkillCategory,
+  setSkillSubCategory,
+  setDescription,
+  setSkillImage,
   categories,
 }) => {
   const [errors, setErrors] = useState({
@@ -58,13 +62,8 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
     skillImage: "",
   });
 
-  const [values, setValues] = useState<{
-    skillName: string;
-    skillCategory: Category | null;
-    skillSubCategory: Subcategory | null;
-    description: string;
-    skillImage: string;
-  }>(formData);
+  // Удаляем локальное состояние values, так как теперь используем пропсы напрямую
+  // Также удаляем зависимость от formData
 
   function getAllSubcategories(
     categoriesWithSubcategories: CategoryWithSubcategories[],
@@ -79,54 +78,42 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-    setFormData({ ...values, [name]: value });
     if (name === "skillName") {
-      console.log(`Validating skillName: ${value}`);
+      setSkillName(value);
       const { message } = validateSkillName(value);
       setErrors((prev) => ({ ...prev, skillName: message || "" }));
-    }
-    if (name === "skillImage") {
-      const { message } = validateSkillImage(value);
-      setErrors((prev) => ({ ...prev, skillImage: message || "" }));
     }
   };
 
   const handleCategoryChange = (value: string | string[]) => {
-    categories.find((category) => category.subcategories);
     const selectedCategory = categories.find(
       (category) => category.id === value,
-    );
-    setValues((prev) => ({
-      ...prev,
-      skillCategory: selectedCategory || null,
-    }));
-    setFormData({ ...values, skillCategory: selectedCategory || null });
-    const { message } = validateSkillCategory(selectedCategory || null);
+    ) || null;
+    setSkillCategory(selectedCategory);
+    const { message } = validateSkillCategory(selectedCategory);
     setErrors((prev) => ({ ...prev, skillCategory: message || "" }));
   };
 
   const handleSubCategoryChange = (value: string | string[]) => {
-    const selectedCategory = getAllSubcategories(
+    const selectedSubCategory = getAllSubcategories(
       categories,
-      values.skillCategory?.id,
-    );
-    const selectedSubCategory = selectedCategory.find(
-      (subcategory) => subcategory.id === value,
-    );
-    setValues((prev) => ({
-      ...prev,
-      skillSubCategory: selectedSubCategory || null,
-    }));
-    setFormData({ ...values, skillSubCategory: selectedSubCategory || null });
-
-    const { message } = validateSkillSubCategory(selectedSubCategory || null);
+      skillCategory?.id,
+    ).find((subcategory) => subcategory.id === value) || null;
+    setSkillSubCategory(selectedSubCategory);
+    const { message } = validateSkillSubCategory(selectedSubCategory);
     setErrors((prev) => ({ ...prev, skillSubCategory: message || "" }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const validation = validateFormStep3(values);
+    const currentValues = {
+      skillName,
+      skillCategory,
+      skillSubCategory,
+      description,
+      skillImage,
+    };
+    const validation = validateFormStep3(currentValues);
     setErrors({
       skillName: validation.errors.skillName || "",
       skillCategory: validation.errors.skillCategory || "",
@@ -142,9 +129,8 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
 
   function handleTextAreaChange(e: ChangeEvent<HTMLTextAreaElement>): void {
     const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-    setFormData({ ...values, [name]: value });
     if (name === "description") {
+      setDescription(value);
       const { message } = validateDescription(value);
       setErrors((prev) => ({ ...prev, description: message || "" }));
     }
@@ -152,13 +138,19 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
 
   const handleFileChange = (file: File | null) => {
     const fileUrl = file ? URL.createObjectURL(file) : "";
-    setValues((prev) => ({ ...prev, skillImage: fileUrl }));
-    setFormData({ ...values, skillImage: fileUrl });
+    setSkillImage(fileUrl);
     const { message } = validateSkillImage(fileUrl);
     setErrors((prev) => ({ ...prev, skillImage: message || "" }));
   };
 
-  const validationResult = validateFormStep3(values);
+  const currentValues = {
+    skillName,
+    skillCategory,
+    skillSubCategory,
+    description,
+    skillImage,
+  };
+  const validationResult = validateFormStep3(currentValues);
   const isFormValid = validationResult.isValid;
 
   return (
@@ -175,7 +167,7 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
               name="skillName"
               type="text"
               placeholder="Введите название навыка"
-              value={values.skillName}
+              value={skillName}
               onChange={handleInputChange}
               error={!!errors.skillName}
               helperText={errors.skillName}
@@ -190,12 +182,11 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
                 }))}
                 type="select"
                 placeholder="Выберите категорию навыка"
-                onChange={(value) => handleCategoryChange(value)}
+                onChange={handleCategoryChange}
               />
               {errors.skillCategory && (
                 <span className={styles.errorText}>
-                  {validateSkillCategory(values.skillCategory).message ||
-                    "ERROR"}
+                  {validateSkillCategory(skillCategory).message || "ERROR"}
                 </span>
               )}
             </div>
@@ -205,9 +196,7 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
               <Dropdown
                 options={
                   categories
-                    .find(
-                      (category) => category.id === values.skillCategory?.id,
-                    )
+                    .find((category) => category.id === skillCategory?.id)
                     ?.subcategories.map((subcategory) => ({
                       value: subcategory.id,
                       label: subcategory.name,
@@ -215,12 +204,11 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
                 }
                 type="select"
                 placeholder="Выберите подкатегорию навыка"
-                onChange={(value) => handleSubCategoryChange(value)}
+                onChange={handleSubCategoryChange}
               />
               {errors.skillSubCategory && (
                 <span className={styles.errorText}>
-                  {validateSkillSubCategory(values.skillSubCategory).message ||
-                    "ERROR"}
+                  {validateSkillSubCategory(skillSubCategory).message || "ERROR"}
                 </span>
               )}
             </div>
@@ -229,7 +217,7 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
               label="Описание"
               name="description"
               placeholder="Коротко опишите, чему можете научить"
-              value={values.description}
+              value={description}
               onChange={handleTextAreaChange}
               error={!!errors.description}
               helperText={errors.description}
@@ -254,7 +242,6 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
                 htmlType="submit"
                 extraClass={styles.submitButton}
                 disabled={!isFormValid}
-                onClick={onNextStep}
               >
                 Продолжить
               </Button>

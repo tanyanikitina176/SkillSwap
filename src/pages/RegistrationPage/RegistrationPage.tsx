@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { RegistrationStep1 } from "../../widgets/RegistrationForm/RegistrationForm1/RegistrationForm1";
-import { RegistrationStep2 } from "../../widgets/RegistrationForm/RegistrationForm2/RegistrationForm2";
-import { RegistrationStep3 } from "../../widgets/RegistrationForm/RegistrationForm3/RegistrationForm3";
-import { categories as rawCategories } from "../../../public/db/skills_categories.json";
-import { subcategories as rawSubcategories } from "../../../public/db/skills_subcategories.json";
+import { RegistrationStep1 } from "@widgets/RegistrationForm/RegistrationForm1/RegistrationForm1";
+import { RegistrationStep2 } from "@widgets/RegistrationForm/RegistrationForm2/RegistrationForm2";
+import { RegistrationStep3 } from "@widgets/RegistrationForm/RegistrationForm3/RegistrationForm3";
+import { categories as rawCategories } from "@public/db/skills_categories.json";
+import { subcategories as rawSubcategories } from "@public/db/skills_subcategories.json";
 import type {
   Category,
   CategoryWithSubcategories,
@@ -11,30 +11,63 @@ import type {
 } from "@entities/Category/CategoryTypes";
 import { useNavigate } from "react-router-dom";
 import logo from "@assets/images/logo.svg";
-import closeIcon from "@assets/icons/cross.svg";
+import Cross from "@assets/icons/cross.svg?react";
 import styles from "./RegistrationForm.module.css";
 import { Button } from "@shared/ui/button/button";
+import { convertFileToBase64 } from "@shared/lib/utils/convertFileToBase64";
 
 const prepareCategories = (): CategoryWithSubcategories[] => {
-  return rawCategories.map((category) => {
-    const categorySubcategories = rawSubcategories
-      .filter((sub) => sub.categoryId === category.id)
-      .map((sub) => ({
-        id: sub.id,
-        name: sub.name,
-        category: {
-          id: category.id,
-          name: category.name,
-          color: category.color,
-          icon: category.icon,
-        },
-      }));
+  if (!Array.isArray(rawCategories)) {
+    console.warn('Некорректные данные категорий: ожидался массив');
+    return [];
+  }
+  
+  if (!Array.isArray(rawSubcategories)) {
+    console.warn('Некорректные данные подкатегорий: ожидался массив');
+    return [];
+  }
 
-    return {
-      ...category,
-      subcategories: categorySubcategories,
-    };
-  });
+  return rawCategories
+    .map((category) => {
+      if (!category?.id || !category?.name) {
+        console.warn('Некорректная категория: отсутствует id или name', category);
+        return null;
+      }
+
+      const categorySubcategories = rawSubcategories
+        .filter((sub) => {
+          if (!sub?.id || !sub?.name || !sub?.categoryId) {
+            console.warn('Некорректная подкатегория: отсутствуют обязательные поля', sub);
+            return false;
+          }
+          return sub.categoryId === category.id;
+        })
+        .map((sub) => ({
+          id: sub.id,
+          name: sub.name,
+          category: {
+            id: category.id,
+            name: category.name,
+            color: category.color,
+            icon: category.icon,
+          },
+        }));
+
+      return {
+        ...category,
+        subcategories: categorySubcategories,
+      };
+    })
+    .filter((c): c is CategoryWithSubcategories => c !== null);
+};
+
+const validateUserData = (data: {
+  email: string;
+  name: string;
+  password: string;
+  [key: string]: any;
+}): boolean => {
+  return !!data.email && !!data.name && !!data.password;
 };
 
 export const RegistrationPage = () => {
@@ -42,81 +75,73 @@ export const RegistrationPage = () => {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    name: "",
-    birthDate: 0 as number,
-    gender: "",
-    city: "",
-    categories: [] as string[],
-    subcategories: [] as string[],
-    avatar: undefined as File | undefined,
-    skillName: "",
-    skillCategory: null as Category | null,
-    skillSubCategory: null as Subcategory | null,
-    description: "",
-    skillImage: "",
-  });
+  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  
+  const [name, setName] = useState("");
+  const [birthDate, setBirthDate] = useState<Date | null>(null);
+  const [gender, setGender] = useState("");
+  const [city, setCity] = useState("");
+  const [categories, setCategories] = useState<string[]>([]);
+  const [subcategories, setSubcategories] = useState<string[]>([]);
+  const [avatar, setAvatar] = useState<File | undefined>();
+  
+  const [skillName, setSkillName] = useState("");
+  const [skillCategory, setSkillCategory] = useState<Category | null>(null);
+  const [skillSubCategory, setSkillSubCategory] = useState<Subcategory | null>(null);
+  const [description, setDescription] = useState("");
+  const [skillImage, setSkillImage] = useState("");
 
   const categoriesWithSubcategories = React.useMemo(prepareCategories, []);
 
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
 
-  const handleFormDataChange = (newData: Partial<typeof formData>) => {
-    setFormData((prev) => ({ ...prev, ...newData }));
-  };
-
   const handleSubmitAll = async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      if (!formData.email || !formData.password || !formData.name) {
+      if (!email || !password || !name) {
         throw new Error("Заполните обязательные поля");
       }
 
       const userData = {
-        email: formData.email,
-        name: formData.name,
-        password: formData.password,
-        birthDate: formData.birthDate,
-        gender: formData.gender,
-        city: formData.city,
-        categories: formData.categories,
-        subcategories: formData.subcategories,
+        email,
+        name,
+        password,
+        birthDate: birthDate ? birthDate.getTime() : null,
+        gender,
+        city,
+        categories,
+        subcategories,
         skills: {
-          name: formData.skillName,
-          category: formData.skillCategory,
-          subcategory: formData.skillSubCategory,
-          description: formData.description,
+          name: skillName,
+          category: skillCategory,
+          subcategory: skillSubCategory,
+          description,
         },
-        avatar: formData.avatar ? await fileToBase64(formData.avatar) : null,
-        skillImage: formData.skillImage,
+        avatar: avatar ? await convertFileToBase64(avatar) : null,
+        skillImage,
       };
 
-      // Сохранение в localStorage
-      localStorage.setItem("user", JSON.stringify(userData));
 
-      // Перенаправление на главную
+      if (validateUserData(userData)) {
+        localStorage.setItem("user", JSON.stringify(userData));
+      } else {
+        localStorage.removeItem("user");
+        throw new Error('Некорректные данные пользователя');
+      }
+      
       navigate("/");
     } catch (err) {
+      localStorage.removeItem("user");
       setError(err instanceof Error ? err.message : "Ошибка регистрации");
-      // Возвращаем на первый шаг при ошибке
       setStep(1);
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const fileToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = (error) => reject(error);
-    });
   };
 
   const handleClose = () => {
@@ -131,9 +156,7 @@ export const RegistrationPage = () => {
           <Button
             type="secondary"
             onClick={handleClose}
-            endIcon={
-              <img src={closeIcon} alt="Закрыть" className={styles.closeIcon} />
-            }
+            endIcon={<Cross className={styles.closeIcon} aria-hidden="true" />}
             extraClass={styles.closeButton}
           >
             Закрыть
@@ -141,7 +164,7 @@ export const RegistrationPage = () => {
         </div>
       </header>
 
-      {error && <div className={styles.errorMessage}>{error}</div>}
+      {error && <div className={styles.errorMessage} role="alert" aria-live="assertive">{error}</div>}
 
       <div className={styles.content}>
         {isLoading ? (
@@ -151,11 +174,10 @@ export const RegistrationPage = () => {
             {step === 1 && (
               <RegistrationStep1
                 onNextStep={nextStep}
-                formData={{
-                  email: formData.email,
-                  password: formData.password,
-                }}
-                setFormData={handleFormDataChange}
+                email={email}
+                password={password}
+                setEmail={setEmail}
+                setPassword={setPassword}
               />
             )}
 
@@ -163,16 +185,20 @@ export const RegistrationPage = () => {
               <RegistrationStep2
                 onNextStep={nextStep}
                 onPrevStep={prevStep}
-                formData={{
-                  name: formData.name,
-                  birthDate: formData.birthDate,
-                  gender: formData.gender,
-                  city: formData.city,
-                  categories: formData.categories,
-                  subcategories: formData.subcategories,
-                  avatar: formData.avatar,
-                }}
-                setFormData={handleFormDataChange}
+                name={name}
+                birthDate={birthDate}
+                gender={gender}
+                city={city}
+                categories={categories}
+                subcategories={subcategories}
+                avatar={avatar}
+                setName={setName}
+                setBirthDate={setBirthDate}
+                setGender={setGender}
+                setCity={setCity}
+                setCategories={setCategories}
+                setSubcategories={setSubcategories}
+                setAvatar={setAvatar}
               />
             )}
 
@@ -181,14 +207,16 @@ export const RegistrationPage = () => {
                 onNextStep={handleSubmitAll}
                 onPrevStep={prevStep}
                 categories={categoriesWithSubcategories}
-                formData={{
-                  skillName: formData.skillName,
-                  skillCategory: formData.skillCategory,
-                  skillSubCategory: formData.skillSubCategory,
-                  description: formData.description,
-                  skillImage: formData.skillImage,
-                }}
-                setFormData={handleFormDataChange}
+                skillName={skillName}
+                skillCategory={skillCategory}
+                skillSubCategory={skillSubCategory}
+                description={description}
+                skillImage={skillImage}
+                setSkillName={setSkillName}
+                setSkillCategory={setSkillCategory}
+                setSkillSubCategory={setSkillSubCategory}
+                setDescription={setDescription}
+                setSkillImage={setSkillImage}
               />
             )}
           </>

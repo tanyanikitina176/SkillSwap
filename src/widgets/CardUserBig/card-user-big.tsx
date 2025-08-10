@@ -8,6 +8,7 @@ interface CardUserBigProps {
   description: string;
   header?: React.ReactNode;
   buttonsSlot?: React.ReactNode;
+  photoSlot?: React.ReactNode;
   children?: React.ReactNode;
 }
 
@@ -18,6 +19,7 @@ export const CardUserBig: FC<CardUserBigProps> = ({
   description,
   header,
   buttonsSlot,
+  photoSlot,
 }) => {
   return (
     <div className={styles.bigcontainer}>
@@ -37,7 +39,7 @@ export const CardUserBig: FC<CardUserBigProps> = ({
             </div>
           </div>
           <div className={styles.containerPhoto}>
-            <div className={styles.photo}></div>
+            {photoSlot}
           </div>
         </div>
       </div>

@@ -1,4 +1,7 @@
-import type { Subcategory } from "@entities/Category/CategoryTypes";
+import type {
+  CategoryWithSubcategories,
+  Subcategory,
+} from "@entities/Category/CategoryTypes";
 
 export type User = {
   id: string;
@@ -13,6 +16,22 @@ export type User = {
   likes: User[];
   likedSkills: User[];
   createdAt?: string;
+};
+
+export type UserInLocalStorage = {
+  email: string;
+  name: string;
+  password: string;
+  birthDate: Date | null;
+  gender: string;
+  city: string;
+  categories: string[];
+  subcategories: string[];
+  skills: CategoryWithSubcategories;
+  avatar: string | undefined | File;
+  skillImage: string;
+  description: string;
+  likedSkills: string[];
 };
 
 export type Skill = {

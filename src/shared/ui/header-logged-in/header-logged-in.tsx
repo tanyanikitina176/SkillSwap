@@ -1,8 +1,8 @@
 import type React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
-import notification from '@assets/icons/notification.svg';
-import like from '@assets/icons/like.svg';
+import Notification from '@assets/icons/notification.svg?react';
+import Like from '@assets/icons/like.svg?react';
 import defaultUserIcon from '@assets/icons/default-user-icon.png';
 import theme from '@assets/icons/moon.svg';
 import styles from './header-logged-in.module.css';
@@ -26,11 +26,11 @@ export const HeaderLoggedIn: React.FC<Props> = ({ name, avatar }) => {
           <img src={theme} alt="Тема." className={styles.icon} />
         </button>
         <button type="button" className={styles.button}>
-          <img src={notification} alt="Уведомления." className={styles.icon} />
+          <Notification className={styles.icon} />
         </button>
-        <NavLink to="profile/favorites" className={styles.link}>
+        <NavLink to="/profile/favourites" className={styles.link} end>
           <button type="button" className={styles.button}>
-            <img src={like} alt="Избранное." className={styles.icon} />
+            <Like className={styles.icon} />
           </button>
         </NavLink>
       </div>

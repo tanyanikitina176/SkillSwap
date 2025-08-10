@@ -1,30 +1,47 @@
-import type { FC } from "react";
+import { useEffect, useState, type FC } from "react";
 import styles from "./user-card.module.css";
 import { Tag } from "@shared/ui/tag/tag";
 import { Button } from "@shared/ui/button/button";
 import type { UserCardProps } from "./type";
 import { useNavigate } from "react-router-dom";
+import {
+  getLikedSkills,
+  toggleLikedSkillsInStorage,
+} from "@shared/lib/utils/getDataFromLocalStorage";
 
 export const UserCard: FC<UserCardProps> = ({
   user,
   onLikeClick,
   onButtonClick,
 }) => {
+  const [isLiked, setIsLiked] = useState<boolean>();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const likedSkills = getLikedSkills();
+    setIsLiked(likedSkills?.includes(user.id));
+  }, [user]);
 
   const handleDetailsClick = () => {
     if (onButtonClick) {
       onButtonClick(user.id);
     }
     // Переходим на страницу /skill с передачей пользователя
-    navigate(`/skill/`, { state: { user } });
+    navigate(`/skill/${user.id}`, { state: { user } });
   };
+
+  const handleLikeClick = () => {
+    setIsLiked((prev) => !prev);
+    toggleLikedSkillsInStorage(user.id);
+    onLikeClick?.(user.id);
+  };
+
   return (
     <div className={styles.card}>
       <button
         type="button"
-        className={styles.card__like_button}
-        onClick={() => onLikeClick?.(user.id)}
+        className={`${styles.card__like_button} ${isLiked ? styles.liked : ""}`}
+        onClick={handleLikeClick}
       ></button>
       <div className={styles.card__header}>
         <img
