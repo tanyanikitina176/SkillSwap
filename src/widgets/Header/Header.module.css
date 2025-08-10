@@ -1,7 +1,6 @@
 .header {
 	padding: 36px 36px 20px 36px;
 	background-color: #f9faf7;
-	position: relative;
 }
 
 .nav {
@@ -93,4 +92,8 @@
 	width: 20px;
 	height: 20px;
 	display: block;
+}
+
+.wrapperDropdownProfile {
+	position: relative;
 }

@@ -1,7 +1,7 @@
 .dropdown {
 	position: absolute;
 	top: calc(100% + 20px);
-	right: 330px;
+	right: 0;
 	z-index: 9999;
 	animation: fadeIn 0.3s ease-out;
 }
@@ -22,7 +22,7 @@
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 24px;
-	max-width: 260px;
+	width: 260px;
 	max-height: 152px;
 	border: 1px solid #b2b9a9;
 	border-radius: 12px;

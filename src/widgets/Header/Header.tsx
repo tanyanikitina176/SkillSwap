@@ -76,11 +76,21 @@ export const AppHeaderUI = () => {
 				<SearchInputUI />
 
 				{isAuth ? (
-					<HeaderLoggedIn
-						name={userName}
-						avatar={userAvatar}
-						handleClick={toggleProfileDropdown}
-					/>
+					<div className={styles.wrapperDropdownProfile}>
+						<HeaderLoggedIn
+							name={userName}
+							avatar={userAvatar}
+							handleClick={toggleProfileDropdown}
+						/>
+						<ProfileDropdown
+							isOpen={isProfileDropdownOpen}
+							onClose={closeDropdownProfile}
+							handleLogout={() => {
+								localStorage.removeItem('user')
+								window.location.reload()
+							}}
+						/>
+					</div>
 				) : (
 					<>
 						<div className={styles.topic}>
@@ -100,14 +110,6 @@ export const AppHeaderUI = () => {
 					</>
 				)}
 			</nav>
-			<ProfileDropdown
-				isOpen={isProfileDropdownOpen}
-				onClose={closeDropdownProfile}
-				handleLogout={() => {
-					localStorage.removeItem('user')
-					window.location.reload()
-				}}
-			/>
 		</header>
 	)
 }
