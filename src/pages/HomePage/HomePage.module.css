@@ -30,12 +30,17 @@
   gap: 24px;
 }
 
+.section__header {
+  display: flex;
+  justify-content: space-between;
+}
+
 @media (max-width: 1024px) {
   .layout {
     flex-direction: column;
     padding: 0 20px;
   }
-  
+
   .filtersContainer {
     width: 100%;
   }
@@ -47,5 +52,8 @@
   }
 }
 
-
-
+.emptyState {
+  font-family: var(--font-roboto-regular, sans-serif);
+  font-weight: 400;
+  font-size: 16px;
+}

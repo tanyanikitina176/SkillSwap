@@ -43,16 +43,16 @@
 
 .checkbox_icon::before {
   opacity: 1;
-  background-image: url("../../../assets/icons/checkbox-empty.svg");
+  background-image: url("@assets/icons/checkbox-empty.svg");
 }
 
 .checkbox_icon::after {
   opacity: 0;
-  background-image: url("../../../assets/icons/checkbox-done.svg");
+  background-image: url("@assets/icons/checkbox-done.svg");
 }
 
 .checkbox_remove .checkbox_icon::after {
-  background-image: url("../../../assets/icons/checkbox-remove.svg");
+  background-image: url("@assets/icons/checkbox-remove.svg");
 }
 
 .checkbox input[type="checkbox"]:checked + .checkbox_icon::before {

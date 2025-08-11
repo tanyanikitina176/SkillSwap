@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import { useState } from "react";
 import { RegistrationStep1 } from "@widgets/RegistrationForm/RegistrationForm1/RegistrationForm1.tsx";
 import styles from "../RegistrationPage/RegistrationForm.module.css";
 import logo from "@assets/images/logo.svg";
 import { Button } from "@shared/ui/button/button.tsx";
-import closeIcon from "@assets/icons/cross.svg";
+import Cross from "@assets/icons/cross.svg?react";
+import { usePreviousUrl } from "@shared/hooks/usePreviousUrl";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const { getPreviousUrl, clearPreviousUrl } = usePreviousUrl();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -19,31 +19,33 @@ export const LoginPage = () => {
     setIsLoading(true);
     setError(null);
 
-      try {
-      const userDataString = localStorage.getItem('user');
-      
+    try {
+      const userDataString = localStorage.getItem("user");
+
       if (!userDataString) {
-        throw new Error('Пользователь не найден. Зарегистрируйтесь.');
+        throw new Error("Пользователь не найден. Зарегистрируйтесь.");
       }
 
       const userData = JSON.parse(userDataString);
 
-      if (userData.email !== formData.email) {
-        throw new Error('Неверный email');
+      if (userData.email !== email) {
+        throw new Error("Неверный email");
       }
 
       // В реальном приложении пароль не храним в localStorage и должен проверяться через хеширование!
-      if (userData.password !== formData.password) {
-        throw new Error('Неверный пароль');
+      if (userData.password !== password) {
+        throw new Error("Неверный пароль");
       }
 
       // Сохраняем флаг авторизации
-      localStorage.setItem('isAuthenticated', 'true');
-      
-      // Перенаправляем на страницу профиля
-      navigate("/");
+      localStorage.setItem("isAuthenticated", "true");
+
+      // Получаем предыдущий URL и перенаправляем туда
+      const previousUrl = getPreviousUrl();
+      clearPreviousUrl(); // Очищаем сохраненный URL
+      navigate(previousUrl);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ошибка входа');
+      setError(err instanceof Error ? err.message : "Ошибка входа");
     } finally {
       setIsLoading(false);
     }
@@ -61,9 +63,7 @@ export const LoginPage = () => {
           <Button
             type="secondary"
             onClick={handleClose}
-            endIcon={
-              <img src={closeIcon} alt="Закрыть" className={styles.closeIcon} />
-            }
+            endIcon={<Cross className={styles.closeIcon} aria-hidden="true" />}
             extraClass={styles.closeButton}
           >
             Закрыть
@@ -71,21 +71,19 @@ export const LoginPage = () => {
         </div>
       </header>
 
-      {error && (
-        <div className={styles.errorMessage}>
-          {error}
-        </div>
-      )}
+      {error && <div className={styles.errorMessage} role="alert" aria-live="assertive">{error}</div>}
 
       {isLoading ? (
         <div className={styles.loader}>Вход...</div>
       ) : (
-      <RegistrationStep1
-        onNextStep={handleLogin}
-        formData={formData}
-        setFormData={setFormData}
-        mode="login"
-      />
+        <RegistrationStep1
+          onNextStep={handleLogin}
+          email={email}
+          password={password}
+          setEmail={setEmail}
+          setPassword={setPassword}
+          mode="login"
+        />
       )}
     </div>
   );

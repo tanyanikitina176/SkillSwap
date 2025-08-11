@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './stepIndicator.module.css';
+import React from "react";
+import styles from "./stepIndicator.module.css";
 
 interface StepIndicatorProps {
   currentStep: number;
@@ -8,7 +8,7 @@ interface StepIndicatorProps {
 
 export const StepIndicator: React.FC<StepIndicatorProps> = ({
   currentStep,
-  totalSteps
+  totalSteps,
 }) => {
   return (
     <div className={styles.container}>
@@ -19,7 +19,7 @@ export const StepIndicator: React.FC<StepIndicatorProps> = ({
         {Array.from({ length: totalSteps }, (_, index) => (
           <div
             key={index}
-            className={`${styles.stepBlock} ${index < currentStep ? styles.active : ''}`}
+            className={`${styles.stepBlock} ${index < currentStep ? styles.active : ""}`}
           />
         ))}
       </div>

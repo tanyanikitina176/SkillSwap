@@ -4,9 +4,9 @@ import clsx from "clsx";
 import styles from "./dropdown.module.css";
 import { Checkbox } from "../checkbox/checkbox";
 
-import crossIcon from "@assets/icons/cross.svg";
-import chevronDownIcon from "@assets/icons/chevron-down.svg";
-import chevronUpIcon from "@assets/icons/chevron-up.svg";
+import Cross from "@assets/icons/cross.svg?react";
+import ChevronDown from "@assets/icons/chevron-down.svg?react";
+import ChevronUp from "@assets/icons/chevron-up.svg?react";
 
 export const Dropdown: React.FC<DropdownProps> = ({
   type = "select",
@@ -16,7 +16,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   placeholder = "Выберите...",
   className,
   error,
-  helperText
+  helperText,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -142,17 +142,12 @@ export const Dropdown: React.FC<DropdownProps> = ({
           onClick={clearSelection}
           type="button"
         >
-          <img src={crossIcon} alt="Clear selection" className={styles.icon} />
+          <Cross className={styles.icon} />
         </button>
       );
     }
     return (
-      <img
-        src={isOpen ? chevronUpIcon : chevronDownIcon}
-        alt={isOpen ? "Close dropdown" : "Open dropdown"}
-        className={styles.icon}
-        onClick={toggleDropdown}
-      />
+      isOpen ? <ChevronUp className={styles.icon} onClick={toggleDropdown} /> : <ChevronDown className={styles.icon} onClick={toggleDropdown} />
     );
   };
 
@@ -190,7 +185,6 @@ export const Dropdown: React.FC<DropdownProps> = ({
         className={`${styles.content} ${error ? styles.error : ""}`}
         style={{ zIndex: isOpen ? 10 : undefined }}
       >
-        
         <div
           className={styles.controls}
           style={{
@@ -201,15 +195,15 @@ export const Dropdown: React.FC<DropdownProps> = ({
           {renderIcon()}
         </div>
 
-         {isOpen && <ul className={styles.selectMenu}>{renderOptions()}</ul>}
+        {isOpen && <ul className={styles.selectMenu}>{renderOptions()}</ul>}
+      </div>
+      {helperText && (
+        <span
+          className={`${styles.helperText} ${error ? styles.errorText : ""}`}
+        >
+          {helperText}
+        </span>
+      )}
     </div>
-    {helperText && (
-      <span
-        className={`${styles.helperText} ${error ? styles.errorText : ""}`}
-      >
-        {helperText}
-      </span>
-    )}
-  </div>
-);
+  );
 };

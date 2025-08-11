@@ -3,22 +3,18 @@ import { UserCard } from "@widgets/UserCard/user-card";
 import { Button } from "@shared/ui/button/button";
 import styles from "./skill-list.module.css";
 import { useCallback, useEffect, useState } from "react";
-import chevronRightIcon from "@assets/icons/chevron-right.svg";
-import chevronDownIcon from "@assets/icons/chevron-down.svg";
+import ChevronRightIcon from "@assets/icons/chevron-right.svg?react";
+import ChevronDownIcon from "@assets/icons/chevron-down.svg?react";
 
 interface ISkillListProps {
   users: User[];
-  onLikeClick: (id: string) => void;
-  onButtonClick: (id: string) => void;
   title: string;
-  isShortList: boolean; //отображаем короткий список или выводим все карточки
+  onLikeClick?: (id: string) => void;
+  onButtonClick?: (id: string) => void;
+  isShortList?: boolean; //отображаем короткий список или выводим все карточки
 }
 
-const SkillList = ({
-  users,
-  title,
-  isShortList,
-}: ISkillListProps) => {
+const SkillList = ({ users, title, isShortList = false, onLikeClick }: ISkillListProps) => {
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
   useEffect(() => {
@@ -46,7 +42,7 @@ const SkillList = ({
               type="tertiary"
               htmlType="button"
               onClick={onButtonLessClick}
-              endIcon={<img src={chevronDownIcon} alt="button less" />}
+              endIcon={<ChevronDownIcon />}
             >
               Свернуть
             </Button>
@@ -55,7 +51,7 @@ const SkillList = ({
               type="tertiary"
               htmlType="button"
               onClick={onButtonMoreClick}
-              endIcon={<img src={chevronRightIcon} alt="button more" />}
+              endIcon={<ChevronRightIcon/>}
             >
               Смотреть все
             </Button>
@@ -65,8 +61,7 @@ const SkillList = ({
         {usersToShow.map((user) => (
           <UserCard
             user={user}
-            onLikeClick={() => {}}
-            onButtonClick={() => {}}
+            onLikeClick={onLikeClick}
             key={user.id}
           />
         ))}

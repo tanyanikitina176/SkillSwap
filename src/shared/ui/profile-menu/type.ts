@@ -7,10 +7,11 @@ export interface IProfileMenuItem {
 
 export interface IProfileMenuProps {
   profileMenuItems: IProfileMenuItem[];
+  onSelectItem?: (id: string) => void;
 }
 
 export interface IProfileMenuItemProps {
   item: IProfileMenuItem;
   isActive: boolean;
-  onClickItem: (id: string) => void;
+  onClickItem?: (is: string) => void;
 }

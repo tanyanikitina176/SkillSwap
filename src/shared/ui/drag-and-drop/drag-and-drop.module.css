@@ -16,6 +16,7 @@
 }
 .icon {
   color: var(--text-link);
+  cursor: pointer;
 }
 
 .text {
@@ -23,13 +24,14 @@
   font-family: var(--font-roboto-regular);
   font-size: 16px;
   line-height: 24px;
+  cursor: pointer;
 }
 
 .input {
   display: none;
 }
 
-.title  {
+.title {
   color: var(--text-caption);
   font-family: var(--font-roboto-regular);
   font-size: 16px;
@@ -40,4 +42,3 @@
   background: var(--disabled);
   opacity: 0.8;
 }
-

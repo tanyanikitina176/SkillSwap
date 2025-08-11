@@ -11,30 +11,46 @@ import {
   genderOptions,
   cityOptions,
 } from "@shared/ui/dropdown/dropdownConstants";
-import { categories } from '../../../../public/db/skills_categories.json';
+import { categories } from "../../../../public/db/skills_categories.json";
 import { subcategories } from "../../../../public/db/skills_subcategories.json";
 import { validateFormInfo, type FormErrors } from "../utils/validation";
 
 interface RegistrationStep2Props {
   onNextStep: () => void;
   onPrevStep: () => void;
-  formData: {
-    name: string;
-    birthDate: number;
-    gender: string;
-    city: string;
-    categories: string[];
-    subcategories: string[];
-    avatar?: File;
-  };
-  setFormData: (data: any) => void;
+  name: string;
+  birthDate: Date | null;
+  gender: string;
+  city: string;
+  categories: string[];
+  subcategories: string[];
+  avatar?: File;
+  setName: (name: string) => void;
+  setBirthDate: (date: Date | null) => void;
+  setGender: (gender: string) => void;
+  setCity: (city: string) => void;
+  setCategories: (categories: string[]) => void;
+  setSubcategories: (subcategories: string[]) => void;
+  setAvatar: (avatar: File) => void;
 }
 
 export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
   onNextStep,
   onPrevStep,
-  formData,
-  setFormData,
+  name,
+  birthDate,
+  gender,
+  city,
+  categories: propCategories,
+  subcategories: propSubcategories,
+  avatar,
+  setName,
+  setBirthDate,
+  setGender,
+  setCity,
+  setCategories,
+  setSubcategories,
+  setAvatar,
 }) => {
   const [errors, setErrors] = useState<FormErrors>({
     name: "",
@@ -45,18 +61,14 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
     subcategories: "",
   });
 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>(
-    []
-  );
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(propCategories || []);
+  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>(propSubcategories || []);
 
   const subcategoriesOptions = useMemo(() => {
     if (selectedCategories.length === 0) return [];
 
     return subcategories
-      .filter((subcategory) =>
-        selectedCategories.includes(subcategory.categoryId)
-      )
+      .filter((subcategory) => selectedCategories.includes(subcategory.categoryId))
       .map((subcategory) => ({
         value: subcategory.id,
         label: subcategory.name,
@@ -65,64 +77,75 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    validateField(name, value);
+    if (name === "name") {
+      setName(value);
+      validateField(name, value);
+    }
   };
 
-  const handleDateChange = (newDate: number | null) => {
-    setFormData({ ...formData, birthDate: newDate });
-    if (newDate === null) {
+  const handleDateChange = (date: number | null) => {
+    const dateObj = date ? new Date(date) : null;
+    setBirthDate(dateObj);
+    
+    if (date === null) {
+      setErrors((prev) => ({
+        ...prev,
+        birthDate: "Поле обязательно для заполнения",
+      }));
       return;
     }
+    
     const now = new Date();
-    const date = new Date(newDate);
     setErrors((prev) => ({
       ...prev,
-      birthDate: date > now ? "Дата рождения не может быть в будущем" : "",
+      birthDate: dateObj && dateObj > now ? "Дата рождения не может быть в будущем" : "",
     }));
   };
 
   const handleGenderChange = (value: string | string[]) => {
     const genderValue = Array.isArray(value) ? value[0] : value;
-    setFormData({ ...formData, gender: genderValue });
+    setGender(genderValue);
     validateField("gender", genderValue);
   };
 
   const handleCityChange = (value: string | string[]) => {
     const cityValue = Array.isArray(value) ? value[0] : value;
-    setFormData({ ...formData, city: cityValue });
+    setCity(cityValue);
     validateField("city", cityValue);
   };
 
   const handleCategoriesChange = (value: string | string[]) => {
     const categoriesValue = Array.isArray(value) ? value : [value];
     setSelectedCategories(categoriesValue);
-    setFormData({ ...formData, categories: categoriesValue });
+    setCategories(categoriesValue);
     setSelectedSubcategories([]);
-    setFormData((prev: any) => ({ ...prev, subcategories: [] }));
+    setSubcategories([]);
     validateField("categories", categoriesValue);
   };
 
   const handleSubcategoriesChange = (value: string | string[]) => {
     const subcategoriesValue = Array.isArray(value) ? value : [value];
     setSelectedSubcategories(subcategoriesValue);
-    setFormData({ ...formData, subcategories: subcategoriesValue });
+    setSubcategories(subcategoriesValue);
     validateField("subcategories", subcategoriesValue);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
-      const file = e.target.files[0];
-      setFormData({
-        ...formData,
-        avatar: file,
-      });
+      setAvatar(e.target.files[0]);
     }
   };
 
   const validateField = (name: string, value: any) => {
-    const tempFormData = { ...formData, [name]: value };
-    const { errors: newErrors } = validateFormInfo(tempFormData);
+    const currentData = {
+      name,
+      birthDate,
+      gender,
+      city,
+      categories: selectedCategories,
+      subcategories: selectedSubcategories,
+    };
+    const { errors: newErrors } = validateFormInfo({ ...currentData, [name]: value });
     setErrors((prev) => ({
       ...prev,
       [name]: newErrors[name as keyof FormErrors],
@@ -130,7 +153,15 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
   };
 
   const validateForm = () => {
-    const { isValid, errors: newErrors } = validateFormInfo(formData);
+    const currentData = {
+      name,
+      birthDate,
+      gender,
+      city,
+      categories: selectedCategories,
+      subcategories: selectedSubcategories,
+    };
+    const { isValid, errors: newErrors } = validateFormInfo(currentData);
     setErrors(newErrors);
     return isValid;
   };
@@ -139,9 +170,9 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
     e.preventDefault();
 
     const now = new Date();
-    const birthDate = formData.birthDate ? new Date(formData.birthDate) : null;
+    const userBirthDate = birthDate ? new Date(birthDate) : null;
 
-    if (birthDate && birthDate > now) {
+    if (userBirthDate && userBirthDate > now) {
       setErrors((prev) => ({
         ...prev,
         birthDate: "Дата рождения не может быть в будущем",
@@ -159,6 +190,17 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
     label: category.name,
   }));
 
+  const currentData = {
+    name,
+    birthDate,
+    gender,
+    city,
+    categories: selectedCategories,
+    subcategories: selectedSubcategories,
+  };
+  const validationResult = validateFormInfo(currentData);
+  const isFormValid = validationResult.isValid;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.stepIndicatorContainer}>
@@ -172,8 +214,8 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
               <label htmlFor="avatar" className={styles.avatarLabel}>
                 <img
                   src={
-                    formData.avatar
-                      ? URL.createObjectURL(formData.avatar)
+                    avatar
+                      ? URL.createObjectURL(avatar)
                       : iconAdd
                   }
                   alt="Загрузить аватар"
@@ -194,7 +236,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
               name="name"
               type="text"
               placeholder="Введите ваше имя"
-              value={formData.name}
+              value={name}
               onChange={handleInputChange}
               error={!!errors.name}
               helperText={errors.name}
@@ -203,7 +245,10 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
             <div className={styles.row}>
               <div className={styles.column}>
                 <label className={styles.label}>Дата рождения</label>
-                <DatePicker onChange={handleDateChange} />
+                <DatePicker 
+                  onChange={handleDateChange} 
+                  date={birthDate ? birthDate.getTime() : null}
+                />
                 {errors.birthDate && (
                   <div className={styles.errorText}>{errors.birthDate}</div>
                 )}
@@ -213,7 +258,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
                 <Dropdown
                   type="select"
                   options={genderOptions}
-                  value={formData.gender}
+                  value={gender}
                   onChange={handleGenderChange}
                   placeholder="Не указан"
                 />
@@ -228,7 +273,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
               <Dropdown
                 type="input"
                 options={cityOptions}
-                value={formData.city}
+                value={city}
                 onChange={handleCityChange}
                 placeholder="Не указан"
               />
@@ -281,6 +326,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
                 type="primary"
                 htmlType="submit"
                 extraClass={styles.submitButton}
+                disabled={!isFormValid}
               >
                 Продолжить
               </Button>

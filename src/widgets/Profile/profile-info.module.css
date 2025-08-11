@@ -32,11 +32,11 @@
   margin-top: 16px;
 }
 
-.label{
-	font-size: 16px;
+.label {
+  font-size: 16px;
   font-family: var(--font-roboto-regular, sans-serif);
   line-height: 150%;
-	letter-spacing: 0.02em;
+  letter-spacing: 0.02em;
   color: var(--text-primary, #253017);
 }
 
@@ -76,4 +76,5 @@
   position: absolute;
   right: 0;
   bottom: 0;
+  cursor: pointer;
 }
