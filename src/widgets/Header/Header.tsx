@@ -1,16 +1,19 @@
-import styles from './Header.module.css'
-import logo from '@assets/images/logo.svg'
-import topic from '@assets/icons/moon.svg'
-import chevronDown from '@assets/icons/chevron-down.svg'
-import chevronUp from '@assets/icons/chevron-up.svg'
-import { SearchInputUI } from '@shared/ui/search'
-import { Button } from '@shared/ui/button/button'
-import { CategoryDisplay } from '@widgets/SkillsPanel/SkillsPanel'
-import { useRef, useState } from 'react'
-import clsx from 'clsx'
-import { NavLink } from 'react-router-dom'
-import { HeaderLoggedIn } from '@shared/ui/header-logged-in/header-logged-in'
-import { ProfileDropdown } from '@widgets/ProfileDropdown/profile-dropdown'
+import styles from "./Header.module.css";
+import Logo from "@assets/images/logo.svg?react";
+import Moon from "@assets/icons/moon.svg?react";
+import ChevronDown from "@assets/icons/chevron-down.svg?react";
+import ChevronUp from "@assets/icons/chevron-up.svg?react";
+import { SearchInputUI } from "@shared/ui/search";
+import { Button } from "@shared/ui/button/button";
+import { CategoryDisplay } from "@widgets/SkillsPanel/SkillsPanel";
+import { type FC, useEffect, useRef, useState } from "react";
+import clsx from "clsx";
+import { NavLink } from "react-router-dom";
+import { HeaderLoggedIn } from "@shared/ui/header-logged-in/header-logged-in";
+import type { UserInLocalStorage } from "@entities/User/types";
+import { EventEmitterWrapper } from "@shared/lib/event/EventEmitter";
+import { getUserFromLocalStorage } from "@shared/lib/utils/getDataFromLocalStorage";
+
 
 export const AppHeaderUI = () => {
 	const [isDropdownOpen, setDropdownOpen] = useState(false)
@@ -43,15 +46,25 @@ export const AppHeaderUI = () => {
 	}
 
 
-	return (
-		<header className={styles.header}>
-			<nav className={styles.nav}>
-				<div className={styles.logoWrapper}>
-					<img src={logo} alt='Logo' className={styles.logo} />
-				</div>
+  return (
+    <header className={styles.header}>
+      <nav className={styles.nav}>
+        <div className={styles.logoWrapper}>
+          <NavLink to="/">
+            <Logo className={styles.logo} />
+          </NavLink>
+        </div>
 
-				<div className={styles.linksWrapper}>
-					<span className={styles.text}>О проекте</span>
+        <div className={styles.linksWrapper}>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `${styles.text} ${isActive ? styles.text_active : ""} `
+            }
+          >
+            <>О проекте</>
+          </NavLink>
+
 
 					<div className={styles.dropdownWrapper} ref={dropdownRef}>
 						<button
