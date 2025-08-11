@@ -11,6 +11,9 @@
   font-weight: 400;
   letter-spacing: 0.02em;
   padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .button_type_primary {
@@ -34,7 +37,7 @@
 }
 
 .button_type_secondary {
-  max-width: 200px;
+  /*!*max-width: 200px;*! убрала*/
   border: 1px solid var(--accent, #abd27a);
   color: var(--text-primary, #253017);
   background: var(--card-bg, #ffffff);
