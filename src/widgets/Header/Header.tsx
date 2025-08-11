@@ -1,5 +1,5 @@
 import styles from "./Header.module.css";
-import logo from "@assets/images/logo.svg";
+import Logo from "@assets/images/logo.svg?react";
 import Moon from "@assets/icons/moon.svg?react";
 import ChevronDown from "@assets/icons/chevron-down.svg?react";
 import ChevronUp from "@assets/icons/chevron-up.svg?react";
@@ -50,11 +50,20 @@ export const AppHeaderUI: FC<AppHeaderUIProps> = ({
     <header className={styles.header}>
       <nav className={styles.nav}>
         <div className={styles.logoWrapper}>
-          <img src={logo} alt="Logo" className={styles.logo} />
+          <NavLink to="/">
+            <Logo className={styles.logo} />
+          </NavLink>
         </div>
 
         <div className={styles.linksWrapper}>
-          <span className={styles.text}>О проекте</span>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `${styles.text} ${isActive ? styles.text_active : ""} `
+            }
+          >
+            <>О проекте</>
+          </NavLink>
 
           <div className={styles.dropdownWrapper} ref={dropdownRef}>
             <button
