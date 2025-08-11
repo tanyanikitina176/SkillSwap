@@ -30,6 +30,9 @@ export const AppHeaderUI: FC<AppHeaderUIProps> = ({
 	const userData = localStorage.getItem('user')
 	let userName = ''
 	let userAvatar = ''
+	
+	const isAuth = localStorage.getItem('isAuthenticated')
+	
 
 	if (userData) {
 		try {
@@ -42,7 +45,7 @@ export const AppHeaderUI: FC<AppHeaderUIProps> = ({
 	}
 
 
-	const isAuth = !!userName
+	//const isAuth = !!userName 
 
 	const toggleProfileDropdown = (): void => {
 		setProfileDropdownOpen(prevState => !prevState)
@@ -101,7 +104,7 @@ export const AppHeaderUI: FC<AppHeaderUIProps> = ({
 							isOpen={isProfileDropdownOpen}
 							onClose={closeDropdownProfile}
 							handleLogout={() => {
-								localStorage.removeItem('user')
+								localStorage.removeItem('isAuthenticated')
 								window.location.reload()
 							}}
 						/>
