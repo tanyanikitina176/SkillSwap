@@ -13,9 +13,10 @@ import { ProfileInfo } from "@widgets/Profile/profile-info.tsx";
 import { usePreviousUrl } from "../shared/hooks/usePreviousUrl";
 
 
+
 function App() {
-  // Инициализируем хук для отслеживания предыдущего URL
-  usePreviousUrl();
+	// Инициализируем хук для отслеживания предыдущего URL
+	usePreviousUrl()
 
   return (
     <>
@@ -43,6 +44,7 @@ function App() {
       </Routes>
     </>
   );
+
 }
 
-export default App;
+export default App
