@@ -14,37 +14,37 @@ import type { UserInLocalStorage } from "@entities/User/types";
 import { EventEmitterWrapper } from "@shared/lib/event/EventEmitter";
 import { getUserFromLocalStorage } from "@shared/lib/utils/getDataFromLocalStorage";
 
-interface AppHeaderUIProps {
-  searchQuery: string;
-  onSearchChange: (value: string) => void;
-}
 
-export const AppHeaderUI: FC<AppHeaderUIProps> = ({
-  searchQuery,
-  onSearchChange,
-}) => {
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const [userName, setUserName] = useState<string>("");
-  const [userAvatar, setUserAvatar] = useState<string | undefined>("");
+export const AppHeaderUI = () => {
+	const [isDropdownOpen, setDropdownOpen] = useState(false)
+	const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false)
+	const dropdownRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const updateUserState = (user: UserInLocalStorage | null) => {
-      if (user) {
-        setUserName(user.name);
-        setUserAvatar(user.avatar as string);
-      }
-    };
+	const userData = localStorage.getItem('user')
+	let userName = ''
+	let userAvatar = ''
 
-    const user = getUserFromLocalStorage();
-    updateUserState(user);
+	if (userData) {
+		try {
+			const user = JSON.parse(userData)
+			userName = user.name
+			userAvatar = user.avatar
+		} catch (err) {
+			console.error('Ошибка при получении user из localStorage:', err)
+		}
+	}
 
-    EventEmitterWrapper.subcribeUserUpdate(updateUserState);
 
-    return () => EventEmitterWrapper.unsubcribeUserUpdate(updateUserState);
-  }, []);
+	const isAuth = !!userName
 
-  const isAuth = !!userName;
+	const toggleProfileDropdown = (): void => {
+		setProfileDropdownOpen(prevState => !prevState)
+	}
+
+	const closeDropdownProfile = (): void => {
+		setProfileDropdownOpen(false)
+	}
+
 
   return (
     <header className={styles.header}>
@@ -65,51 +65,66 @@ export const AppHeaderUI: FC<AppHeaderUIProps> = ({
             <>О проекте</>
           </NavLink>
 
-          <div className={styles.dropdownWrapper} ref={dropdownRef}>
-            <button
-              className={clsx(styles.dropdownTrigger, styles.text)}
-              onClick={() => setDropdownOpen(!isDropdownOpen)}
-            >
-              Все навыки
-              {isDropdownOpen ? (
-                <ChevronUp className={styles.chevronIcon} />
-              ) : (
-                <ChevronDown className={styles.chevronIcon} />
-              )}
-            </button>
 
-            <div
-              className={`${styles.dropdownContent} ${isDropdownOpen ? styles.active : ""}`}
-              ref={dropdownRef}
-            >
-              <CategoryDisplay />
-            </div>
-          </div>
-        </div>
+					<div className={styles.dropdownWrapper} ref={dropdownRef}>
+						<button
+							className={clsx(styles.dropdownTrigger, styles.text)}
+							onClick={() => setDropdownOpen(!isDropdownOpen)}
+						>
+							Все навыки
+							<img
+								src={isDropdownOpen ? chevronUp : chevronDown}
+								alt='Стрелка вниз'
+								className={styles.chevronDown}
+							/>
+						</button>
 
-        <SearchInputUI value={searchQuery} onChange={onSearchChange} />
+						<div
+							className={`${styles.dropdownContent} ${isDropdownOpen ? styles.active : ''}`}
+							ref={dropdownRef}
+						>
+							<CategoryDisplay />
+						</div>
+					</div>
+				</div>
 
-        {isAuth ? (
-          <HeaderLoggedIn name={userName} avatar={userAvatar} />
-        ) : (
-          <>
-            <div className={styles.topic}>
-              <button title="Темная тема" className={styles.topicButton}>
-                <Moon className={styles.icon} />
-              </button>
-            </div>
+				<SearchInputUI />
 
-            <div className={styles.buttonsWrapper}>
-              <NavLink to="/login">
-                <Button type="secondary">Войти</Button>
-              </NavLink>
-              <NavLink to="/reg">
-                <Button type="primary">Зарегистрироваться</Button>
-              </NavLink>
-            </div>
-          </>
-        )}
-      </nav>
-    </header>
-  );
-};
+				{isAuth ? (
+					<div className={styles.wrapperDropdownProfile}>
+						<HeaderLoggedIn
+							name={userName}
+							avatar={userAvatar}
+							handleClick={toggleProfileDropdown}
+						/>
+						<ProfileDropdown
+							isOpen={isProfileDropdownOpen}
+							onClose={closeDropdownProfile}
+							handleLogout={() => {
+								localStorage.removeItem('user')
+								window.location.reload()
+							}}
+						/>
+					</div>
+				) : (
+					<>
+						<div className={styles.topic}>
+							<button title='Темная тема' className={styles.topicButton}>
+								<img src={topic} alt='Тема' className={styles.icon} />
+							</button>
+						</div>
+
+						<div className={styles.buttonsWrapper}>
+							<NavLink to='/login'>
+								<Button type='secondary'>Войти</Button>
+							</NavLink>
+							<NavLink to='/reg'>
+								<Button type='primary'>Зарегистрироваться</Button>
+							</NavLink>
+						</div>
+					</>
+				)}
+			</nav>
+		</header>
+	)
+}
