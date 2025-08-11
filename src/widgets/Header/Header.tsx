@@ -1,18 +1,28 @@
 import styles from './Header.module.css'
 import logo from '@assets/images/logo.svg'
 import topic from '@assets/icons/moon.svg'
-import chevronDown from '@assets/icons/chevron-down.svg'
-import chevronUp from '@assets/icons/chevron-up.svg'
+import ChevronDown from "@assets/icons/chevron-down.svg?react";
+import ChevronUp from "@assets/icons/chevron-up.svg?react";
 import { SearchInputUI } from '@shared/ui/search'
 import { Button } from '@shared/ui/button/button'
 import { CategoryDisplay } from '@widgets/SkillsPanel/SkillsPanel'
-import { useRef, useState } from 'react'
+import { type FC,useRef, useState } from "react";
 import clsx from 'clsx'
 import { NavLink } from 'react-router-dom'
 import { HeaderLoggedIn } from '@shared/ui/header-logged-in/header-logged-in'
 import { ProfileDropdown } from '@widgets/ProfileDropdown/profile-dropdown'
 
-export const AppHeaderUI = () => {
+
+interface AppHeaderUIProps {
+  searchQuery: string;
+  onSearchChange: (value: string) => void;
+}
+
+export const AppHeaderUI: FC<AppHeaderUIProps> = ({
+  searchQuery,
+  onSearchChange,
+}) => {
+
 	const [isDropdownOpen, setDropdownOpen] = useState(false)
 	const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false)
 	const dropdownRef = useRef<HTMLDivElement>(null)
@@ -59,12 +69,13 @@ export const AppHeaderUI = () => {
 							onClick={() => setDropdownOpen(!isDropdownOpen)}
 						>
 							Все навыки
-							<img
-								src={isDropdownOpen ? chevronUp : chevronDown}
-								alt='Стрелка вниз'
-								className={styles.chevronDown}
-							/>
+							{isDropdownOpen ? (
+                <ChevronUp className={styles.chevronIcon} />
+              ) : (
+                <ChevronDown className={styles.chevronIcon} />
+              )}
 						</button>
+						
 
 						<div
 							className={`${styles.dropdownContent} ${isDropdownOpen ? styles.active : ''}`}
@@ -75,7 +86,9 @@ export const AppHeaderUI = () => {
 					</div>
 				</div>
 
-				<SearchInputUI />
+				<SearchInputUI value={searchQuery} onChange={onSearchChange} />
+
+				
 
 				{isAuth ? (
 					<div className={styles.wrapperDropdownProfile}>
