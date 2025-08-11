@@ -6,11 +6,13 @@ import defaultUserIcon from '@assets/icons/default-user-icon.png'
 import theme from '@assets/icons/moon.svg'
 import styles from './header-logged-in.module.css'
 
+
 type Props = {
 	name: string
 	avatar?: string
 	handleClick: () => void
 }
+
 
 export const HeaderLoggedIn: React.FC<Props> = ({
 	name,
@@ -47,3 +49,4 @@ export const HeaderLoggedIn: React.FC<Props> = ({
 		</div>
 	)
 }
+

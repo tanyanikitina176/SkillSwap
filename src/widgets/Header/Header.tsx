@@ -31,6 +31,7 @@ export const AppHeaderUI = () => {
 		}
 	}
 
+
 	const isAuth = !!userName
 
 	const toggleProfileDropdown = (): void => {
@@ -40,6 +41,7 @@ export const AppHeaderUI = () => {
 	const closeDropdownProfile = (): void => {
 		setProfileDropdownOpen(false)
 	}
+
 
 	return (
 		<header className={styles.header}>

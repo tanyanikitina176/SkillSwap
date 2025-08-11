@@ -17,6 +17,7 @@ export const LoginPage = () => {
 	const [error, setError] = useState<string | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
 
+
 	const handleLogin = () => {
 		setIsLoading(true)
 		setError(null)
@@ -39,6 +40,7 @@ export const LoginPage = () => {
 				throw new Error('Неверный пароль')
 			}
 
+
 			// Сохраняем флаг авторизации
 			localStorage.setItem('isAuthenticated', 'true')
 
@@ -56,6 +58,7 @@ export const LoginPage = () => {
 	const handleClose = () => {
 		navigate('/')
 	}
+
 
 	return (
 		<div className={styles.container}>
@@ -90,3 +93,4 @@ export const LoginPage = () => {
 		</div>
 	)
 }
+
