@@ -1,4 +1,9 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import "./App.css";
 import HomePage from "../pages/HomePage/HomePage";
 import { NotFound404 } from "./../pages/page-404/page-404";
@@ -11,57 +16,41 @@ import { ProfilePage } from "./../pages/ProfilePage/ProfilePage.tsx";
 import { ProfileFavourites } from "@widgets/Profile/profile-favourites.tsx";
 import { ProfileInfo } from "@widgets/Profile/profile-info.tsx";
 import { usePreviousUrl } from "../shared/hooks/usePreviousUrl";
-import {ModalUI} from "@shared/ui/modal/modalUi.tsx";
-
-// import { useEffect, useState } from 'react'
-// import { fetchUsersData } from '@api/User/User-api'
-// // import type { User } from '@entities/User/types'
+import { ModalUI } from "@shared/ui/modal/modalUi.tsx";
 
 function App() {
   // Инициализируем хук для отслеживания предыдущего URL
   usePreviousUrl();
 
-
-
-  // Раскомментировать при сборки маршрутов
-  // const location = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
-  // const state = location.state as { backgroundLocation?: Location };
-  // const backgroundLocation = state?.backgroundLocation;
+  const state = location.state as { backgroundLocation?: Location };
+  const backgroundLocation = state?.backgroundLocation;
 
-  // @ts-ignore
   return (
     <>
-      {/*добавить в Route location={backgroundLocation || location}*/}
-      <Routes>
+      {/*добавить в Route */}
+      <Routes location={backgroundLocation || location}>
         <Route path="/" element={<HomePage />} />
-        <Route path="*" element={<NotFound404 />} />
-        <Route path="/500" element={<ConnetcError500 />} />
-        <Route path="/reg" element={<RegistrationPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/skill/:userId" element={<SkillPage />} />
 
         {/* Только для НЕавторизованных*/}
-
         <Route
           path="/login"
           element={
-        <ProtectedRoute onlyUnAuth >
-            <LoginPage />
+            <ProtectedRoute onlyUnAuth>
+              <LoginPage />
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/reg"
           element={
             <ProtectedRoute onlyUnAuth>
-            <RegistrationPage />
-                </ProtectedRoute>
+              <RegistrationPage />
+            </ProtectedRoute>
           }
         />
-
-         Только для Авторизованных
+        Только для Авторизованных
         <Route
           path="/profile"
           element={
@@ -70,81 +59,86 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        {/*<Route*/}
-        {/*  path="/profile/favourites"*/}
-        {/*  element={*/}
-        {/*    <ProtectRouter>*/}
-        {/*      <Favourites />*/}
-        {/*    </ProtectRouter>*/}
-        {/*  }*/}
-        {/*/>*/}
-
+        <Route
+          path="/profile/favourites"
+          element={
+            <ProtectedRoute>
+              <ProfileFavourites />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/skill/:userId"
+          element={
+            <ProtectedRoute>
+              <SkillPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<NotFound404 />} />
         <Route path="/500" element={<ConnetcError500 />} />
       </Routes>
 
-      {/* Обернуть Routes в {backgroundLocation && () }*/}
-      <Routes>
-        {/* Модальное окно: Вы предложили обмен*/}
-        <Route
-          path="/proposal/sent"
-          element={
-            <ProtectedRoute>
+      {backgroundLocation && (
+        <Routes>
+          {/* Модальное окно: Вы предложили обмен*/}
+          <Route
+            path="/proposal/sent"
+            element={
+              <ProtectedRoute>
                 <ModalUI
-                    title="Вы предложили обмен"
-                    onClose={() => navigate(-1)}
-                    image={""}
-                    imageAlt={""}
-                    description={"Теперь вы можете предложить обмен"}
+                  title="Вы предложили обмен"
+                  onClose={() => navigate(-1)}
+                  image={""}
+                  imageAlt={""}
+                  description={"Теперь вы можете предложить обмен"}
                 >
-                    {/* Добавить нужный компонент */}
+                  {/* Добавить нужный компонент */}
                 </ModalUI>
-            </ProtectedRoute>
+              </ProtectedRoute>
+            }
+          />
 
-          }
-        />
-
-        {/* Модальное окно: Ваше предложение создано */}
-        <Route
-          path="/proposal/created"
-          element={
-            <ProtectedRoute>
+          {/* Модальное окно: Ваше предложение создано */}
+          <Route
+            path="/proposal/created"
+            element={
+              <ProtectedRoute>
                 <ModalUI
-                    title="Ваше предложение создано"
-                    onClose={() => navigate(-1)}
-                    image={""}
-                    imageAlt={""}
-                    description={"Теперь вы можете предложить обмен"}
+                  title="Ваше предложение создано"
+                  onClose={() => navigate(-1)}
+                  image={""}
+                  imageAlt={""}
+                  description={"Теперь вы можете предложить обмен"}
                 >
-                    {/* Добавить нужный компонент */}
+                  {/* Добавить нужный компонент */}
                 </ModalUI>
-            </ProtectedRoute>
-
-          }
-        />
-        {/*  Модальное окно: Создание предложения */}
-        <Route
-          path="/proposal/create"
-          element={
-            <ProtectedRoute>
+              </ProtectedRoute>
+            }
+          />
+          {/*  Модальное окно: Создание предложения */}
+          <Route
+            path="/proposal/create"
+            element={
+              <ProtectedRoute>
                 <ModalUI
-                    title="При создании предложения"
-                    onClose={() => navigate(-1)}
-                    image={""}
-                    imageAlt={""}
-                    description={"Пожалуйста, проверьте и подтвердите правильность данных"}
+                  title="При создании предложения"
+                  onClose={() => navigate(-1)}
+                  image={""}
+                  imageAlt={""}
+                  description={
+                    "Пожалуйста, проверьте и подтвердите правильность данных"
+                  }
                 >
-                    {/* Добавить нужный компонент */}
+                  {/* Добавить нужный компонент */}
                 </ModalUI>
-            </ProtectedRoute>
-
-          }
-        />
-      </Routes>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      )}
     </>
   );
-
 }
 
 export default App;
