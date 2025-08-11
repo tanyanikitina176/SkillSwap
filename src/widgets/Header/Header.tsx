@@ -20,9 +20,9 @@ interface AppHeaderUIProps {
 }
 
 export const AppHeaderUI: FC<AppHeaderUIProps> = ({
-  searchQuery,
-  onSearchChange,
-}) => {
+                                                    searchQuery,
+                                                    onSearchChange,
+                                                  }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [userName, setUserName] = useState<string>("");
@@ -46,69 +46,69 @@ export const AppHeaderUI: FC<AppHeaderUIProps> = ({
 
   const isAuth = !!userName;
   return (
-    <header className={styles.header}>
-      <nav className={styles.nav}>
-        <div className={styles.logoWrapper}>
-          <NavLink to="/">
-            <Logo className={styles.logo} />
-          </NavLink>
-        </div>
+      <header className={styles.header}>
+        <nav className={styles.nav}>
+          <div className={styles.logoWrapper}>
+            <NavLink to="/">
+              <Logo className={styles.logo} />
+            </NavLink>
+          </div>
 
-        <div className={styles.linksWrapper}>
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `${styles.text} ${isActive ? styles.text_active : ""} `
-            }
-          >
-            <>О проекте</>
-          </NavLink>
-
-          <div className={styles.dropdownWrapper} ref={dropdownRef}>
-            <button
-              className={clsx(styles.dropdownTrigger, styles.text)}
-              onClick={() => setDropdownOpen(!isDropdownOpen)}
+          <div className={styles.linksWrapper}>
+            <NavLink
+                to="/"
+                className={({ isActive }) =>
+                    `${styles.text} ${isActive ? styles.text_active : ""} `
+                }
             >
-              Все навыки
-              {isDropdownOpen ? (
-                <ChevronUp className={styles.chevronIcon} />
-              ) : (
-                <ChevronDown className={styles.chevronIcon} />
-              )}
-            </button>
+              <>О проекте</>
+            </NavLink>
 
-            <div
-              className={`${styles.dropdownContent} ${isDropdownOpen ? styles.active : ""}`}
-              ref={dropdownRef}
-            >
-              <CategoryDisplay />
+            <div className={styles.dropdownWrapper} ref={dropdownRef}>
+              <button
+                  className={clsx(styles.dropdownTrigger, styles.text)}
+                  onClick={() => setDropdownOpen(!isDropdownOpen)}
+              >
+                Все навыки
+                {isDropdownOpen ? (
+                    <ChevronUp className={styles.chevronIcon} />
+                ) : (
+                    <ChevronDown className={styles.chevronIcon} />
+                )}
+              </button>
+
+              <div
+                  className={`${styles.dropdownContent} ${isDropdownOpen ? styles.active : ""}`}
+                  ref={dropdownRef}
+              >
+                <CategoryDisplay />
+              </div>
             </div>
           </div>
-        </div>
 
-        <SearchInputUI value={searchQuery} onChange={onSearchChange} />
+          <SearchInputUI value={searchQuery} onChange={onSearchChange} />
 
-        {isAuth ? (
-          <HeaderLoggedIn name={userName} avatar={userAvatar} />
-        ) : (
-          <>
-            <div className={styles.topic}>
-              <button title="Темная тема" className={styles.topicButton}>
-                <Moon className={styles.icon} />
-              </button>
-            </div>
+          {isAuth ? (
+              <HeaderLoggedIn name={userName} avatar={userAvatar} />
+          ) : (
+              <>
+                <div className={styles.topic}>
+                  <button title="Темная тема" className={styles.topicButton}>
+                    <Moon className={styles.icon} />
+                  </button>
+                </div>
 
-            <div className={styles.buttonsWrapper}>
-              <NavLink to="/login">
-                <Button type="secondary">Войти</Button>
-              </NavLink>
-              <NavLink to="/reg">
-                <Button type="primary">Зарегистрироваться</Button>
-              </NavLink>
-            </div>
-          </>
-        )}
-      </nav>
-    </header>
+                <div className={styles.buttonsWrapper}>
+                  <NavLink to="/login">
+                    <Button type="secondary">Войти</Button>
+                  </NavLink>
+                  <NavLink to="/reg">
+                    <Button type="primary">Зарегистрироваться</Button>
+                  </NavLink>
+                </div>
+              </>
+          )}
+        </nav>
+      </header>
   );
 };
