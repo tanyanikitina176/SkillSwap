@@ -45,7 +45,6 @@ export const AppHeaderUI: FC<AppHeaderUIProps> = ({
   }, []);
 
   const isAuth = !!userName;
-
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
