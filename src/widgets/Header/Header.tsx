@@ -14,10 +14,7 @@ import type { UserInLocalStorage } from "@entities/User/types";
 import { EventEmitterWrapper } from "@shared/lib/event/EventEmitter";
 import { getUserFromLocalStorage } from "@shared/lib/utils/getDataFromLocalStorage";
 
-interface AppHeaderUIProps {
-  searchQuery: string;
-  onSearchChange: (value: string) => void;
-}
+
 
 export const AppHeaderUI: FC<AppHeaderUIProps> = ({
                                                     searchQuery,
@@ -28,23 +25,35 @@ export const AppHeaderUI: FC<AppHeaderUIProps> = ({
   const [userName, setUserName] = useState<string>("");
   const [userAvatar, setUserAvatar] = useState<string | undefined>("");
 
-  useEffect(() => {
-    const updateUserState = (user: UserInLocalStorage | null) => {
-      if (user) {
-        setUserName(user.name);
-        setUserAvatar(user.avatar as string);
-      }
-    };
+	const userData = localStorage.getItem('user')
+	let userName = ''
+	let userAvatar = ''
 
-    const user = getUserFromLocalStorage();
-    updateUserState(user);
+	if (userData) {
+		try {
+			const user = JSON.parse(userData)
+			userName = user.name
+			userAvatar = user.avatar
+		} catch (err) {
+			console.error('Ошибка при получении user из localStorage:', err)
+		}
+	}
 
-    EventEmitterWrapper.subcribeUserUpdate(updateUserState);
 
-    return () => EventEmitterWrapper.unsubcribeUserUpdate(updateUserState);
-  }, []);
+
+	const isAuth = !!userName
+
+	const toggleProfileDropdown = (): void => {
+		setProfileDropdownOpen(prevState => !prevState)
+	}
+
+	const closeDropdownProfile = (): void => {
+		setProfileDropdownOpen(false)
+	}
+
 
   const isAuth = !!userName;
+
   return (
       <header className={styles.header}>
         <nav className={styles.nav}>
