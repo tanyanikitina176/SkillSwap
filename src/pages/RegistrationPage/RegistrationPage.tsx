@@ -15,6 +15,7 @@ import Cross from "@assets/icons/cross.svg?react";
 import styles from "./RegistrationForm.module.css";
 import { Button } from "@shared/ui/button/button";
 import { convertFileToBase64 } from "@shared/lib/utils/convertFileToBase64";
+import {RegistrationStep4} from "@widgets/RegistrationForm/RegistrationForm4/RegistrationForm4.tsx";
 
 const prepareCategories = (): CategoryWithSubcategories[] => {
   if (!Array.isArray(rawCategories)) {
@@ -206,6 +207,24 @@ export const RegistrationPage = () => {
 
             {step === 3 && (
               <RegistrationStep3
+                onNextStep={nextStep}
+                onPrevStep={prevStep}
+                categories={categoriesWithSubcategories}
+                skillName={skillName}
+                skillCategory={skillCategory}
+                skillSubCategory={skillSubCategory}
+                description={description}
+                skillImage={skillImage}
+                setSkillName={setSkillName}
+                setSkillCategory={setSkillCategory}
+                setSkillSubCategory={setSkillSubCategory}
+                setDescription={setDescription}
+                setSkillImage={setSkillImage}
+              />
+            )}
+
+            {step === 4 && (
+              <RegistrationStep4
                 onNextStep={handleSubmitAll}
                 onPrevStep={prevStep}
                 categories={categoriesWithSubcategories}

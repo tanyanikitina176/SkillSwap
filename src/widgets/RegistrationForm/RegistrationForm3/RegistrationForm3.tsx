@@ -22,9 +22,6 @@ import type {
 } from "@entities/Category/CategoryTypes";
 import { FormTextArea } from "@shared/ui/text-area/text-area";
 import { DragAndDropUI } from "@shared/ui/drag-and-drop/drag-and-drop";
-import { Modal } from "@shared/ui/modal/modal.tsx";
-import { CardUserBig } from "@widgets/CardUserBig/card-user-big.tsx";
-import {PhotoSwitcherUI} from "@shared/ui/photo-switcher";
 
 interface RegistrationStep3Props {
   onNextStep: () => void;
@@ -65,7 +62,6 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
     skillImage: "",
   });
 
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false); // для модалки
 
   // Удаляем локальное состояние values, так как теперь используем пропсы напрямую
   // Также удаляем зависимость от formData
@@ -127,8 +123,7 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
     });
 
     if (validation.isValid) {
-      // onNextStep();
-      setIsPreviewOpen(true);
+       onNextStep();
     }
   };
 
@@ -270,38 +265,6 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
           </div>
         </div>
       </div>
-      <Modal open={isPreviewOpen} onClose={() => setIsPreviewOpen(false)}>
-        <CardUserBig
-          title={skillName}
-          category={skillCategory?.name ?? ""}
-          subcategory={skillSubCategory?.name ?? ""}
-          description={description}
-          buttonsSlot={
-            <div style={{ display: "flex", gap: 12 }}>
-              <Button
-                type="secondary"
-                htmlType="button"
-                onClick={() => setIsPreviewOpen(false)}
-              >
-                Назад к редактированию
-              </Button>
-              <Button
-                type="primary"
-                htmlType="button"
-                onClick={() => {
-                  setIsPreviewOpen(false);
-                  onNextStep(); // подтверждаем и двигаемся дальше
-                }}
-              >
-                Подтвердить
-              </Button>
-            </div>
-          }
-          photoSlot={
-            <PhotoSwitcherUI skillId = {skillImage}/>
-          }
-        ></CardUserBig>
-      </Modal>
     </div>
   );
 };
