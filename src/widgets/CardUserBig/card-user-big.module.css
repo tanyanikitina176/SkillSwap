@@ -54,7 +54,7 @@
 .contentContainer {
     display: flex;
     grid-column: 2 / 5;
-    gap: 77px;
+    justify-content: space-between;
 }
 /*заглушка*/
 .containerPhoto {
