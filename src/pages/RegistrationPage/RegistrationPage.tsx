@@ -129,6 +129,7 @@ export const RegistrationPage = () => {
 
       if (validateUserData(userData)) {
         localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem('isAuthenticated', 'true');
       } else {
         localStorage.removeItem("user");
         throw new Error('Некорректные данные пользователя');
@@ -178,6 +179,7 @@ export const RegistrationPage = () => {
                 password={password}
                 setEmail={setEmail}
                 setPassword={setPassword}
+                mode="register"
               />
             )}
 
