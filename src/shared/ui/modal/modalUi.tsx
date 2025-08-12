@@ -1,6 +1,7 @@
 import { ModalOverlayUI } from "./modal-overlay/modal-overlay.tsx";
 import React, { type FC, memo } from "react";
 import styles from "./modalUi.module.css";
+import clsx from "clsx";
 
 export const ModalUI: FC<{
   image?: string;
@@ -9,9 +10,10 @@ export const ModalUI: FC<{
   description?: string;
   onClose: () => void;
   children?: React.ReactNode;
-}> = memo(({ image, imageAlt, title, description, onClose, children }) => (
+  noPadding?: boolean;
+}> = memo(({ image, imageAlt, title, description, onClose, children, noPadding }) => (
   <>
-    <div className={styles.modal}>
+    <div className={clsx(styles.modal, noPadding && styles.noPadding)}>
       {image && <img src={image} alt={imageAlt} className={styles.image} />}
       {(title || description) && (
         <div className={styles.content}>

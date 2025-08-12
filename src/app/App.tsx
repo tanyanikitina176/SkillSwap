@@ -18,7 +18,6 @@ import {RegistrationSuccessModal} from "@widgets/RegistrationSuccess/Registratio
 function App() {
   const location = useLocation();
   const background = location.state?.background;
-  console.log(location, background);
 	// Инициализируем хук для отслеживания предыдущего URL
 	usePreviousUrl()
   return (

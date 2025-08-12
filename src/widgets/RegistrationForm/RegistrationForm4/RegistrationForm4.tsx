@@ -43,7 +43,7 @@ export const RegistrationStep4: React.FC<RegistrationStep4Props> = ({
   }, [onPrevStep]);
 
   return isPreviewOpen ? (
-    <Modal onClose={handleClose}>
+    <Modal onClose={handleClose} noPadding>
       <CardUserBig
         header={
           <div className={styles.headerCardUserBigText}>

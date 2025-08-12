@@ -62,3 +62,7 @@
 .body > * {
   flex: 1;
 }
+
+.noPadding {
+  padding: 0;
+}

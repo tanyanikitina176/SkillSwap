@@ -6,7 +6,7 @@ import type {TModalProps} from "./type.ts";
 const modalRoot = document.getElementById("modals");
 
 export const Modal: FC<TModalProps> = memo(
-  ({ image, imageAlt, title, description, onClose, children }) => {
+  ({ image, imageAlt, title, description, onClose, children, noPadding = false }) => {
 
     useEffect(() => {
       const handleEsc = (e: KeyboardEvent) => {
@@ -28,6 +28,8 @@ export const Modal: FC<TModalProps> = memo(
         image={image}
         imageAlt={imageAlt}
         onClose={onClose}
+        noPadding={noPadding}
+
       >
         {children}
       </ModalUI>,

@@ -7,4 +7,6 @@ export type TModalProps = {
   description?: string;
   onClose: () => void;
   children?: React.ReactNode;
+  noPadding?: boolean;
 };
+
