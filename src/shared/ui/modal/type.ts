@@ -1,10 +1,10 @@
 import React from "react";
 
 export type TModalUIProps = {
-  image: string;
-  imageAlt: string;
-  title: string;
-  description: string;
+  image?: string;
+  imageAlt?: string;
+  title?: string;
+  description?: string;
   onClose: () => void;
   children?: React.ReactNode;
 };

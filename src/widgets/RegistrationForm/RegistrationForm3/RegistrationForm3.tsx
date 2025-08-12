@@ -22,7 +22,9 @@ import type {
 } from "@entities/Category/CategoryTypes";
 import { FormTextArea } from "@shared/ui/text-area/text-area";
 import { DragAndDropUI } from "@shared/ui/drag-and-drop/drag-and-drop";
-import {Modal} from "@shared/ui/modal/modal.tsx";
+import { Modal } from "@shared/ui/modal/modal.tsx";
+import { CardUserBig } from "@widgets/CardUserBig/card-user-big.tsx";
+import {PhotoSwitcherUI} from "@shared/ui/photo-switcher";
 
 interface RegistrationStep3Props {
   onNextStep: () => void;
@@ -65,7 +67,6 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
 
   const [isPreviewOpen, setIsPreviewOpen] = useState(false); // для модалки
 
-
   // Удаляем локальное состояние values, так как теперь используем пропсы напрямую
   // Также удаляем зависимость от formData
 
@@ -90,19 +91,18 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
   };
 
   const handleCategoryChange = (value: string | string[]) => {
-    const selectedCategory = categories.find(
-      (category) => category.id === value,
-    ) || null;
+    const selectedCategory =
+      categories.find((category) => category.id === value) || null;
     setSkillCategory(selectedCategory);
     const { message } = validateSkillCategory(selectedCategory);
     setErrors((prev) => ({ ...prev, skillCategory: message || "" }));
   };
 
   const handleSubCategoryChange = (value: string | string[]) => {
-    const selectedSubCategory = getAllSubcategories(
-      categories,
-      skillCategory?.id,
-    ).find((subcategory) => subcategory.id === value) || null;
+    const selectedSubCategory =
+      getAllSubcategories(categories, skillCategory?.id).find(
+        (subcategory) => subcategory.id === value,
+      ) || null;
     setSkillSubCategory(selectedSubCategory);
     const { message } = validateSkillSubCategory(selectedSubCategory);
     setErrors((prev) => ({ ...prev, skillSubCategory: message || "" }));
@@ -213,7 +213,8 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
               />
               {errors.skillSubCategory && (
                 <span className={styles.errorText}>
-                  {validateSkillSubCategory(skillSubCategory).message || "ERROR"}
+                  {validateSkillSubCategory(skillSubCategory).message ||
+                    "ERROR"}
                 </span>
               )}
             </div>
@@ -228,9 +229,7 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
               helperText={errors.description}
             />
 
-            <DragAndDropUI 
-              onFileChange={handleFileChange}
-            />
+            <DragAndDropUI onFileChange={handleFileChange} />
 
             <div className={styles.buttonsContainer}>
               <Button
@@ -271,9 +270,38 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
           </div>
         </div>
       </div>
-      <Modal onClose={() => setIsPreviewOpen(false)}></Modal>
+      <Modal open={isPreviewOpen} onClose={() => setIsPreviewOpen(false)}>
+        <CardUserBig
+          title={skillName}
+          category={skillCategory?.name ?? ""}
+          subcategory={skillSubCategory?.name ?? ""}
+          description={description}
+          buttonsSlot={
+            <div style={{ display: "flex", gap: 12 }}>
+              <Button
+                type="secondary"
+                htmlType="button"
+                onClick={() => setIsPreviewOpen(false)}
+              >
+                Назад к редактированию
+              </Button>
+              <Button
+                type="primary"
+                htmlType="button"
+                onClick={() => {
+                  setIsPreviewOpen(false);
+                  onNextStep(); // подтверждаем и двигаемся дальше
+                }}
+              >
+                Подтвердить
+              </Button>
+            </div>
+          }
+          photoSlot={
+            <PhotoSwitcherUI skillId = {skillImage}/>
+          }
+        ></CardUserBig>
+      </Modal>
     </div>
-
-
   );
 };
