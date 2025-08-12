@@ -36,14 +36,6 @@ export const RegistrationStep4: React.FC<RegistrationStep4Props> = ({
   description,
   skillImage,
 }) => {
-  const [errors, setErrors] = useState({
-    skillName: "",
-    skillCategory: "",
-    skillSubCategory: "",
-    description: "",
-    skillImage: "",
-  });
-
   const [isPreviewOpen, setIsPreviewOpen] = useState(true);
   const handleClose = useCallback(() => {
     setIsPreviewOpen(false);
