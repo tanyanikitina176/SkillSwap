@@ -24,17 +24,15 @@
 	gap: 24px;
 	width: 260px;
 	max-height: 152px;
-	border: 1px solid #b2b9a9;
+	border: 1px solid var(--toggle);
 	border-radius: 12px;
 	padding: 40px;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-	color: #253017;
-	font-family: Roboto;
+	color: var(--text-primary);
+	font-family: var(--font-roboto-medium);
 	font-weight: 500;
 	font-size: 16px;
-	font-style: normal;
 	line-height: 24px;
-	letter-spacing: 0.32px;
 	background: #fff;
 }
 
@@ -46,13 +44,11 @@
 	margin: 0;
 	border: none;
 	padding: 0;
-	color: #253017;
-	font-family: Roboto;
+	color: var(--text-primary);
+	font-family: var(--font-roboto-medium);
 	font-weight: 500;
-	font-size: 16px;
 	line-height: 24px;
-	letter-spacing: 0.32px;
-	background: #fff;
+	background: var(--card-bg);
 	transition: opacity 0.2s ease;
 	cursor: pointer;
 }
@@ -69,18 +65,17 @@
 	height: 24px;
 }
 
-.profileLink {
-	color: #253017;
-	font-family: Roboto;
+.link {
+	color: var(--text-primary);
+	font-family: var(--font-roboto-medium);
 	font-weight: 500;
 	font-size: 16px;
-	font-style: normal;
 	line-height: 24px;
 	letter-spacing: 0.32px;
 	text-decoration: none;
 	transition: opacity 0.2s ease;
 }
 
-.profileLink:hover {
+.link:hover {
 	opacity: 0.7;
 }
