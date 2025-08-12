@@ -17,7 +17,6 @@ import { usePreviousUrl } from "../shared/hooks/usePreviousUrl";
 function App() {
 	// Инициализируем хук для отслеживания предыдущего URL
 	usePreviousUrl()
-
   return (
     <>
       <Routes>
