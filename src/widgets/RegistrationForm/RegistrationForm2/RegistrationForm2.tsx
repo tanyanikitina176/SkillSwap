@@ -181,9 +181,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
     }
 
     if (validateForm()) {
-      console.log('TST 1');
       onNextStep();
-      console.log('TST 2');
     }
   };
 

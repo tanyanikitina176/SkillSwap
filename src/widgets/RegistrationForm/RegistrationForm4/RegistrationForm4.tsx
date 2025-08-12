@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, { useCallback, useState } from "react";
 import type {
   Category,
   CategoryWithSubcategories,
@@ -42,10 +42,17 @@ export const RegistrationStep4: React.FC<RegistrationStep4Props> = ({
     onPrevStep(); // на третий шаг обратно
   }, [onPrevStep]);
 
-  return (
-    <Modal open={isPreviewOpen} onClose={handleClose}>
+  return isPreviewOpen ? (
+    <Modal onClose={handleClose}>
       <CardUserBig
-        header={<div className={styles.headerCardUserBigText}><div className={styles.headerTitle}>Ваше предложение</div> <div className={styles.headerWarning}>Пожалуйста, проверьте и подтвердите правильность данных</div></div>}
+        header={
+          <div className={styles.headerCardUserBigText}>
+            <div className={styles.headerTitle}>Ваше предложение</div>
+            <div className={styles.headerWarning}>
+              Пожалуйста, проверьте и подтвердите правильность данных
+            </div>
+          </div>
+        }
         title={skillName}
         category={skillCategory?.name ?? ""}
         subcategory={skillSubCategory?.name ?? ""}
@@ -55,7 +62,10 @@ export const RegistrationStep4: React.FC<RegistrationStep4Props> = ({
             <Button
               type="secondary"
               htmlType="button"
-              onClick={() => { setIsPreviewOpen(false); onPrevStep() }}
+              onClick={() => {
+                setIsPreviewOpen(false);
+                onPrevStep();
+              }}
               endIcon={<Edit />}
             >
               Редактировать
@@ -75,5 +85,5 @@ export const RegistrationStep4: React.FC<RegistrationStep4Props> = ({
         photoSlot={<PhotoSwitcherUI skillId={skillImage} />}
       ></CardUserBig>
     </Modal>
-  );
+  ) : null;
 };

@@ -6,10 +6,9 @@ import type {TModalProps} from "./type.ts";
 const modalRoot = document.getElementById("modals");
 
 export const Modal: FC<TModalProps> = memo(
-  ({ image, imageAlt, title, description, onClose, children, open }) => {
+  ({ image, imageAlt, title, description, onClose, children }) => {
 
     useEffect(() => {
-      if (!open) return;
       const handleEsc = (e: KeyboardEvent) => {
         if (e.key === "Escape") {
           onClose();
@@ -20,7 +19,7 @@ export const Modal: FC<TModalProps> = memo(
       return () => {
         document.removeEventListener("keydown", handleEsc);
       };
-    }, [open, onClose]);
+    }, [onClose]);
 
     return ReactDOM.createPortal(
       <ModalUI

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import {Route, Routes, useLocation} from "react-router-dom";
 import "./App.css";
 import HomePage from "../pages/HomePage/HomePage";
 import { NotFound404 } from "./../pages/page-404/page-404";
@@ -11,15 +11,19 @@ import { ProfilePage } from "./../pages/ProfilePage/ProfilePage.tsx";
 import { ProfileFavourites } from "@widgets/Profile/profile-favourites.tsx";
 import { ProfileInfo } from "@widgets/Profile/profile-info.tsx";
 import { usePreviousUrl } from "../shared/hooks/usePreviousUrl";
+import {RegistrationSuccessModal} from "@widgets/RegistrationSuccess/RegistrationSuccessModal.tsx";
 
 
 
 function App() {
+  const location = useLocation();
+  const background = location.state?.background;
+  console.log(location, background);
 	// Инициализируем хук для отслеживания предыдущего URL
 	usePreviousUrl()
   return (
     <>
-      <Routes>
+      <Routes location={background || location}>
         <Route path="/" element={<HomePage />} />
         <Route path="*" element={<NotFound404 />} />
         <Route path="/500" element={<ConnetcError500 />} />
@@ -41,6 +45,9 @@ function App() {
           />
         </Route>
       </Routes>
+      {background && (<Routes>
+        <Route path="/reg-success" element={<RegistrationSuccessModal />} />
+      </Routes>)}
     </>
   );
 

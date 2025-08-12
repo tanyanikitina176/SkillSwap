@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { RegistrationStep1 } from "@widgets/RegistrationForm/RegistrationForm1/RegistrationForm1";
 import { RegistrationStep2 } from "@widgets/RegistrationForm/RegistrationForm2/RegistrationForm2";
 import { RegistrationStep3 } from "@widgets/RegistrationForm/RegistrationForm3/RegistrationForm3";
@@ -16,8 +16,6 @@ import styles from "./RegistrationForm.module.css";
 import { Button } from "@shared/ui/button/button";
 import { convertFileToBase64 } from "@shared/lib/utils/convertFileToBase64";
 import { RegistrationStep4 } from "@widgets/RegistrationForm/RegistrationForm4/RegistrationForm4.tsx";
-import { Modal } from "@shared/ui/modal/modal.tsx";
-import DoneIcon from "@assets/icons/Done.svg";
 
 const prepareCategories = (): CategoryWithSubcategories[] => {
   if (!Array.isArray(rawCategories)) {
@@ -85,31 +83,31 @@ export const RegistrationPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("a@b.c");
+  const [password, setPassword] = useState("123123A!");
 
-  const [name, setName] = useState("");
-  const [birthDate, setBirthDate] = useState<Date | null>(null);
-  const [gender, setGender] = useState("");
-  const [city, setCity] = useState("");
-  const [categories, setCategories] = useState<string[]>([]);
-  const [subcategories, setSubcategories] = useState<string[]>([]);
+  const [name, setName] = useState("asd");
+  const [birthDate, setBirthDate] = useState<Date | null>(
+    new Date(Date.parse("Tue Aug 05 2025 00:00:00 GMT+0400")),
+  );
+  const [gender, setGender] = useState("2");
+  const [city, setCity] = useState("1");
+  const [categories, setCategories] = useState<string[]>(["1"]);
+  const [subcategories, setSubcategories] = useState<string[]>(["101"]);
   const [avatar, setAvatar] = useState<File | undefined>();
 
-  const [skillName, setSkillName] = useState("");
-  const [skillCategory, setSkillCategory] = useState<Category | null>(null);
-  const [skillSubCategory, setSkillSubCategory] = useState<Subcategory | null>(
-    null,
-  );
-  const [description, setDescription] = useState("");
-  const [skillImage, setSkillImage] = useState("");
-
   const categoriesWithSubcategories = React.useMemo(prepareCategories, []);
-
-  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  useEffect(() => {
-    if (step !== 4) setIsPostModalOpen(false);
-  }, [step]);
+  const [skillName, setSkillName] = useState("Барабан");
+  const [skillCategory, setSkillCategory] = useState<Category | null>(
+    categoriesWithSubcategories[0],
+  );
+  const [skillSubCategory, setSkillSubCategory] = useState<Subcategory | null>(
+    categoriesWithSubcategories[0].subcategories[0],
+  );
+  const [description, setDescription] = useState("123123123123");
+  const [skillImage, setSkillImage] = useState(
+    "blob:http://localhost:5174/4923efcc-1eac-4fbd-a045-d1526ede89bb",
+  );
 
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
@@ -150,7 +148,7 @@ export const RegistrationPage = () => {
         throw new Error("Некорректные данные пользователя");
       }
 
-      navigate("/");
+      navigate("/reg-success", { state: { background: "/" } });
     } catch (err) {
       localStorage.removeItem("user");
       setError(err instanceof Error ? err.message : "Ошибка регистрации");
@@ -261,18 +259,6 @@ export const RegistrationPage = () => {
           </>
         )}
       </div>
-      {isPostModalOpen && (
-        <Modal
-          open={isPostModalOpen}
-          onClose={() => setIsPostModalOpen(false)}
-          title="Важе предложение создано"
-          description="Теперь вы можете предложить обмен"
-          image={DoneIcon}
-          imageAlt="Готово"
-        >
-          <Button onClick={() => console.log("готово")}>Готово</Button>
-        </Modal>
-      )}
     </div>
   );
 };
