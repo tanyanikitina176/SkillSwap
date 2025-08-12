@@ -22,6 +22,7 @@ import type {
 } from "@entities/Category/CategoryTypes";
 import { FormTextArea } from "@shared/ui/text-area/text-area";
 import { DragAndDropUI } from "@shared/ui/drag-and-drop/drag-and-drop";
+import {Modal} from "@shared/ui/modal/modal.tsx";
 
 interface RegistrationStep3Props {
   onNextStep: () => void;
@@ -61,6 +62,9 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
     description: "",
     skillImage: "",
   });
+
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false); // для модалки
+
 
   // Удаляем локальное состояние values, так как теперь используем пропсы напрямую
   // Также удаляем зависимость от formData
@@ -123,7 +127,8 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
     });
 
     if (validation.isValid) {
-      onNextStep();
+      // onNextStep();
+      setIsPreviewOpen(true);
     }
   };
 
@@ -266,6 +271,9 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
           </div>
         </div>
       </div>
+      <Modal onClose={() => setIsPreviewOpen(false)}></Modal>
     </div>
+
+
   );
 };

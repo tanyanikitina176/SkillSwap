@@ -10,8 +10,8 @@ import { usePreviousUrl } from '@shared/hooks/usePreviousUrl'
 export const LoginPage = () => {
 	const navigate = useNavigate()
 	const { getPreviousUrl, clearPreviousUrl } = usePreviousUrl()
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 	const [error, setError] = useState<string | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
 

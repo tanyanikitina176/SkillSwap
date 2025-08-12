@@ -8,3 +8,7 @@ export type TModalUIProps = {
   onClose: () => void;
   children?: React.ReactNode;
 };
+
+export type TModalProps = TModalUIProps & {
+  open: boolean;
+}
