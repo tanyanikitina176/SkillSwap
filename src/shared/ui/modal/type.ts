@@ -1,7 +1,7 @@
-import React from "react";
+import React, {type ReactNode} from "react";
 
 export type TModalUIProps = {
-  image?: string;
+  image?: string | ReactNode;
   imageAlt?: string;
   title?: string;
   description?: string;
