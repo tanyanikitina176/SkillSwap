@@ -10,17 +10,34 @@ import { type FC, useState } from "react";
 import type { User } from "@entities/User/types";
 import type { UserSkill } from "@entities/Skill/SkillType.ts";
 import { PhotoSwitcherUI } from "@shared/ui/photo-switcher";
+import { Modal } from "@shared/ui/modal/modal";
+import iconModal from "@assets/icons/notification.svg";
+import {
+  addRequestSwap,
+  getAuth,
+} from "@shared/lib/utils/getDataFromLocalStorage";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface SkillInfoProps {
   user: User;
   skill: UserSkill | null;
 }
 
-export const SkillInfo: FC<SkillInfoProps> = ({ user, skill,}) => {
+export const SkillInfo: FC<SkillInfoProps> = ({ user, skill }) => {
   const [exchangeOffered, setExchangeOffered] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleOfferClick = () => {
-    setExchangeOffered(true);
+    const isAuth = getAuth();
+    if (isAuth) {
+      setExchangeOffered(true);
+      setIsOpenModal(!isOpenModal);
+      addRequestSwap(user, skill!);
+    } else {
+      navigate("/login", { state: { from: location }, replace: true });
+    }
   };
   // Проверяем наличие skill
   if (!skill) {
@@ -59,10 +76,21 @@ export const SkillInfo: FC<SkillInfoProps> = ({ user, skill,}) => {
           </Button>
         }
         // <PhotoSwitcherUI skillId/>
-        photoSlot={
-          <PhotoSwitcherUI skillId = {skill.id}/>
-        }
+        photoSlot={<PhotoSwitcherUI skillId={skill.id} />}
       ></CardUserBig>
+      {isOpenModal && (
+        <Modal
+          title="Вы предложили обмен"
+          imageAlt="Иконка колокольчика"
+          image={iconModal}
+          onClose={() => setIsOpenModal(!isOpenModal)}
+          description="Теперь дождитесь подтверждения. Вам придёт уведомление"
+        >
+          <Button type="primary" onClick={() => setIsOpenModal(!isOpenModal)}>
+            Готово
+          </Button>
+        </Modal>
+      )}
     </div>
   );
 };
