@@ -1,20 +1,28 @@
 import { ModalOverlayUI } from "./modal-overlay/modal-overlay.tsx";
-import { type FC, memo } from "react";
+import React, { type FC, memo } from "react";
 import styles from "./modalUi.module.css";
-import type { TModalUIProps } from "./type.ts";
+import clsx from "clsx";
 
-export const ModalUI: FC<TModalUIProps> = memo(
-  ({ image, imageAlt, title, description, onClose, children }) => (
-    <>
-      <div className={styles.modal}>
-        <img src={image} alt={imageAlt} className={styles.image} />
+export const ModalUI: FC<{
+  image?: string;
+  imageAlt?: string;
+  title?: string;
+  description?: string;
+  onClose: () => void;
+  children?: React.ReactNode;
+  noPadding?: boolean;
+}> = memo(({ image, imageAlt, title, description, onClose, children, noPadding }) => (
+  <>
+    <div className={clsx(styles.modal, noPadding && styles.noPadding)}>
+      {image && <img src={image} alt={imageAlt} className={styles.image} />}
+      {(title || description) && (
         <div className={styles.content}>
           <h2 className={styles.title}>{title}</h2>
           <p className={styles.description}>{description}</p>
         </div>
-        <div className={styles.body}>{children}</div>
-      </div>
-      <ModalOverlayUI onClick={onClose} />
-    </>
-  ),
-);
+      )}
+      <div className={styles.body}>{children}</div>
+    </div>
+    <ModalOverlayUI onClick={onClose} />
+  </>
+));

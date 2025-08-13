@@ -15,29 +15,36 @@ import Cross from "@assets/icons/cross.svg?react";
 import styles from "./RegistrationForm.module.css";
 import { Button } from "@shared/ui/button/button";
 import { convertFileToBase64 } from "@shared/lib/utils/convertFileToBase64";
+import { RegistrationStep4 } from "@widgets/RegistrationForm/RegistrationForm4/RegistrationForm4.tsx";
 
 const prepareCategories = (): CategoryWithSubcategories[] => {
   if (!Array.isArray(rawCategories)) {
-    console.warn('Некорректные данные категорий: ожидался массив');
+    console.warn("Некорректные данные категорий: ожидался массив");
     return [];
   }
-  
+
   if (!Array.isArray(rawSubcategories)) {
-    console.warn('Некорректные данные подкатегорий: ожидался массив');
+    console.warn("Некорректные данные подкатегорий: ожидался массив");
     return [];
   }
 
   return rawCategories
     .map((category) => {
       if (!category?.id || !category?.name) {
-        console.warn('Некорректная категория: отсутствует id или name', category);
+        console.warn(
+          "Некорректная категория: отсутствует id или name",
+          category,
+        );
         return null;
       }
 
       const categorySubcategories = rawSubcategories
         .filter((sub) => {
           if (!sub?.id || !sub?.name || !sub?.categoryId) {
-            console.warn('Некорректная подкатегория: отсутствуют обязательные поля', sub);
+            console.warn(
+              "Некорректная подкатегория: отсутствуют обязательные поля",
+              sub,
+            );
             return false;
           }
           return sub.categoryId === category.id;
@@ -75,10 +82,10 @@ export const RegistrationPage = () => {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const [name, setName] = useState("");
   const [birthDate, setBirthDate] = useState<Date | null>(null);
   const [gender, setGender] = useState("");
@@ -86,14 +93,13 @@ export const RegistrationPage = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [subcategories, setSubcategories] = useState<string[]>([]);
   const [avatar, setAvatar] = useState<File | undefined>();
-  
+
+  const categoriesWithSubcategories = React.useMemo(prepareCategories, []);
   const [skillName, setSkillName] = useState("");
   const [skillCategory, setSkillCategory] = useState<Category | null>(null);
   const [skillSubCategory, setSkillSubCategory] = useState<Subcategory | null>(null);
   const [description, setDescription] = useState("");
   const [skillImage, setSkillImage] = useState("");
-
-  const categoriesWithSubcategories = React.useMemo(prepareCategories, []);
 
   const nextStep = () => setStep(step + 1);
   const prevStep = () => setStep(step - 1);
@@ -126,16 +132,15 @@ export const RegistrationPage = () => {
         skillImage,
       };
 
-
       if (validateUserData(userData)) {
         localStorage.setItem("user", JSON.stringify(userData));
-        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem("isAuthenticated", "true");
       } else {
         localStorage.removeItem("user");
-        throw new Error('Некорректные данные пользователя');
+        throw new Error("Некорректные данные пользователя");
       }
-      
-      navigate("/");
+
+      navigate("/reg-success", { state: { background: "/" } });
     } catch (err) {
       localStorage.removeItem("user");
       setError(err instanceof Error ? err.message : "Ошибка регистрации");
@@ -165,7 +170,11 @@ export const RegistrationPage = () => {
         </div>
       </header>
 
-      {error && <div className={styles.errorMessage} role="alert" aria-live="assertive">{error}</div>}
+      {error && (
+        <div className={styles.errorMessage} role="alert" aria-live="assertive">
+          {error}
+        </div>
+      )}
 
       <div className={styles.content}>
         {isLoading ? (
@@ -204,8 +213,26 @@ export const RegistrationPage = () => {
               />
             )}
 
-            {step === 3 && (
+            {step >= 3 && (
               <RegistrationStep3
+                onNextStep={nextStep}
+                onPrevStep={prevStep}
+                categories={categoriesWithSubcategories}
+                skillName={skillName}
+                skillCategory={skillCategory}
+                skillSubCategory={skillSubCategory}
+                description={description}
+                skillImage={skillImage}
+                setSkillName={setSkillName}
+                setSkillCategory={setSkillCategory}
+                setSkillSubCategory={setSkillSubCategory}
+                setDescription={setDescription}
+                setSkillImage={setSkillImage}
+              />
+            )}
+
+            {step === 4 && (
+              <RegistrationStep4
                 onNextStep={handleSubmitAll}
                 onPrevStep={prevStep}
                 categories={categoriesWithSubcategories}
