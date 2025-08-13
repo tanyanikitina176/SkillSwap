@@ -9,7 +9,7 @@ import {
 } from "@shared/ui/dropdown/dropdownConstants";
 import { DatePicker } from "@shared/ui/date-picker/date-picker";
 import { useEffect, useRef, useState, type FC } from "react";
-import editIcon from "@assets/icons/gallery-edit.svg";
+import EditIconGallery from "@assets/icons/gallery-edit.svg?react";
 import {
   validateDateOfBirth,
   validateDescription,
@@ -26,7 +26,6 @@ import {
   updateUserInStorage,
 } from "@shared/lib/utils/getDataFromLocalStorage";
 import { convertFileToBase64 } from "@shared/lib/utils/convertFileToBase64";
-import defaultUserIcon from "@assets/icons/default-user-icon.png";
 
 const INITIAL_ERRORS = {
   name: "",
@@ -254,14 +253,12 @@ export const ProfileInfo: FC = () => {
       </form>
       <div className={styles.card_wrapper}>
         <img
-          src={(formValue.avatar as string) || defaultUserIcon}
+          src={formValue.avatar as string}
           className={styles.card__avatar}
           alt="Аватар пользователя"
         />
-        <img
-          src={editIcon}
-          alt="Иконка редактирования"
-          className={styles.edit_icon}
+        <EditIconGallery
+          className={styles.edit_icon_gallery}
           onClick={handleImageClick}
         />
         <input
