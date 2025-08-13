@@ -21,8 +21,12 @@ import {
 import isEqual from "lodash/isEqual";
 import EditIcon from "@assets/icons/edit.svg?react";
 import type { UserInLocalStorage } from "@entities/User/types";
-import { getUserFromLocalStorage, updateUserInStorage } from "@shared/lib/utils/getDataFromLocalStorage";
+import {
+  getUserFromLocalStorage,
+  updateUserInStorage,
+} from "@shared/lib/utils/getDataFromLocalStorage";
 import { convertFileToBase64 } from "@shared/lib/utils/convertFileToBase64";
+import defaultUserIcon from "@assets/icons/default-user-icon.png";
 
 const INITIAL_ERRORS = {
   name: "",
@@ -39,10 +43,12 @@ export const ProfileInfo: FC = () => {
   const [showPasswordField, setShowPasswordField] = useState(false);
   const [formValue, setFormValue] = useState<UserInLocalStorage>(() => {
     const user = getUserFromLocalStorage();
-    return user ? {
-      ...user,
-      birthDate: user.birthDate ? new Date(user.birthDate) : null
-    } : {} as UserInLocalStorage;
+    return user
+      ? {
+          ...user,
+          birthDate: user.birthDate ? new Date(user.birthDate) : null,
+        }
+      : ({} as UserInLocalStorage);
   });
   const [errors, setErrors] = useState(INITIAL_ERRORS);
   const [isDisabledButton, setIsDisabledButton] = useState(true);
@@ -248,7 +254,7 @@ export const ProfileInfo: FC = () => {
       </form>
       <div className={styles.card_wrapper}>
         <img
-          src={formValue.avatar as string}
+          src={(formValue.avatar as string) || defaultUserIcon}
           className={styles.card__avatar}
           alt="Аватар пользователя"
         />
