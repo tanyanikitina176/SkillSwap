@@ -2,7 +2,6 @@ import {
   Route,
   Routes,
   useLocation,
-  useNavigate,
 } from "react-router-dom";
 import "./App.css";
 import HomePage from "../pages/HomePage/HomePage";
@@ -18,33 +17,32 @@ import { ProfileInfo } from "@widgets/Profile/profile-info.tsx";
 import { usePreviousUrl } from "../shared/hooks/usePreviousUrl";
 import {RegistrationSuccessModal} from "@widgets/RegistrationSuccess/RegistrationSuccessModal.tsx";
 
-
-import { ModalUI } from "@shared/ui/modal/modalUi.tsx";
-
 function App() {
-  // Инициализируем хук для отслеживания предыдущего URL
-  usePreviousUrl();
-
   const location = useLocation();
-  const navigate = useNavigate();
-  const state = location.state as { backgroundLocation?: Location };
-  const backgroundLocation = state?.backgroundLocation;
+  const background = location.state?.backgroundLocation;
 
-  const location = useLocation();
-  const background = location.state?.background;
 	// Инициализируем хук для отслеживания предыдущего URL
 	usePreviousUrl()
   return (
     <>
-      {/*добавить в Route */}
-      <Routes location={backgroundLocation || location}>
       <Routes location={background || location}>
+
         <Route path="/" element={<HomePage />} />
         <Route path="*" element={<NotFound404 />} />
         <Route path="/500" element={<ConnetcError500 />} />
-        <Route path="/reg" element={<RegistrationPage />} />
-        <Route path="/login" element={<LoginPage />} />
         <Route path="/skill/:userId" element={<SkillPage />} />
+
+
+        <Route path="/reg" element={
+         <ProtectedRoute onlyUnAuth>
+           <RegistrationPage/>
+           </ProtectedRoute>
+        } />
+        <Route path="/login" element={
+          <ProtectedRoute onlyUnAuth>
+          <LoginPage />
+          </ProtectedRoute>
+        } />
         <Route
           path="/profile"
           element={
