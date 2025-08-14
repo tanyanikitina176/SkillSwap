@@ -1,4 +1,4 @@
-import type { Skill, User, UserInLocalStorage } from "@entities/User/types";
+import type { User, UserInLocalStorage } from "@entities/User/types";
 import { EventEmitterWrapper } from "../event/EventEmitter";
 import { EventType } from "../event/EventType";
 import type { UserSkill } from "@entities/Skill/SkillType";
@@ -36,7 +36,7 @@ export const getLikedSkills = (): string[] | null => {
   } catch (error) {
     console.log(
       "Ошибка при парсинге лайков пользователя из localStorage:",
-      error
+      error,
     );
     return null;
   }
@@ -70,7 +70,7 @@ export const getAuth = () => {
 
 export const addRequestSwap = (
   userForSwap: User,
-  skillForSwap: UserSkill
+  skillForSwap: UserSkill,
 ): void => {
   const request = localStorage.getItem("Request");
   let result = [];

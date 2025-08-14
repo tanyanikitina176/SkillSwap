@@ -1,4 +1,3 @@
-import { ProfileInfo } from "@widgets/Profile/profile-info";
 import { AppHeaderUI } from "@widgets/Header/Header";
 import { Footer } from "../../widgets/Footer/Footer";
 import styles from "./ProfilePage.module.css";
@@ -12,9 +11,7 @@ export const ProfilePage: FC = () => {
     <div className={styles.profile_page__wrapper}>
       <AppHeaderUI />
       <main className={styles.profile_page__container}>
-        <ProfileMenuUI
-          profileMenuItems={ProfileMenuItems}
-        />
+        <ProfileMenuUI profileMenuItems={ProfileMenuItems} />
         <Outlet />
       </main>
       <Footer />

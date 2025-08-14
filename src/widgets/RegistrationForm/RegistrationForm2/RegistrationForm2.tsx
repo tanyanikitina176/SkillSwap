@@ -61,14 +61,20 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
     subcategories: "",
   });
 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>(propCategories || []);
-  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>(propSubcategories || []);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(
+    propCategories || [],
+  );
+  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>(
+    propSubcategories || [],
+  );
 
   const subcategoriesOptions = useMemo(() => {
     if (selectedCategories.length === 0) return [];
 
     return subcategories
-      .filter((subcategory) => selectedCategories.includes(subcategory.categoryId))
+      .filter((subcategory) =>
+        selectedCategories.includes(subcategory.categoryId),
+      )
       .map((subcategory) => ({
         value: subcategory.id,
         label: subcategory.name,
@@ -86,7 +92,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
   const handleDateChange = (date: number | null) => {
     const dateObj = date ? new Date(date) : null;
     setBirthDate(dateObj);
-    
+
     if (date === null) {
       setErrors((prev) => ({
         ...prev,
@@ -94,11 +100,12 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
       }));
       return;
     }
-    
+
     const now = new Date();
     setErrors((prev) => ({
       ...prev,
-      birthDate: dateObj && dateObj > now ? "Дата рождения не может быть в будущем" : "",
+      birthDate:
+        dateObj && dateObj > now ? "Дата рождения не может быть в будущем" : "",
     }));
   };
 
@@ -145,7 +152,10 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
       categories: selectedCategories,
       subcategories: selectedSubcategories,
     };
-    const { errors: newErrors } = validateFormInfo({ ...currentData, [name]: value });
+    const { errors: newErrors } = validateFormInfo({
+      ...currentData,
+      [name]: value,
+    });
     setErrors((prev) => ({
       ...prev,
       [name]: newErrors[name as keyof FormErrors],
@@ -213,11 +223,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
             <div className={styles.avatarContainer}>
               <label htmlFor="avatar" className={styles.avatarLabel}>
                 <img
-                  src={
-                    avatar
-                      ? URL.createObjectURL(avatar)
-                      : iconAdd
-                  }
+                  src={avatar ? URL.createObjectURL(avatar) : iconAdd}
                   alt="Загрузить аватар"
                   className={styles.avatarImage}
                 />
@@ -245,8 +251,8 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
             <div className={styles.row}>
               <div className={styles.column}>
                 <label className={styles.label}>Дата рождения</label>
-                <DatePicker 
-                  onChange={handleDateChange} 
+                <DatePicker
+                  onChange={handleDateChange}
                   date={birthDate ? birthDate.getTime() : null}
                 />
                 {errors.birthDate && (

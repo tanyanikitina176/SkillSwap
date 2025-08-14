@@ -80,7 +80,7 @@ export const ProfileInfo: FC = () => {
   };
 
   const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { message } = validateDescription(e.target.value);
     setErrors((prev) => ({ ...prev, description: message || "" }));
@@ -105,7 +105,7 @@ export const ProfileInfo: FC = () => {
 
   const setData = <K extends keyof UserInLocalStorage>(
     field: K,
-    value: UserInLocalStorage[K]
+    value: UserInLocalStorage[K],
   ) => {
     setFormValue((prev) => ({
       ...prev,

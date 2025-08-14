@@ -9,4 +9,3 @@ export type TModalProps = {
   children?: React.ReactNode;
   noPadding?: boolean;
 };
-

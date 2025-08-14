@@ -47,7 +47,11 @@ export const GeoFilter: React.FC<GeoFilterProps> = ({
         <span className={styles.toggleText}>
           {showAllCities ? "Свернуть" : "Все города"}
         </span>
-        { showAllCities ? <ChevronUp className={styles.chevronIcon} /> : <ChevronDown className={styles.chevronIcon} /> }
+        {showAllCities ? (
+          <ChevronUp className={styles.chevronIcon} />
+        ) : (
+          <ChevronDown className={styles.chevronIcon} />
+        )}
       </button>
     </div>
   );

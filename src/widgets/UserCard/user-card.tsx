@@ -33,7 +33,7 @@ export const UserCard: FC<UserCardProps> = ({
     const req = JSON.parse(reqString);
     const hasSwap = req.some(
       //проверяем, был ли уже предложен обмен
-      (item: any) => isEqual(item.userForSwap.id, user.id)
+      (item: any) => isEqual(item.userForSwap.id, user.id),
     );
     setIsHasSwap(hasSwap);
   }, []);

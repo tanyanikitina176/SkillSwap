@@ -6,7 +6,7 @@ import ShareIcon from "@assets/icons/share.svg?react";
 import ClockIcon from "@assets/icons/clock.svg?react";
 import MoreSquareIcon from "@assets/icons/more-square.svg?react";
 import { UserCardSkillInfo } from "@widgets/SkillInfo/UserCardSkillInfo.tsx";
-import { type FC, useEffect, useLayoutEffect, useState } from "react";
+import { type FC, useLayoutEffect, useState } from "react";
 import type { User } from "@entities/User/types";
 import type { UserSkill } from "@entities/Skill/SkillType.ts";
 import { PhotoSwitcherUI } from "@shared/ui/photo-switcher";
@@ -40,7 +40,7 @@ export const SkillInfo: FC<SkillInfoProps> = ({ user, skill }) => {
       //проверяем, был ли уже предложен обмен
       (item: any) =>
         isEqual(item.skillForSwap, skill) &&
-        isEqual(item.userForSwap.id, user.id)
+        isEqual(item.userForSwap.id, user.id),
     );
     setExchangeOffered(hasSwap);
   }, []);

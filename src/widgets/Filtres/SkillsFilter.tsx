@@ -56,9 +56,12 @@ export const SkillsFilter: React.FC<SkillsFilterProps> = ({
               isChecked={selectedSkills.includes(category.id)}
               onChange={() => toggleSkill(category.id)}
             />
-            {category.subcategories && (
-              expandedCategories[category.id] ? <ChevronUp className={styles.chevronIcon} /> : <ChevronDown className={styles.chevronIcon} />
-            )}
+            {category.subcategories &&
+              (expandedCategories[category.id] ? (
+                <ChevronUp className={styles.chevronIcon} />
+              ) : (
+                <ChevronDown className={styles.chevronIcon} />
+              ))}
           </div>
 
           {expandedCategories[category.id] && category.subcategories && (
@@ -85,7 +88,11 @@ export const SkillsFilter: React.FC<SkillsFilterProps> = ({
         <span className={styles.toggleText}>
           {showAllSkills ? "Свернуть" : "Все категории"}
         </span>
-        { showAllSkills ? <ChevronUp className={styles.chevronIcon} /> : <ChevronDown className={styles.chevronIcon} />}
+        {showAllSkills ? (
+          <ChevronUp className={styles.chevronIcon} />
+        ) : (
+          <ChevronDown className={styles.chevronIcon} />
+        )}
       </button>
     </div>
   );

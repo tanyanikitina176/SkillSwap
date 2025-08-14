@@ -97,7 +97,9 @@ export const RegistrationPage = () => {
   const categoriesWithSubcategories = React.useMemo(prepareCategories, []);
   const [skillName, setSkillName] = useState("");
   const [skillCategory, setSkillCategory] = useState<Category | null>(null);
-  const [skillSubCategory, setSkillSubCategory] = useState<Subcategory | null>(null);
+  const [skillSubCategory, setSkillSubCategory] = useState<Subcategory | null>(
+    null,
+  );
   const [description, setDescription] = useState("");
   const [skillImage, setSkillImage] = useState("");
 

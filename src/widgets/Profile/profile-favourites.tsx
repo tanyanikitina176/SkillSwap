@@ -14,7 +14,7 @@ export const ProfileFavourites = () => {
         const usersData = await fetchUsersData();
         const likesUserId = getLikedSkills();
         const likedUserArray = usersData.filter((user) =>
-          likesUserId?.includes(user.id)
+          likesUserId?.includes(user.id),
         );
         setLikedUsers(likedUserArray);
       } catch (error) {

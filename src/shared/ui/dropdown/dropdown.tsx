@@ -146,8 +146,10 @@ export const Dropdown: React.FC<DropdownProps> = ({
         </button>
       );
     }
-    return (
-      isOpen ? <ChevronUp className={styles.icon} onClick={toggleDropdown} /> : <ChevronDown className={styles.icon} onClick={toggleDropdown} />
+    return isOpen ? (
+      <ChevronUp className={styles.icon} onClick={toggleDropdown} />
+    ) : (
+      <ChevronDown className={styles.icon} onClick={toggleDropdown} />
     );
   };
 
