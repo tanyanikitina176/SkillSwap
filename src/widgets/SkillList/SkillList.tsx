@@ -14,7 +14,12 @@ interface ISkillListProps {
   isShortList?: boolean; //отображаем короткий список или выводим все карточки
 }
 
-const SkillList = ({ users, title, isShortList = false, onLikeClick }: ISkillListProps) => {
+const SkillList = ({
+  users,
+  title,
+  isShortList = false,
+  onLikeClick,
+}: ISkillListProps) => {
   const [usersToShow, setUsersToShow] = useState<User[]>([]);
   const [isExpanded, setIsExpanded] = useState(false);
   useEffect(() => {
@@ -51,7 +56,7 @@ const SkillList = ({ users, title, isShortList = false, onLikeClick }: ISkillLis
               type="tertiary"
               htmlType="button"
               onClick={onButtonMoreClick}
-              endIcon={<ChevronRightIcon/>}
+              endIcon={<ChevronRightIcon />}
             >
               Смотреть все
             </Button>
@@ -59,11 +64,7 @@ const SkillList = ({ users, title, isShortList = false, onLikeClick }: ISkillLis
       </div>
       <div className={styles.cards_container}>
         {usersToShow.map((user) => (
-          <UserCard
-            user={user}
-            onLikeClick={onLikeClick}
-            key={user.id}
-          />
+          <UserCard user={user} onLikeClick={onLikeClick} key={user.id} />
         ))}
       </div>
     </div>

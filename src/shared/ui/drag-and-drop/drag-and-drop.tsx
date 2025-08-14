@@ -6,7 +6,9 @@ interface DragAndDropUIProps {
   onFileChange?: (file: File | null) => void;
 }
 
-export const DragAndDropUI: React.FC<DragAndDropUIProps> = ({ onFileChange }) => {
+export const DragAndDropUI: React.FC<DragAndDropUIProps> = ({
+  onFileChange,
+}) => {
   const [files, setFiles] = useState<File[]>([]);
   const [dragActive, setDragActive] = useState<boolean>(false);
 

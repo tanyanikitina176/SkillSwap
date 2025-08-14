@@ -62,7 +62,6 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
     skillImage: "",
   });
 
-
   // Удаляем локальное состояние values, так как теперь используем пропсы напрямую
   // Также удаляем зависимость от formData
 
@@ -123,7 +122,7 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
     });
 
     if (validation.isValid) {
-       onNextStep();
+      onNextStep();
     }
   };
 

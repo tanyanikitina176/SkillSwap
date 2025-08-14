@@ -22,11 +22,11 @@ export const SkillPage = () => {
       try {
         const usersData = await fetchUsersData();
         setUsers(usersData);
-        
+
         // Находим пользователя по ID из URL
-        const user = usersData.find(u => u.id === userId) || null;
+        const user = usersData.find((u) => u.id === userId) || null;
         setCurrentUser(user);
-        
+
         if (user) {
           const skill = await fetchSkillByAuthorId(user.id);
           setCurrentSkill(skill);
@@ -37,7 +37,7 @@ export const SkillPage = () => {
         setLoading(false);
       }
     };
-    
+
     loadData();
   }, [userId]);
   // сброс состояния при переходе между карточками
@@ -54,7 +54,7 @@ export const SkillPage = () => {
     <div className={styles.skillPage}>
       <AppHeaderUI />
       <main className={styles.main}>
-        <SkillInfo user={currentUser} skill = {currentSkill}/>
+        <SkillInfo user={currentUser} skill={currentSkill} />
         <SameOffers users={users} currentUser={currentUser} />
       </main>
       <Footer />

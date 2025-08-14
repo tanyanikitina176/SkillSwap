@@ -26,9 +26,9 @@ export const HeaderLoggedIn: React.FC<Props> = ({
         <button type="button" className={styles.button}>
           <img src={notification} alt="Уведомления." className={styles.icon} />
         </button>
-        <NavLink to='/profile/favourites' className={styles.link} end>
-          <button type='button' className={styles.button}>
-            <img src={like} alt='Избранное.' className={styles.icon} />
+        <NavLink to="/profile/favourites" className={styles.link} end>
+          <button type="button" className={styles.button}>
+            <img src={like} alt="Избранное." className={styles.icon} />
           </button>
         </NavLink>
       </div>

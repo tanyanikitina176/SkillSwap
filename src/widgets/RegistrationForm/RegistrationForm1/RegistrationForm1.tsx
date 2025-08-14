@@ -36,7 +36,7 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    
+
     if (name === "email") {
       setEmail(value);
       const { message } = validateEmail(value);
@@ -62,10 +62,10 @@ export const RegistrationStep1: React.FC<RegistrationStep1Props> = ({
     }
   };
 
-  const isFormValid = 
+  const isFormValid =
     !validateEmail(email).message &&
     !validatePassword(password).message &&
-    email.trim() !== "" && 
+    email.trim() !== "" &&
     password.trim() !== "";
 
   return (

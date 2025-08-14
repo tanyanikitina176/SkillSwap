@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, type FC } from "react";
+import { type FC } from "react";
 import styles from "./profile-menu.module.css";
 import { NavLink, useLocation } from "react-router-dom";
 import type { IProfileMenuItemProps, IProfileMenuProps } from "./type";
@@ -27,7 +27,7 @@ const ProfileMenuItem = ({ item, isActive }: IProfileMenuItemProps) => {
 };
 
 export const ProfileMenuUI: FC<IProfileMenuProps> = (
-  profileMenuProps: IProfileMenuProps
+  profileMenuProps: IProfileMenuProps,
 ) => {
   const location = useLocation();
   const { profileMenuItems } = profileMenuProps;

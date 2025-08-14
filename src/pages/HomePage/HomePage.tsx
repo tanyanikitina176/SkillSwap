@@ -27,7 +27,6 @@ interface HomeFilters {
 const MemoizedUserCard = memo(UserCard);
 
 export const HomePage = () => {
-
   const [searchQuery, setSearchQuery] = useState("");
   const debouncedSearch = useDebounce(searchQuery, 400);
 
@@ -80,9 +79,7 @@ export const HomePage = () => {
     console.log("Подробнее о пользователе:", userId);
   }, []);
 
-
   const skillsUsers = useMemo(() => skills.skills, []);
-
 
   const skillNamesBySubId = useMemo(() => {
     const m = new Map<string, string[]>();
@@ -96,15 +93,18 @@ export const HomePage = () => {
     return m;
   }, [skillsUsers]);
 
-
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {
       if (filters.gender !== "Не имеет значения") {
         const genderMap = { Мужской: "male", Женский: "female" } as const;
-        if (user.gender !== genderMap[filters.gender as keyof typeof genderMap]) return false;
+        if (user.gender !== genderMap[filters.gender as keyof typeof genderMap])
+          return false;
       }
 
-      if (filters.cities.length > 0 && !filters.cities.includes(user.city.name)) {
+      if (
+        filters.cities.length > 0 &&
+        !filters.cities.includes(user.city.name)
+      ) {
         return false;
       }
 
@@ -117,7 +117,9 @@ export const HomePage = () => {
               : user.wantToLearnSkills;
 
         const hasMatch = skillsToCheck.some(
-          (skill) => filters.skills.includes(skill.id) || filters.skills.includes(skill.category.id)
+          (skill) =>
+            filters.skills.includes(skill.id) ||
+            filters.skills.includes(skill.category.id),
         );
         if (!hasMatch) return false;
       }
@@ -125,7 +127,6 @@ export const HomePage = () => {
       return true;
     });
   }, [users, filters]);
-
 
   const searchedUsers = useMemo(() => {
     if (!debouncedSearch) return filteredUsers;
@@ -141,7 +142,6 @@ export const HomePage = () => {
             : user.wantToLearnSkills;
 
       return skillsToCheck.some((subcat) => {
-
         const namesInThisSub = skillNamesBySubId.get(subcat.id) ?? [];
 
         return (
@@ -153,9 +153,11 @@ export const HomePage = () => {
     });
   }, [debouncedSearch, filteredUsers, filters.role, skillNamesBySubId]);
 
-  const isSearchActive = useMemo(() => debouncedSearch.trim().length > 0, [debouncedSearch]);
+  const isSearchActive = useMemo(
+    () => debouncedSearch.trim().length > 0,
+    [debouncedSearch],
+  );
   const resultsCount = searchedUsers.length;
-
 
   const listToRender = useMemo(() => {
     return isClickButtonShowNew
@@ -163,14 +165,13 @@ export const HomePage = () => {
       : searchedUsers;
   }, [isClickButtonShowNew, searchedUsers, skillsUsers]);
 
-
   const isDefaultFilters = useMemo(
     () =>
       filters.role === "Всё" &&
       filters.gender === "Не имеет значения" &&
       filters.cities.length === 0 &&
       filters.skills.length === 0,
-    [filters]
+    [filters],
   );
 
   const onClickButtonShowNew = () => {
@@ -200,7 +201,10 @@ export const HomePage = () => {
             ) : (
               <section className={styles.section}>
                 <div className={styles.section__header}>
-                  <h2 className={skillListStyles.header__title} style={{ marginBottom: "36px" }}>
+                  <h2
+                    className={skillListStyles.header__title}
+                    style={{ marginBottom: "36px" }}
+                  >
                     Подходящие предложения: {resultsCount}
                   </h2>
                   <Button

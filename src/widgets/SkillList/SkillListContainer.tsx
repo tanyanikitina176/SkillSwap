@@ -16,20 +16,9 @@ export const SkillListContainer = ({ users }: ISkillListContainer) => {
 
   return (
     <div className={styles.skill_list__container}>
-      <SkillList
-        users={popularUsers}
-        title="Популярное"
-        isShortList={true}
-      />
-      <SkillList
-        users={sortedUsersByDate}
-        title="Новое"
-        isShortList={true}
-      />
-      <SkillList
-        users={users}
-        title="Рекомендуем"
-      />
+      <SkillList users={popularUsers} title="Популярное" isShortList={true} />
+      <SkillList users={sortedUsersByDate} title="Новое" isShortList={true} />
+      <SkillList users={users} title="Рекомендуем" />
     </div>
   );
 };

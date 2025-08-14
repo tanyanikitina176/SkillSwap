@@ -33,14 +33,10 @@ export const CardUserBig: FC<CardUserBigProps> = ({
                 {category} / {subcategory}
               </p>
               <p className={styles.description}>{description}</p>
-              <div className={styles.buttonWrapper}>
-                {buttonsSlot}
-              </div>
+              <div className={styles.buttonWrapper}>{buttonsSlot}</div>
             </div>
           </div>
-          <div className={styles.containerPhoto}>
-            {photoSlot}
-          </div>
+          <div className={styles.containerPhoto}>{photoSlot}</div>
         </div>
       </div>
     </div>
