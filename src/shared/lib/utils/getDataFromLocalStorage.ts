@@ -1,6 +1,7 @@
-import type { UserInLocalStorage } from "@entities/User/types";
+import type { Skill, User, UserInLocalStorage } from "@entities/User/types";
 import { EventEmitterWrapper } from "../event/EventEmitter";
 import { EventType } from "../event/EventType";
+import type { UserSkill } from "@entities/Skill/SkillType";
 
 export const getUserFromLocalStorage = (): UserInLocalStorage | null => {
   try {
@@ -60,4 +61,25 @@ export const toggleLikedSkillsInStorage = (skillId: string): void => {
   } catch (error) {
     console.log("Ошибка при переключении лайка", error);
   }
+};
+
+export const getAuth = () => {
+  const isAuth = localStorage.getItem("isAuthenticated");
+  return isAuth;
+};
+
+export const addRequestSwap = (
+  userForSwap: User,
+  skillForSwap: UserSkill
+): void => {
+  const request = localStorage.getItem("Request");
+  let result = [];
+  if (!request) {
+    result.push({ userForSwap: userForSwap, skillForSwap: skillForSwap });
+  } else {
+    const requestParse = JSON.parse(request!);
+    requestParse.push({ userForSwap: userForSwap, skillForSwap: skillForSwap });
+    result = requestParse;
+  }
+  localStorage.setItem("Request", JSON.stringify(result));
 };

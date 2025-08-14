@@ -11,6 +11,7 @@ import clsx from 'clsx'
 import { NavLink } from 'react-router-dom'
 import { HeaderLoggedIn } from '@shared/ui/header-logged-in/header-logged-in'
 import { ProfileDropdown } from '@widgets/ProfileDropdown/profile-dropdown'
+import { getAuth } from '@shared/lib/utils/getDataFromLocalStorage';
 
 
 interface AppHeaderUIProps {
@@ -31,7 +32,7 @@ export const AppHeaderUI: FC<AppHeaderUIProps> = ({
 	let userName = ''
 	let userAvatar = ''
 	
-	const isAuth = localStorage.getItem('isAuthenticated')
+	const isAuth = getAuth();
 	
 
 	if (userData) {
@@ -43,9 +44,6 @@ export const AppHeaderUI: FC<AppHeaderUIProps> = ({
 			console.error('Ошибка при получении user из localStorage:', err)
 		}
 	}
-
-
-	//const isAuth = !!userName 
 
 	const toggleProfileDropdown = (): void => {
 		setProfileDropdownOpen(prevState => !prevState)

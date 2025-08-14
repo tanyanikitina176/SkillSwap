@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC } from "react";
+import { useEffect, useLayoutEffect, useState, type FC } from "react";
 import styles from "./user-card.module.css";
 import { Tag } from "@shared/ui/tag/tag";
 import { Button } from "@shared/ui/button/button";
@@ -8,6 +8,8 @@ import {
   getLikedSkills,
   toggleLikedSkillsInStorage,
 } from "@shared/lib/utils/getDataFromLocalStorage";
+import isEqual from "lodash/isEqual";
+import ClockIcon from "@assets/icons/clock.svg?react";
 
 export const UserCard: FC<UserCardProps> = ({
   user,
@@ -15,12 +17,26 @@ export const UserCard: FC<UserCardProps> = ({
   onButtonClick,
 }) => {
   const [isLiked, setIsLiked] = useState<boolean>();
+  const [isHasSwap, setIsHasSwap] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const likedSkills = getLikedSkills();
     setIsLiked(likedSkills?.includes(user.id));
   }, [user]);
+
+  useLayoutEffect(() => {
+    const reqString = localStorage.getItem("Request");
+    if (!reqString) {
+      return;
+    }
+    const req = JSON.parse(reqString);
+    const hasSwap = req.some(
+      //проверяем, был ли уже предложен обмен
+      (item: any) => isEqual(item.userForSwap.id, user.id)
+    );
+    setIsHasSwap(hasSwap);
+  }, []);
 
   const handleDetailsClick = () => {
     if (onButtonClick) {
@@ -114,15 +130,27 @@ export const UserCard: FC<UserCardProps> = ({
           </div>
         </div>
       </div>
-      <Button
-        type="primary"
-        htmlType="button"
-        // onClick={() => onButtonClick?.(user.id)}
-        onClick={handleDetailsClick}
-        extraClass={styles.card__button}
-      >
-        Подробнее
-      </Button>
+
+      {isHasSwap ? (
+        <Button
+          type="secondary"
+          htmlType="button"
+          onClick={handleDetailsClick}
+          extraClass={styles.card__button}
+          startIcon={<ClockIcon />}
+        >
+          Обмен предложен
+        </Button>
+      ) : (
+        <Button
+          type="primary"
+          htmlType="button"
+          onClick={handleDetailsClick}
+          extraClass={styles.card__button}
+        >
+          Подробнее
+        </Button>
+      )}
     </div>
   );
 };
