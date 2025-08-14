@@ -81,7 +81,7 @@ export const SkillInfo: FC<SkillInfoProps> = ({ user, skill }) => {
           <Button
             style={{ width: "100%" }}
             onClick={handleOfferClick}
-            type={exchangeOffered ? "tertiary" : "primary"}
+            type={exchangeOffered ? "secondary" : "primary"}
             startIcon={exchangeOffered ? <ClockIcon /> : undefined}
             disabled={exchangeOffered}
           >

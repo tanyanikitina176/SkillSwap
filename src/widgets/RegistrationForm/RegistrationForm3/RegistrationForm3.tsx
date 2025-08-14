@@ -62,6 +62,7 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
     skillImage: "",
   });
 
+
   // Удаляем локальное состояние values, так как теперь используем пропсы напрямую
   // Также удаляем зависимость от formData
 
@@ -86,19 +87,18 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
   };
 
   const handleCategoryChange = (value: string | string[]) => {
-    const selectedCategory = categories.find(
-      (category) => category.id === value,
-    ) || null;
+    const selectedCategory =
+      categories.find((category) => category.id === value) || null;
     setSkillCategory(selectedCategory);
     const { message } = validateSkillCategory(selectedCategory);
     setErrors((prev) => ({ ...prev, skillCategory: message || "" }));
   };
 
   const handleSubCategoryChange = (value: string | string[]) => {
-    const selectedSubCategory = getAllSubcategories(
-      categories,
-      skillCategory?.id,
-    ).find((subcategory) => subcategory.id === value) || null;
+    const selectedSubCategory =
+      getAllSubcategories(categories, skillCategory?.id).find(
+        (subcategory) => subcategory.id === value,
+      ) || null;
     setSkillSubCategory(selectedSubCategory);
     const { message } = validateSkillSubCategory(selectedSubCategory);
     setErrors((prev) => ({ ...prev, skillSubCategory: message || "" }));
@@ -123,7 +123,7 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
     });
 
     if (validation.isValid) {
-      onNextStep();
+       onNextStep();
     }
   };
 
@@ -208,7 +208,8 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
               />
               {errors.skillSubCategory && (
                 <span className={styles.errorText}>
-                  {validateSkillSubCategory(skillSubCategory).message || "ERROR"}
+                  {validateSkillSubCategory(skillSubCategory).message ||
+                    "ERROR"}
                 </span>
               )}
             </div>
@@ -223,9 +224,7 @@ export const RegistrationStep3: React.FC<RegistrationStep3Props> = ({
               helperText={errors.description}
             />
 
-            <DragAndDropUI 
-              onFileChange={handleFileChange}
-            />
+            <DragAndDropUI onFileChange={handleFileChange} />
 
             <div className={styles.buttonsContainer}>
               <Button

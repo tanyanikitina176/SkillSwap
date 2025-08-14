@@ -139,7 +139,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
   const validateField = (name: string, value: any) => {
     const currentData = {
       name,
-      birthDate,
+      birthDate: birthDate ? birthDate.getTime() : 0,
       gender,
       city,
       categories: selectedCategories,
@@ -155,7 +155,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
   const validateForm = () => {
     const currentData = {
       name,
-      birthDate,
+      birthDate: birthDate ? birthDate.getTime() : 0, //убрать
       gender,
       city,
       categories: selectedCategories,
@@ -192,7 +192,7 @@ export const RegistrationStep2: React.FC<RegistrationStep2Props> = ({
 
   const currentData = {
     name,
-    birthDate,
+    birthDate: birthDate ? birthDate.getTime() : 0,
     gender,
     city,
     categories: selectedCategories,
