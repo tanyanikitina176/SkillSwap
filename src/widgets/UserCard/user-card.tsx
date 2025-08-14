@@ -8,6 +8,7 @@ import {
   getLikedSkills,
   toggleLikedSkillsInStorage,
 } from "@shared/lib/utils/getDataFromLocalStorage";
+import { getAgeWithDeclension } from "@shared/lib/utils/ageDeclension";
 import isEqual from "lodash/isEqual";
 import ClockIcon from "@assets/icons/clock.svg?react";
 
@@ -68,7 +69,7 @@ export const UserCard: FC<UserCardProps> = ({
         <div className={styles.card__title}>
           <span className={styles.card__user_name_title}>{user.name}</span>
           <span className={styles.card__user_description}>
-            {user.city.name}, {user.age} года
+            {user.city.name}, {getAgeWithDeclension(user.age)}
           </span>
         </div>
       </div>

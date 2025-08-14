@@ -1,7 +1,9 @@
-import type { FC } from "react";
-import styles from "./UserCardSkillInfo.module.css";
-import { Tag } from "@shared/ui/tag/tag";
-import type { User } from "@entities/User/types.ts";
+import type { FC } from 'react'
+import styles from './UserCardSkillInfo.module.css'
+import { Tag } from '@shared/ui/tag/tag'
+import type {User} from "@entities/User/types.ts";
+import { getAgeWithDeclension } from "@shared/lib/utils/ageDeclension";
+
 
 export type UserCardSkillProps = {
   user: User;
@@ -18,8 +20,8 @@ export const UserCardSkillInfo: FC<UserCardSkillProps> = ({ user }) => {
         <div className={styles.card__title}>
           <span className={styles.card__user_name_title}>{user.name}</span>
           <span className={styles.card__user_description}>
-            {user.city.name}, {user.age} года
-          </span>
+						{user.city.name}, {getAgeWithDeclension(user.age)}
+					</span>
         </div>
       </div>
       <div className={styles.card__allSkills}>
