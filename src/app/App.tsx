@@ -53,8 +53,12 @@ function App() {
         >
           <Route index element={<ProfileInfo />} />
           <Route
-            path="favourites"
-            element={<ProfileFavourites />}
+            path="/profile/favorites"
+            element={
+            <ProtectedRoute>
+            <ProfileFavourites />
+            </ProtectedRoute>
+            }
           />
         </Route>
       </Routes>
