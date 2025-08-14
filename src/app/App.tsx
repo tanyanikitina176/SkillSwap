@@ -17,7 +17,6 @@ function App() {
   const location = useLocation();
   const background = location.state?.background;
 
-  // Инициализируем хук для отслеживания предыдущего URL
   usePreviousUrl();
   return (
     <>
