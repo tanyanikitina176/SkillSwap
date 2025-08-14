@@ -1,3 +1,4 @@
+import type { User } from "@entities/User/types";
 import styles from "./card-user-big.module.css";
 import React, { type FC } from "react";
 
@@ -10,6 +11,7 @@ interface CardUserBigProps {
   buttonsSlot?: React.ReactNode;
   photoSlot?: React.ReactNode;
   children?: React.ReactNode;
+  user?: User;
 }
 
 export const CardUserBig: FC<CardUserBigProps> = ({

@@ -2,11 +2,12 @@ import { CardUserBig } from "@widgets/CardUserBig/card-user-big.tsx";
 import { Button } from "@shared/ui/button/button.tsx";
 import styles from "./SkillInfo.module.css";
 import LikeIcon from "@assets/icons/like.svg?react";
+import LikeFillIcon from "@assets/icons/likeFill.svg?react";
 import ShareIcon from "@assets/icons/share.svg?react";
 import ClockIcon from "@assets/icons/clock.svg?react";
 import MoreSquareIcon from "@assets/icons/more-square.svg?react";
 import { UserCardSkillInfo } from "@widgets/SkillInfo/UserCardSkillInfo.tsx";
-import { type FC, useLayoutEffect, useState } from "react";
+import { type FC, useEffect, useLayoutEffect, useState } from "react";
 import type { User } from "@entities/User/types";
 import type { UserSkill } from "@entities/Skill/SkillType.ts";
 import { PhotoSwitcherUI } from "@shared/ui/photo-switcher";
@@ -15,6 +16,8 @@ import iconModal from "@assets/icons/notification.svg";
 import {
   addRequestSwap,
   getAuth,
+  getLikedSkills,
+  toggleLikedSkillsInStorage,
 } from "@shared/lib/utils/getDataFromLocalStorage";
 import { useLocation, useNavigate } from "react-router-dom";
 import isEqual from "lodash/isEqual";
@@ -26,9 +29,15 @@ interface SkillInfoProps {
 
 export const SkillInfo: FC<SkillInfoProps> = ({ user, skill }) => {
   const [exchangeOffered, setExchangeOffered] = useState(false);
+  const [isLiked, setIsLiked] = useState<boolean>();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const likedSkills = getLikedSkills();
+    setIsLiked(likedSkills?.includes(user.id));
+  }, [user]);
 
   useLayoutEffect(() => {
     const reqString = localStorage.getItem("Request");
@@ -40,7 +49,7 @@ export const SkillInfo: FC<SkillInfoProps> = ({ user, skill }) => {
       //проверяем, был ли уже предложен обмен
       (item: any) =>
         isEqual(item.skillForSwap, skill) &&
-        isEqual(item.userForSwap.id, user.id),
+        isEqual(item.userForSwap.id, user.id)
     );
     setExchangeOffered(hasSwap);
   }, []);
@@ -55,6 +64,12 @@ export const SkillInfo: FC<SkillInfoProps> = ({ user, skill }) => {
       navigate("/login", { state: { from: location }, replace: true });
     }
   };
+
+  const handleLikeClick = () => {
+    setIsLiked((prev) => !prev);
+    toggleLikedSkillsInStorage(user.id);
+  };
+
   // Проверяем наличие skill
   if (!skill) {
     return <div>Информация о навыке не найдена</div>;
@@ -64,10 +79,11 @@ export const SkillInfo: FC<SkillInfoProps> = ({ user, skill }) => {
     <div className={styles.gridSkillInfo}>
       <UserCardSkillInfo user={user} />
       <CardUserBig
+        user={user}
         header={
           <div className={styles.headerIcons}>
-            <button className={styles.iconButton}>
-              <LikeIcon />
+            <button className={styles.iconButton} onClick={handleLikeClick}>
+              {isLiked ? <LikeFillIcon /> : <LikeIcon />}
             </button>
             <button className={styles.iconButton}>
               <ShareIcon />
