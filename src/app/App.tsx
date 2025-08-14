@@ -16,6 +16,9 @@ import { ProfilePage } from "./../pages/ProfilePage/ProfilePage.tsx";
 import { ProfileFavourites } from "@widgets/Profile/profile-favourites.tsx";
 import { ProfileInfo } from "@widgets/Profile/profile-info.tsx";
 import { usePreviousUrl } from "../shared/hooks/usePreviousUrl";
+import {RegistrationSuccessModal} from "@widgets/RegistrationSuccess/RegistrationSuccessModal.tsx";
+
+
 import { ModalUI } from "@shared/ui/modal/modalUi.tsx";
 
 function App() {
@@ -27,116 +30,39 @@ function App() {
   const state = location.state as { backgroundLocation?: Location };
   const backgroundLocation = state?.backgroundLocation;
 
+  const location = useLocation();
+  const background = location.state?.background;
+	// Инициализируем хук для отслеживания предыдущего URL
+	usePreviousUrl()
   return (
     <>
       {/*добавить в Route */}
       <Routes location={backgroundLocation || location}>
+      <Routes location={background || location}>
         <Route path="/" element={<HomePage />} />
-
-        {/* Только для НЕавторизованных*/}
-        <Route
-          path="/login"
-          element={
-            <ProtectedRoute onlyUnAuth>
-              <LoginPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/reg"
-          element={
-            <ProtectedRoute onlyUnAuth>
-              <RegistrationPage />
-            </ProtectedRoute>
-          }
-        />
-        Только для Авторизованных
+        <Route path="*" element={<NotFound404 />} />
+        <Route path="/500" element={<ConnetcError500 />} />
+        <Route path="/reg" element={<RegistrationPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/skill/:userId" element={<SkillPage />} />
         <Route
           path="/profile"
           element={
             <ProtectedRoute>
-              <ProfileInfo />
+              <ProfilePage />
             </ProtectedRoute>
           }
-        />
-        <Route
-          path="/profile/favourites"
-          element={
-            <ProtectedRoute>
-              <ProfileFavourites />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/skill/:userId"
-          element={
-            <ProtectedRoute>
-              <SkillPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="*" element={<NotFound404 />} />
-        <Route path="/500" element={<ConnetcError500 />} />
+        >
+          <Route index element={<ProfileInfo />} />
+          <Route
+            path="favourites"
+            element={<ProfileFavourites />}
+          />
+        </Route>
       </Routes>
-
-      {backgroundLocation && (
-        <Routes>
-          {/* Модальное окно: Вы предложили обмен*/}
-          <Route
-            path="/proposal/sent"
-            element={
-              <ProtectedRoute>
-                <ModalUI
-                  title="Вы предложили обмен"
-                  onClose={() => navigate(-1)}
-                  image={""}
-                  imageAlt={""}
-                  description={"Теперь вы можете предложить обмен"}
-                >
-                  {/* Добавить нужный компонент */}
-                </ModalUI>
-              </ProtectedRoute>
-            }
-          />
-
-          {/* Модальное окно: Ваше предложение создано */}
-          <Route
-            path="/proposal/created"
-            element={
-              <ProtectedRoute>
-                <ModalUI
-                  title="Ваше предложение создано"
-                  onClose={() => navigate(-1)}
-                  image={""}
-                  imageAlt={""}
-                  description={"Теперь вы можете предложить обмен"}
-                >
-                  {/* Добавить нужный компонент */}
-                </ModalUI>
-              </ProtectedRoute>
-            }
-          />
-          {/*  Модальное окно: Создание предложения */}
-          <Route
-            path="/proposal/create"
-            element={
-              <ProtectedRoute>
-                <ModalUI
-                  title="При создании предложения"
-                  onClose={() => navigate(-1)}
-                  image={""}
-                  imageAlt={""}
-                  description={
-                    "Пожалуйста, проверьте и подтвердите правильность данных"
-                  }
-                >
-                  {/* Добавить нужный компонент */}
-                </ModalUI>
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      )}
+      {background && (<Routes>
+        <Route path="/reg-success" element={<RegistrationSuccessModal />} />
+      </Routes>)}
     </>
   );
 }

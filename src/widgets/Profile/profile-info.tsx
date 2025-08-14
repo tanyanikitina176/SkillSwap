@@ -9,7 +9,7 @@ import {
 } from "@shared/ui/dropdown/dropdownConstants";
 import { DatePicker } from "@shared/ui/date-picker/date-picker";
 import { useEffect, useRef, useState, type FC } from "react";
-import editIcon from "@assets/icons/gallery-edit.svg";
+import EditIconGallery from "@assets/icons/gallery-edit.svg?react";
 import {
   validateDateOfBirth,
   validateDescription,
@@ -21,7 +21,10 @@ import {
 import isEqual from "lodash/isEqual";
 import EditIcon from "@assets/icons/edit.svg?react";
 import type { UserInLocalStorage } from "@entities/User/types";
-import { getUserFromLocalStorage, updateUserInStorage } from "@shared/lib/utils/getDataFromLocalStorage";
+import {
+  getUserFromLocalStorage,
+  updateUserInStorage,
+} from "@shared/lib/utils/getDataFromLocalStorage";
 import { convertFileToBase64 } from "@shared/lib/utils/convertFileToBase64";
 
 const INITIAL_ERRORS = {
@@ -39,10 +42,12 @@ export const ProfileInfo: FC = () => {
   const [showPasswordField, setShowPasswordField] = useState(false);
   const [formValue, setFormValue] = useState<UserInLocalStorage>(() => {
     const user = getUserFromLocalStorage();
-    return user ? {
-      ...user,
-      birthDate: user.birthDate ? new Date(user.birthDate) : null
-    } : {} as UserInLocalStorage;
+    return user
+      ? {
+          ...user,
+          birthDate: user.birthDate ? new Date(user.birthDate) : null,
+        }
+      : ({} as UserInLocalStorage);
   });
   const [errors, setErrors] = useState(INITIAL_ERRORS);
   const [isDisabledButton, setIsDisabledButton] = useState(true);
@@ -252,10 +257,8 @@ export const ProfileInfo: FC = () => {
           className={styles.card__avatar}
           alt="Аватар пользователя"
         />
-        <img
-          src={editIcon}
-          alt="Иконка редактирования"
-          className={styles.edit_icon}
+        <EditIconGallery
+          className={styles.edit_icon_gallery}
           onClick={handleImageClick}
         />
         <input

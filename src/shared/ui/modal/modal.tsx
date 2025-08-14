@@ -1,12 +1,13 @@
 import { type FC, memo, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { ModalUI } from "./modalUi.tsx";
-import type { TModalUIProps } from "./type.ts";
+import type {TModalProps} from "./type.ts";
 
 const modalRoot = document.getElementById("modals");
 
-export const Modal: FC<TModalUIProps> = memo(
-  ({ image, imageAlt, title, description, onClose, children }) => {
+export const Modal: FC<TModalProps> = memo(
+  ({ image, imageAlt, title, description, onClose, children, noPadding = false }) => {
+
     useEffect(() => {
       const handleEsc = (e: KeyboardEvent) => {
         if (e.key === "Escape") {
@@ -27,6 +28,8 @@ export const Modal: FC<TModalUIProps> = memo(
         image={image}
         imageAlt={imageAlt}
         onClose={onClose}
+        noPadding={noPadding}
+
       >
         {children}
       </ModalUI>,
