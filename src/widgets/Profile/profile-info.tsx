@@ -10,6 +10,7 @@ import {
 import { DatePicker } from "@shared/ui/date-picker/date-picker";
 import { useEffect, useRef, useState, type FC } from "react";
 import EditIconGallery from "@assets/icons/gallery-edit.svg?react";
+import defaultIcon from "@assets/icons/default-user-icon.png";
 import {
   validateDateOfBirth,
   validateDescription,
@@ -80,7 +81,7 @@ export const ProfileInfo: FC = () => {
   };
 
   const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { message } = validateDescription(e.target.value);
     setErrors((prev) => ({ ...prev, description: message || "" }));
@@ -105,7 +106,7 @@ export const ProfileInfo: FC = () => {
 
   const setData = <K extends keyof UserInLocalStorage>(
     field: K,
-    value: UserInLocalStorage[K],
+    value: UserInLocalStorage[K]
   ) => {
     setFormValue((prev) => ({
       ...prev,
@@ -253,7 +254,7 @@ export const ProfileInfo: FC = () => {
       </form>
       <div className={styles.card_wrapper}>
         <img
-          src={formValue.avatar as string}
+          src={(formValue.avatar as string) || defaultIcon}
           className={styles.card__avatar}
           alt="Аватар пользователя"
         />
