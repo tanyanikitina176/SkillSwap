@@ -6,21 +6,54 @@ import ShareIcon from "@assets/icons/share.svg?react";
 import ClockIcon from "@assets/icons/clock.svg?react";
 import MoreSquareIcon from "@assets/icons/more-square.svg?react";
 import { UserCardSkillInfo } from "@widgets/SkillInfo/UserCardSkillInfo.tsx";
-import { type FC, useState } from "react";
+import { type FC, useEffect, useLayoutEffect, useState } from "react";
 import type { User } from "@entities/User/types";
 import type { UserSkill } from "@entities/Skill/SkillType.ts";
 import { PhotoSwitcherUI } from "@shared/ui/photo-switcher";
+import { Modal } from "@shared/ui/modal/modal";
+import iconModal from "@assets/icons/notification.svg";
+import {
+  addRequestSwap,
+  getAuth,
+} from "@shared/lib/utils/getDataFromLocalStorage";
+import { useLocation, useNavigate } from "react-router-dom";
+import isEqual from "lodash/isEqual";
 
 interface SkillInfoProps {
   user: User;
   skill: UserSkill | null;
 }
 
-export const SkillInfo: FC<SkillInfoProps> = ({ user, skill,}) => {
+export const SkillInfo: FC<SkillInfoProps> = ({ user, skill }) => {
   const [exchangeOffered, setExchangeOffered] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useLayoutEffect(() => {
+    const reqString = localStorage.getItem("Request");
+    if (!reqString) {
+      return;
+    }
+    const req = JSON.parse(reqString);
+    const hasSwap = req.some(
+      //проверяем, был ли уже предложен обмен
+      (item: any) =>
+        isEqual(item.skillForSwap, skill) &&
+        isEqual(item.userForSwap.id, user.id)
+    );
+    setExchangeOffered(hasSwap);
+  }, []);
 
   const handleOfferClick = () => {
-    setExchangeOffered(true);
+    const isAuth = getAuth();
+    if (isAuth) {
+      setExchangeOffered(true);
+      setIsOpenModal(!isOpenModal);
+      addRequestSwap(user, skill!);
+    } else {
+      navigate("/login", { state: { from: location }, replace: true });
+    }
   };
   // Проверяем наличие skill
   if (!skill) {
@@ -54,15 +87,27 @@ export const SkillInfo: FC<SkillInfoProps> = ({ user, skill,}) => {
             onClick={handleOfferClick}
             type={exchangeOffered ? "secondary" : "primary"}
             startIcon={exchangeOffered ? <ClockIcon /> : undefined}
+            disabled={exchangeOffered}
           >
             {exchangeOffered ? "Обмен предложен" : "Предложить обмен"}
           </Button>
         }
         // <PhotoSwitcherUI skillId/>
-        photoSlot={
-          <PhotoSwitcherUI skillId = {skill.id}/>
-        }
+        photoSlot={<PhotoSwitcherUI skillId={skill.id} />}
       ></CardUserBig>
+      {isOpenModal && (
+        <Modal
+          title="Вы предложили обмен"
+          imageAlt="Иконка колокольчика"
+          image={iconModal}
+          onClose={() => setIsOpenModal(!isOpenModal)}
+          description="Теперь дождитесь подтверждения. Вам придёт уведомление"
+        >
+          <Button type="primary" onClick={() => setIsOpenModal(!isOpenModal)}>
+            Готово
+          </Button>
+        </Modal>
+      )}
     </div>
   );
 };
