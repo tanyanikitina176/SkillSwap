@@ -58,11 +58,11 @@ export const AppHeaderUI: FC<AppHeaderUIProps> = ({
 		<header className={styles.header}>
 			<nav className={styles.nav}>
 				<div className={styles.logoWrapper}>
-					<img src={logo} alt='Logo' className={styles.logo} />
+					<NavLink to='/'><img src={logo} alt='Logo' className={styles.logo} /></NavLink>
 				</div>
 
 				<div className={styles.linksWrapper}>
-					<span className={styles.text}>О проекте</span>
+					<NavLink to='/'><span className={styles.text}>О проекте</span></NavLink>
 
 					<div className={styles.dropdownWrapper} ref={dropdownRef}>
 						<button
