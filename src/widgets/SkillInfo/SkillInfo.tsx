@@ -31,7 +31,11 @@ export const SkillInfo: FC<SkillInfoProps> = ({ user, skill }) => {
   const navigate = useNavigate();
 
   useLayoutEffect(() => {
-    const req = JSON.parse(localStorage.getItem("Request")!);
+    const reqString = localStorage.getItem("Request");
+    if (!reqString) {
+      return;
+    }
+    const req = JSON.parse(reqString);
     const hasSwap = req.some(
       //проверяем, был ли уже предложен обмен
       (item: any) =>
