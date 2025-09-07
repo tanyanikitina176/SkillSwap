@@ -4,7 +4,9 @@
 
 ## Стэк: React + TypeScript + Vite
 
-[Макет](<https://www.figma.com/design/bKwOakHJI7Z2mh2zVCBphP/SkillSwap---Для-разработчиков?node-id=386-11920&t=xN1r61F4DvdVdr9v-0>)
+[Ссылка на макет в Figma](<https://www.figma.com/design/bKwOakHJI7Z2mh2zVCBphP/SkillSwap---Для-разработчиков?node-id=386-11920&t=xN1r61F4DvdVdr9v-0>) |
+[Ссылка на gh pages](<https://tanyanikitina176.github.io/SkillSwap/>)
+
 
 
 ##### Скелет проекта: 
@@ -16,7 +18,6 @@
 │   └── Request/                 # API-запросы, связанные с Request
 │
 ├── app/                         # Корневые настройки и инфраструктура приложения
-│   ├── fonts/                   # Подключаемые шрифты
 │   ├── protected-route/         # Реализация защищённых маршрутов
 │   ├── store.ts                 # Глобальный Redux store
 │   ├── App.tsx                  # Главный компонент приложения
@@ -53,7 +54,8 @@
 public/
 └── db/
     ├── skills.json              # Мок-данные с навыками
-    └── users.json               # Мок-данные с пользователями
+    ├── users.json               # Мок-данные с пользователями
+    └── fonts/                   # Подключаемые шрифты
 ```
 
 ⚙️ Скрипты
