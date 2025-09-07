@@ -68,7 +68,7 @@ public/
 
 🚀 Установка и запуск
 ##### 1. Клонируй репозиторий
-git clone https://github.com/your-username/skillswap.git
+git clone https://github.com/your-username/skillswap.git \
 cd skillswap
 
 #### 2. Установи зависимости
