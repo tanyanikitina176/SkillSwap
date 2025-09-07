@@ -14,7 +14,7 @@ export type User = {
   photo: string;
   description: string;
   likes: User[];
-  likedSkills: User[];
+  likedSkills?: User[];
   createdAt?: string;
 };
 

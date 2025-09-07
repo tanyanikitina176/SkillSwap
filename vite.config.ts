@@ -6,6 +6,7 @@ import path from 'path'
 export default defineConfig({
 	plugins: [react(), svgr()],
 	server: { open: true },
+	base: "/SkillSwap/",
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, 'src'),
