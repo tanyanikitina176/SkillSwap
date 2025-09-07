@@ -108,8 +108,7 @@ export const SkillInfo: FC<SkillInfoProps> = ({ user, skill }) => {
             {exchangeOffered ? "Обмен предложен" : "Предложить обмен"}
           </Button>
         }
-        // <PhotoSwitcherUI skillId/>
-        photoSlot={<PhotoSwitcherUI skillId={skill.id} />}
+        photoSlot={<PhotoSwitcherUI images={skill?.images || []} />}
       ></CardUserBig>
       {isOpenModal && (
         <Modal

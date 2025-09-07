@@ -12,10 +12,39 @@ import { ProfileFavourites } from "@widgets/Profile/profile-favourites.tsx";
 import { ProfileInfo } from "@widgets/Profile/profile-info.tsx";
 import { usePreviousUrl } from "../shared/hooks/usePreviousUrl";
 import { RegistrationSuccessModal } from "@widgets/RegistrationSuccess/RegistrationSuccessModal.tsx";
+import { useEffect } from "react";
 
 function App() {
   const location = useLocation();
   const background = location.state?.background;
+  
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+        @font-face {
+          font-family: "Jost";
+          src: url('${import.meta.env.BASE_URL}fonts/jost/Jost-Medium.ttf') format("truetype");
+          font-weight: 500;
+          font-style: normal;
+        }
+
+        @font-face {
+          font-family: "Roboto-Regular";
+          src: url('${import.meta.env.BASE_URL}fonts/roboto/Roboto-Regular.ttf') format("truetype");
+          font-weight: 400;
+          font-style: normal;
+        }
+
+        @font-face {
+          font-family: "Roboto-Medium";
+          src: url('${import.meta.env.BASE_URL}fonts/roboto/Roboto-Medium.ttf') format("truetype");
+          font-weight: 500;
+          font-style: normal;
+        }
+    `
+
+    document.head.appendChild(style);
+  }, []);
 
   usePreviousUrl();
   return (

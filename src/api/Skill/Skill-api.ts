@@ -16,10 +16,10 @@ export const fetchSkillsData = async (): Promise<Skill[]> => {
   try {
     const [categoriesRes, subcategoriesRes, skillsRes, usersRes] =
       await Promise.all([
-        fetch("/db/skills_categories.json").then((res) => res.json()),
-        fetch("/db/skills_subcategories.json").then((res) => res.json()),
-        fetch("/db/skills.json").then((res) => res.json()),
-        fetch("/db/users.json").then((res) => res.json()),
+        fetch(`${import.meta.env.BASE_URL}/db/skills_categories.json`).then((res) => res.json()),
+        fetch(`${import.meta.env.BASE_URL}/db/skills_subcategories.json`).then((res) => res.json()),
+        fetch(`${import.meta.env.BASE_URL}/db/skills.json`).then((res) => res.json()),
+        fetch(`${import.meta.env.BASE_URL}/db/users.json`).then((res) => res.json()),
       ]);
 
     return (skillsRes.skills || []).map((skill: FetchedSkill) => {
@@ -36,6 +36,8 @@ export const fetchSkillsData = async (): Promise<Skill[]> => {
         (u: User) => String(u.id) === skill.authorId,
       );
 
+      console.log("SKILL", import.meta.env.BASE_URL);
+
       return {
         ...skill,
         id: String(skill.id),
@@ -45,6 +47,7 @@ export const fetchSkillsData = async (): Promise<Skill[]> => {
           color: "#E8ECF7",
           icon: "",
         },
+        images: skill.images?.map(image => `${import.meta.env.BASE_URL}${image}`),
         subcategory: subcategory || {
           id: "unknown",
           name: "Неизвестная подкатегория",

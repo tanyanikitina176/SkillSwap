@@ -29,8 +29,8 @@ export const CategoryDisplay = () => {
     const loadData = async () => {
       try {
         const [skillsRes, subcategoriesRes] = await Promise.all([
-          fetch("/db/skills_categories.json"),
-          fetch("/db/skills_subcategories.json"),
+          fetch(`${import.meta.env.BASE_URL}/db/skills_categories.json`),
+          fetch(`${import.meta.env.BASE_URL}/db/skills_subcategories.json`),
         ]);
 
         if (!skillsRes.ok || !subcategoriesRes.ok) {

@@ -2,11 +2,23 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import svgr from 'vite-plugin-svgr'
 import path from 'path'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 export default defineConfig({
-	plugins: [react(), svgr()],
-	server: { open: true },
 	base: "/SkillSwap/",
+	plugins: [
+		react(),
+		svgr(),
+		viteStaticCopy({
+			targets: [
+				{
+					src: 'public/db',  // source folder
+					dest: 'assets'       // copy to root of dist
+				}
+			]
+		})
+	],
+	server: { open: true },
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, 'src'),

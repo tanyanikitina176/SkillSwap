@@ -82,7 +82,7 @@ export const RegistrationStep4: React.FC<RegistrationStep4Props> = ({
             </Button>
           </div>
         }
-        photoSlot={<PhotoSwitcherUI skillId={skillImage} />}
+        photoSlot={<PhotoSwitcherUI images={skillImage ? [skillImage] : []} />}
       ></CardUserBig>
     </Modal>
   ) : null;

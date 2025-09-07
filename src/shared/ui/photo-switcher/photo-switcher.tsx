@@ -3,25 +3,20 @@ import Left from "@assets/icons/chevron-right.svg?react";
 import Right from "@assets/icons/chevron-right.svg?react";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import skillsData from "@public/db/skills.json";
 
 type PhotoSwitcherProps = {
-  skillId?: string;
+  images: string[];
 };
 
-export const PhotoSwitcherUI = ({ skillId }: PhotoSwitcherProps) => {
+export const PhotoSwitcherUI = ({ images }: PhotoSwitcherProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [images, setImages] = useState<string[]>([]);
 
   // Под грузка изображение по ID
   useEffect(() => {
-    const skill = skillsData.skills.find((s) => s.id === skillId);
-
-    if (skill) {
-      setImages(skill.images);
+    if (images.length > 0) {
       setCurrentIndex(0);
     }
-  }, [skillId]);
+  }, [images]);
 
   // Переключатель влево
   const prevImages = () => {

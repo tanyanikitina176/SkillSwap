@@ -1,7 +1,7 @@
 /* Jost Medium H1 */
 @font-face {
   font-family: "Jost";
-  src: url("./jost/Jost-Medium.ttf") format("truetype");
+  src: url('%BASE_URL%fonts/jost/Jost-Medium.ttf') format("truetype");
   font-weight: 500;
   font-style: normal;
 }
@@ -9,7 +9,7 @@
 /* Roboto Regular */
 @font-face {
   font-family: "Roboto-Regular";
-  src: url("./roboto/Roboto-Regular.ttf") format("truetype");
+  src: url('%BASE_URL%fonts/roboto/Roboto-Regular.ttf') format("truetype");
   font-weight: 400;
   font-style: normal;
 }
@@ -17,7 +17,7 @@
 /* Roboto Medium */
 @font-face {
   font-family: "Roboto-Medium";
-  src: url("./roboto/Roboto-Medium.ttf") format("truetype");
+  src: url('%BASE_URL%fonts/roboto/Roboto-Medium.ttf') format("truetype");
   font-weight: 500;
   font-style: normal;
 }

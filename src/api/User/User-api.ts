@@ -12,10 +12,10 @@ export const fetchUsersData = async (): Promise<User[]> => {
   try {
     const [citiesRes, subcategoriesRes, categoriesRes, usersRes] =
       await Promise.all([
-        fetch("/db/cities.json").then((res) => res.json()),
-        fetch("/db/skills_subcategories.json").then((res) => res.json()),
-        fetch("/db/skills_categories.json").then((res) => res.json()),
-        fetch("/db/users.json").then((res) => res.json()),
+        fetch(`${import.meta.env.BASE_URL}/db/cities.json`).then((res) => res.json()),
+        fetch(`${import.meta.env.BASE_URL}/db/skills_subcategories.json`).then((res) => res.json()),
+        fetch(`${import.meta.env.BASE_URL}/db/skills_categories.json`).then((res) => res.json()),
+        fetch(`${import.meta.env.BASE_URL}/db/users.json`).then((res) => res.json()),
       ]);
 
     return (usersRes.users || []).map((user: FetchedUser) => {
@@ -46,11 +46,12 @@ export const fetchUsersData = async (): Promise<User[]> => {
           })
           .filter(Boolean) as Subcategory[];
       };
-
+      
       return {
         ...user,
         id: String(user.id),
         city,
+        photo: `${import.meta.env.BASE_URL}${user.photo}`,
         teachingSkills: formatSkills(user.teachingSkills),
         wantToLearnSkills: formatSkills(user.wantToLearnSkills),
         exchangesCount: Math.floor(Math.random() * 10) + 1,
